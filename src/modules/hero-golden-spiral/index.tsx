@@ -81,7 +81,7 @@ export default function HeroGoldenSpiral({
 					</div>
 					<CTAList
 						ctas={ctas}
-						className="mt-8 gap-3 max-sm:*:w-full [&_.action]:min-h-12 [&_.action]:rounded-full [&_.action]:bg-[#d4ad69] [&_.action]:px-6 [&_.action]:font-semibold [&_.action]:text-[#102e27] [&_.action-outline]:min-h-12 [&_.action-outline]:rounded-full [&_.action-outline]:border-white/35 [&_.action-outline]:bg-white/5 [&_.action-outline]:px-6 [&_.action-outline]:text-white"
+						className="[&_.action-outline]:border-border-inverse mt-8 gap-3 max-sm:*:w-full [&_.action]:min-h-12 [&_.action]:rounded-full [&_.action]:bg-[#d4ad69] [&_.action]:px-6 [&_.action]:font-semibold [&_.action]:text-[#102e27] [&_.action-outline]:min-h-12 [&_.action-outline]:rounded-full [&_.action-outline]:bg-white/5 [&_.action-outline]:px-6 [&_.action-outline]:text-white"
 					/>
 					<ul
 						aria-label="Materials and specialties"

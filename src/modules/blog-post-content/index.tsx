@@ -33,35 +33,47 @@ export default function ({
 	return (
 		<>
 			<Module as="article" {...props}>
-				<header className="section relative text-center">
-					<Img
-						image={post.metadata?.image}
-						imageOptions={{ blur: 30 }}
-						width={1000}
-						className="absolute inset-0 size-full object-cover opacity-10 delay-1000 duration-2000 starting:opacity-0"
-						alt={post.metadata?.title ?? ''}
-						draggable={false}
-						loading="eager"
-					/>
+				<header className="section relative py-6 sm:py-8">
+					<div className="border-border-subtle rounded-feature bg-art-backdrop relative isolate overflow-hidden border shadow-[0_24px_80px_rgba(0,0,0,.14)]">
+						<Img
+							image={post.metadata?.image}
+							width={1600}
+							className="absolute inset-0 size-full object-cover opacity-30"
+							alt=""
+							draggable={false}
+							loading="eager"
+						/>
+						<span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(247,242,233,.98)_0%,rgba(247,242,233,.88)_48%,rgba(247,242,233,.55)_100%)]" />
 
-					<div className="relative mx-auto max-w-5xl space-y-4">
-						<h1 className="h1 text-balance">
-							{post.title || post.metadata?.title}
-						</h1>
+						<div className="relative flex min-h-[clamp(28rem,52vw,38rem)] max-w-5xl flex-col justify-end p-6 sm:p-10 lg:p-14">
+							<p className="text-primary mb-5 text-xs font-bold tracking-[.2em] uppercase">
+								Journal
+							</p>
+							<h1
+								className="max-w-4xl font-[var(--font-serif)] font-semibold tracking-[-.045em] text-balance"
+								style={{
+									fontSize: 'clamp(3.25rem, 6vw, 5.75rem)',
+									lineHeight: 0.94,
+								}}
+							>
+								{post.title || post.metadata?.title}
+							</h1>
 
-						<div className="gap-x-lh gap-y-ch flex flex-wrap items-center justify-center">
-							<Byline author={post.author as unknown as Person} />
-							<Categories
-								categories={post.categories as BlogCategory[]}
-								linked
-							/>
-							<Date date={post.publishDate} />
-							<span>{Math.ceil(post.readTime)} min read</span>
+							<div className="border-border-default text-foreground/70 mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t pt-5 text-sm">
+								<Byline author={post.author as unknown as Person} />
+								<Categories
+									categories={post.categories as BlogCategory[]}
+									linked
+									className="[&_a]:decoration-accent [&_a]:font-semibold"
+								/>
+								<Date date={post.publishDate} />
+								<span>{Math.ceil(post.readTime)} min read</span>
+							</div>
 						</div>
 					</div>
 				</header>
 
-				<section className="post-content section gap-lh flex max-md:flex-col md:items-start">
+				<section className="post-content section flex gap-10 py-12 max-md:flex-col md:items-start lg:gap-16 lg:py-16">
 					<Sidebar
 						{...sidebar}
 						headings={post.headings}

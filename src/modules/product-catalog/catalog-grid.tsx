@@ -36,7 +36,7 @@ function Facet({
 }) {
 	return (
 		<fieldset className="py-5 last:pb-0 first-of-type:pt-0">
-			<legend className="mb-4 text-sm font-bold tracking-[.14em] text-[#211d18] uppercase">
+			<legend className="text-foreground mb-4 text-sm font-bold tracking-[.14em] uppercase">
 				{title}
 			</legend>
 			<div className="space-y-3">
@@ -45,7 +45,7 @@ function Facet({
 					return (
 						<label
 							key={option.value}
-							className="group flex cursor-pointer items-center gap-3 text-sm text-black/68"
+							className="group text-muted-foreground flex cursor-pointer items-center gap-3 text-sm"
 						>
 							<input
 								className="peer sr-only"
@@ -57,9 +57,9 @@ function Facet({
 							<span
 								aria-hidden="true"
 								className={cn(
-									'grid size-5 shrink-0 place-items-center border border-black/25 bg-white transition group-hover:border-[#765523] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#765523]',
+									'border-border-default bg-surface group-hover:border-primary peer-focus-visible:outline-primary grid size-5 shrink-0 place-items-center border transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2',
 									type === 'radio' ? 'rounded-full' : 'rounded-[.3rem]',
-									checked && 'border-[#173f35] bg-[#173f35] text-white',
+									checked && 'border-brand-green bg-brand-green text-white',
 								)}
 							>
 								{checked &&
@@ -72,12 +72,12 @@ function Facet({
 							<span
 								className={cn(
 									'flex-1',
-									checked && 'font-semibold text-[#211d18]',
+									checked && 'text-foreground font-semibold',
 								)}
 							>
 								{option.label}
 							</span>
-							<span className="min-w-7 rounded-full bg-black/[.045] px-2 py-0.5 text-center text-xs text-black/60 tabular-nums">
+							<span className="bg-foreground/5 text-muted-foreground min-w-7 rounded-full px-2 py-0.5 text-center text-xs tabular-nums">
 								{option.count}
 							</span>
 						</label>
@@ -240,38 +240,38 @@ export default function CatalogGrid({
 
 	return (
 		<div>
-			<div className="mb-6 flex flex-wrap items-center justify-between gap-4 border-y border-black/10 py-4">
+			<div className="border-border-subtle mb-6 flex flex-wrap items-center justify-between gap-4 border-y py-4">
 				<div className="flex items-center gap-3">
 					{hasFilters && (
 						<button
 							type="button"
 							aria-expanded={drawerOpen}
 							onClick={() => setDrawerOpen(true)}
-							className="inline-flex min-h-11 items-center gap-2 rounded-full border border-black/15 bg-white px-4 text-sm font-semibold text-[#211d18] shadow-sm lg:hidden"
+							className="border-border-default bg-surface text-foreground inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold shadow-sm lg:hidden"
 						>
 							<PiSlidersHorizontal className="size-5" />
 							Filters
 							{activeCount > 0 && (
-								<span className="grid size-5 place-items-center rounded-full bg-[#173f35] text-[11px] text-white">
+								<span className="bg-brand-green grid size-5 place-items-center rounded-full text-[11px] text-white">
 									{activeCount}
 								</span>
 							)}
 						</button>
 					)}
-					<p aria-live="polite" className="text-sm text-black/60">
-						<strong className="font-semibold text-[#211d18]">
+					<p aria-live="polite" className="text-muted-foreground text-sm">
+						<strong className="text-foreground font-semibold">
 							{visible.length}
 						</strong>{' '}
 						{visible.length === 1 ? 'piece' : 'pieces'}
 					</p>
 				</div>
-				<label className="flex items-center gap-2 text-sm text-black/60">
+				<label className="text-muted-foreground flex items-center gap-2 text-sm">
 					<PiArrowsDownUp className="size-4" />
 					<span className="sr-only sm:not-sr-only">Sort by</span>
 					<select
 						value={sort}
 						onChange={(event) => setSort(event.target.value)}
-						className="rounded-full border border-black/15 bg-white py-2.5 pr-9 pl-4 font-semibold text-[#211d18] shadow-sm outline-none focus:border-[#765523] focus:ring-2 focus:ring-[#765523]/20"
+						className="border-border-default bg-surface text-foreground focus:border-primary focus:ring-primary/20 rounded-full border py-2.5 pr-9 pl-4 font-semibold shadow-sm outline-none focus:ring-2"
 					>
 						<option value="featured">Featured</option>
 						<option value="name-asc">Name: A–Z</option>
@@ -310,7 +310,7 @@ export default function CatalogGrid({
 					<button
 						type="button"
 						onClick={clearAll}
-						className="ml-1 text-sm font-semibold text-[#785a2a] underline decoration-[#d4ad69] underline-offset-4 hover:text-[#173f35]"
+						className="text-primary decoration-accent hover:text-accent ml-1 text-sm font-semibold underline underline-offset-4"
 					>
 						Clear all
 					</button>
@@ -325,11 +325,11 @@ export default function CatalogGrid({
 				{hasFilters && (
 					<aside
 						aria-label="Catalog filters"
-						className="sticky-below-header hidden rounded-[1.25rem] border border-black/10 bg-white/65 p-5 shadow-[0_14px_45px_rgba(35,28,18,.06)] lg:block"
+						className="border-border-subtle sticky-below-header rounded-panel bg-surface/65 hidden border p-5 shadow-[0_14px_45px_rgba(0,0,0,.1)] lg:block"
 						style={{ '--offset': '1.5rem' } as React.CSSProperties}
 					>
 						<div className="mb-5 flex items-center justify-between">
-							<h3 className="flex items-center gap-2 text-base font-bold text-[#211d18]">
+							<h3 className="text-foreground flex items-center gap-2 text-base font-bold">
 								<PiSlidersHorizontal />
 								Filter
 							</h3>
@@ -337,7 +337,7 @@ export default function CatalogGrid({
 								<button
 									type="button"
 									onClick={clearAll}
-									className="text-xs font-semibold text-[#785a2a] underline underline-offset-4"
+									className="text-primary text-xs font-semibold underline underline-offset-4"
 								>
 									Clear
 								</button>
@@ -362,14 +362,14 @@ export default function CatalogGrid({
 						))}
 					</div>
 					{!visible.length && (
-						<div className="rounded-2xl border border-dashed border-black/20 bg-white/45 p-10 text-center">
-							<p className="font-semibold text-[#211d18]">
+						<div className="border-border-default rounded-card bg-surface/45 border border-dashed p-10 text-center">
+							<p className="text-foreground font-semibold">
 								No pieces match your filters.
 							</p>
 							<button
 								type="button"
 								onClick={clearAll}
-								className="mt-3 text-sm font-semibold text-[#785a2a] underline underline-offset-4"
+								className="text-primary mt-3 text-sm font-semibold underline underline-offset-4"
 							>
 								Reset filters
 							</button>
@@ -392,17 +392,17 @@ export default function CatalogGrid({
 					/>
 					<div
 						ref={drawerRef}
-						className="absolute inset-y-0 right-0 flex w-[min(90vw,24rem)] flex-col bg-[#f8f3ea] shadow-2xl"
+						className="bg-background absolute inset-y-0 right-0 flex w-[min(90vw,24rem)] flex-col shadow-2xl"
 					>
-						<div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
+						<div className="border-border-subtle flex items-center justify-between border-b px-5 py-4">
 							<div>
 								<h2
 									id="filter-drawer-title"
-									className="text-xl font-bold text-[#211d18]"
+									className="text-foreground text-xl font-bold"
 								>
 									Filter
 								</h2>
-								<p className="text-xs text-black/60">
+								<p className="text-muted-foreground text-xs">
 									{visible.length} results
 								</p>
 							</div>
@@ -411,25 +411,25 @@ export default function CatalogGrid({
 								type="button"
 								aria-label="Close filters"
 								onClick={() => setDrawerOpen(false)}
-								className="grid size-11 place-items-center rounded-full border border-black/10 bg-white"
+								className="border-border-subtle bg-surface grid size-11 place-items-center rounded-full border"
 							>
 								<PiX className="size-5" />
 							</button>
 						</div>
 						<div className="flex-1 overflow-y-auto px-5 py-6">{filters}</div>
-						<div className="grid grid-cols-2 gap-3 border-t border-black/10 bg-white/70 p-4">
+						<div className="border-border-subtle bg-surface/70 grid grid-cols-2 gap-3 border-t p-4">
 							<button
 								type="button"
 								onClick={clearAll}
 								disabled={!activeCount}
-								className="min-h-12 rounded-full border border-black/15 px-4 text-sm font-semibold disabled:opacity-40"
+								className="border-border-default min-h-12 rounded-full border px-4 text-sm font-semibold disabled:opacity-40"
 							>
 								Clear all
 							</button>
 							<button
 								type="button"
 								onClick={() => setDrawerOpen(false)}
-								className="min-h-12 rounded-full bg-[#173f35] px-4 text-sm font-semibold text-white"
+								className="bg-brand-green min-h-12 rounded-full px-4 text-sm font-semibold text-white"
 							>
 								Show {visible.length} results
 							</button>
@@ -453,7 +453,7 @@ function FilterChip({
 			type="button"
 			onClick={onRemove}
 			aria-label={`Remove ${label} filter`}
-			className="inline-flex items-center gap-2 rounded-full border border-[#b98c49]/35 bg-[#f1e5d0] px-3 py-1.5 text-xs font-semibold text-[#5f4825] transition hover:border-[#765523]"
+			className="border-primary/35 bg-primary/10 text-primary hover:border-primary inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition"
 		>
 			<span>{label}</span>
 			<PiX className="size-3.5" />

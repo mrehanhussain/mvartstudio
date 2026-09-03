@@ -4,60 +4,21 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import {
 	PiArrowUpRight,
 	PiEnvelopeSimple,
+	PiSpinnerGap,
 	PiWhatsappLogo,
 } from 'react-icons/pi'
+import {
+	enquiryFieldLabels as fieldLabels,
+	enquiryFieldOrder as fieldOrder,
+	type EnquiryKind as FormKind,
+} from '@/lib/enquiry'
 import { cn } from '@/lib/utils'
 
-type FormKind = 'contact' | 'quote'
 type DeliveryChannel = 'whatsapp' | 'email'
 
 const input =
-	'mt-2 min-h-12 w-full rounded-xl border border-black/12 bg-[#fffdf8] px-4 py-3 text-[15px] text-[#211d18] outline-none transition placeholder:text-black/32 hover:border-black/25 focus:border-[#765523] focus:ring-4 focus:ring-[#765523]/12'
-const label = 'text-sm font-semibold text-[#302a23]'
-
-const fieldLabels: Record<string, string> = {
-	name: 'Name',
-	email: 'Email',
-	phone: 'Phone / WhatsApp',
-	company: 'Company or organisation',
-	subject: 'Enquiry about',
-	projectType: 'Project type',
-	productReference: 'Artwork or product reference',
-	location: 'Project location',
-	dimensions: 'Approximate dimensions',
-	materials: 'Preferred materials',
-	finish: 'Colour or finish',
-	quantity: 'Quantity',
-	budget: 'Approximate budget',
-	timeline: 'Preferred timeline',
-	installation: 'Installation',
-	message: 'Project details',
-	preferredReply: 'Preferred reply',
-	references: 'Reference images',
-}
-
-const fieldOrder: Record<FormKind, string[]> = {
-	contact: ['name', 'email', 'phone', 'subject', 'message', 'preferredReply'],
-	quote: [
-		'name',
-		'email',
-		'phone',
-		'company',
-		'projectType',
-		'productReference',
-		'location',
-		'dimensions',
-		'materials',
-		'finish',
-		'quantity',
-		'budget',
-		'timeline',
-		'installation',
-		'references',
-		'message',
-		'preferredReply',
-	],
-}
+	'border-border-default mt-2 min-h-12 w-full rounded-control border bg-surface px-4 py-3 text-[15px] text-foreground outline-none transition placeholder:text-foreground/35 hover:border-primary/45 focus:border-primary focus:ring-4 focus:ring-primary/12'
+const label = 'text-sm font-semibold text-foreground'
 
 const quoteSteps = [
 	{ title: 'Your details', description: 'How we can reach you' },
@@ -68,6 +29,8 @@ const quoteSteps = [
 export default function EnquiryForm({ kind }: { kind: FormKind }) {
 	const [productReference, setProductReference] = useState('')
 	const [status, setStatus] = useState('')
+	const [statusType, setStatusType] = useState<'success' | 'error'>('success')
+	const [submitting, setSubmitting] = useState(false)
 	const [step, setStep] = useState(0)
 	const [preferredReply, setPreferredReply] = useState('')
 	const [contactError, setContactError] = useState('')
@@ -77,7 +40,6 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 		/\D/g,
 		'',
 	)
-	const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim()
 
 	useEffect(() => {
 		const product = new URLSearchParams(window.location.search).get('product')
@@ -106,8 +68,9 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 		goToStep(Math.min(step + 1, quoteSteps.length - 1))
 	}
 
-	function handleSubmit(event: FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
+		if (submitting) return
 		const submitter = (event.nativeEvent as SubmitEvent)
 			.submitter as HTMLButtonElement | null
 		const channel = submitter?.value as DeliveryChannel | undefined
@@ -157,39 +120,75 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 			return
 		}
 
-		if (channel === 'email' && contactEmail) {
-			const subject =
-				kind === 'quote' ? 'Custom quote request' : 'Website enquiry'
-			window.location.assign(
-				`mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message.replaceAll('*', ''))}`,
+		if (channel === 'email') {
+			const fields = Object.fromEntries(
+				fieldOrder[kind].map((name) => {
+					const values = formData
+						.getAll(name)
+						.map(String)
+						.map((value) => value.trim())
+						.filter(Boolean)
+					return [name, values.length > 1 ? values : values[0] || '']
+				}),
 			)
+
+			setSubmitting(true)
+			setStatus('')
+			try {
+				const response = await fetch('/api/enquiries', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						kind,
+						fields,
+						website: String(formData.get('website') || ''),
+					}),
+				})
+				const result = (await response.json()) as { error?: string }
+				if (!response.ok)
+					throw new Error(result.error || 'Unable to send enquiry.')
+				setStatusType('success')
+				setStatus(
+					kind === 'quote'
+						? 'Your quotation request has been sent. We will be in touch shortly.'
+						: 'Your enquiry has been sent. We will be in touch shortly.',
+				)
+			} catch (error) {
+				setStatusType('error')
+				setStatus(
+					error instanceof Error
+						? error.message
+						: 'Unable to send your enquiry. Please try WhatsApp.',
+				)
+			} finally {
+				setSubmitting(false)
+			}
 			return
 		}
 
-		setStatus(
-			`The ${channel === 'whatsapp' ? 'WhatsApp number' : 'contact email'} has not been configured yet.`,
-		)
+		setStatusType('error')
+		setStatus('The WhatsApp number has not been configured yet.')
 	}
 
 	return (
 		<form
 			ref={formRef}
 			onSubmit={handleSubmit}
-			className="rounded-[1.75rem] border border-black/10 bg-white/72 p-5 shadow-[0_24px_70px_rgba(43,33,20,.08)] backdrop-blur-sm sm:p-8"
+			className="border-border-subtle rounded-panel bg-surface/72 border p-5 shadow-[0_24px_70px_rgba(0,0,0,.12)] backdrop-blur-sm sm:p-8"
 		>
-			<div className="mb-8 border-b border-black/10 pb-6">
+			<div className="border-border-subtle mb-8 border-b pb-6">
 				<div className="flex items-start justify-between gap-5">
 					<div>
-						<p className="text-xs font-bold tracking-[.2em] text-[#765523] uppercase">
+						<p className="text-primary text-xs font-bold tracking-[.2em] uppercase">
 							{kind === 'quote' ? 'Project brief' : 'Your message'}
 						</p>
-						<p className="mt-2 max-w-md text-sm leading-6 text-black/60">
+						<p className="text-muted-foreground mt-2 max-w-md text-sm leading-6">
 							{kind === 'quote'
 								? 'Share what you know. Approximate details are completely fine.'
 								: 'Tell us what you need and choose how you would like to send it.'}
 						</p>
 					</div>
-					<span className="grid size-11 shrink-0 place-items-center rounded-full border border-[#765523]/25 bg-[#f4ebdc] text-xs font-bold text-[#765523]">
+					<span className="border-primary/25 bg-primary/10 text-primary grid size-11 shrink-0 place-items-center rounded-full border text-xs font-bold">
 						{kind === 'quote' ? `${step + 1}/${quoteSteps.length}` : '01'}
 					</span>
 				</div>
@@ -208,12 +207,12 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 									className={cn(
 										'min-h-11 w-full border-t-2 pt-2 text-left text-[11px] font-semibold transition sm:text-xs',
 										index <= step
-											? 'border-[#765523] text-[#4f3b20]'
-											: 'cursor-not-allowed border-black/12 text-black/45',
+											? 'border-primary text-primary'
+											: 'border-border-default text-muted-foreground/70 cursor-not-allowed',
 									)}
 								>
 									<span className="block">{item.title}</span>
-									<span className="mt-0.5 hidden font-normal text-black/60 sm:block">
+									<span className="text-muted-foreground mt-0.5 hidden font-normal sm:block">
 										{item.description}
 									</span>
 								</button>
@@ -228,7 +227,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 					<h2
 						ref={stepHeadingRef}
 						tabIndex={-1}
-						className="mb-5 text-xl text-[#211d18] outline-none"
+						className="text-foreground mb-5 text-xl outline-none"
 					>
 						Your details
 					</h2>
@@ -285,7 +284,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 						<h2
 							ref={step === 1 ? stepHeadingRef : undefined}
 							tabIndex={-1}
-							className="mb-5 text-xl text-[#211d18] outline-none"
+							className="text-foreground mb-5 text-xl outline-none"
 						>
 							The piece
 						</h2>
@@ -302,7 +301,9 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 							</SelectField>
 							<label className={label}>
 								Artwork or product reference
-								<span className="ml-2 font-normal text-black/60">Optional</span>
+								<span className="text-muted-foreground ml-2 font-normal">
+									Optional
+								</span>
 								<input
 									className={input}
 									name="productReference"
@@ -368,7 +369,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 						<h2
 							ref={step === 2 ? stepHeadingRef : undefined}
 							tabIndex={-1}
-							className="mb-5 text-xl text-[#211d18] outline-none"
+							className="text-foreground mb-5 text-xl outline-none"
 						>
 							Project details
 						</h2>
@@ -437,6 +438,10 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 			<fieldset
 				className={cn('mt-6', kind === 'quote' && step !== 2 && 'hidden')}
 			>
+				<label className="pointer-events-none absolute -left-[9999px] h-px w-px overflow-hidden opacity-0">
+					Website
+					<input name="website" tabIndex={-1} autoComplete="off" />
+				</label>
 				<legend className={label}>Preferred reply</legend>
 				<div className="mt-3 flex flex-wrap gap-2">
 					{['WhatsApp', 'Email', 'Phone'].map((value) => (
@@ -461,7 +466,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 					<button
 						type="button"
 						onClick={advanceQuote}
-						className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#173f35] px-6 text-sm font-semibold text-white hover:bg-[#0f3028]"
+						className="bg-brand-green hover:bg-brand-green-hover inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white"
 					>
 						Continue <PiArrowUpRight aria-hidden="true" className="size-4" />
 					</button>
@@ -472,7 +477,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 						<button
 							type="button"
 							onClick={() => goToStep(step - 1)}
-							className="mb-3 min-h-11 text-sm font-semibold text-[#5f4825] underline decoration-[#d4ad69] underline-offset-4"
+							className="text-primary decoration-accent mb-3 min-h-11 text-sm font-semibold underline underline-offset-4"
 						>
 							Back to the piece
 						</button>
@@ -483,7 +488,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 							name="channel"
 							value="whatsapp"
 							disabled={!whatsappNumber}
-							className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-[#173f35] px-5 text-sm font-semibold text-white transition hover:bg-[#0f3028] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173f35] disabled:cursor-not-allowed disabled:opacity-40"
+							className="bg-brand-green hover:bg-brand-green-hover focus-visible:outline-brand-green inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white transition focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
 						>
 							<PiWhatsappLogo aria-hidden="true" className="size-5" />
 							Review and open WhatsApp
@@ -493,36 +498,48 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 							type="submit"
 							name="channel"
 							value="email"
-							disabled={!contactEmail}
-							className="inline-flex min-h-13 items-center justify-center gap-2 rounded-full border border-[#765523]/35 bg-[#f8f0e4] px-5 text-sm font-semibold text-[#5f4825] transition hover:border-[#765523]/60 hover:bg-[#f2e4d0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#765523] disabled:cursor-not-allowed disabled:opacity-40"
+							disabled={submitting}
+							className="border-primary/35 bg-primary/10 text-primary hover:border-primary/60 hover:bg-primary/15 focus-visible:outline-primary inline-flex min-h-13 items-center justify-center gap-2 rounded-full border px-5 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
 						>
-							<PiEnvelopeSimple aria-hidden="true" className="size-5" />
-							Open email draft
+							{submitting ? (
+								<PiSpinnerGap
+									aria-hidden="true"
+									className="size-5 animate-spin"
+								/>
+							) : (
+								<PiEnvelopeSimple aria-hidden="true" className="size-5" />
+							)}
+							{submitting
+								? 'Sending…'
+								: kind === 'quote'
+									? 'Send quotation request'
+									: 'Send enquiry'}
 						</button>
 					</div>
-					<p className="mt-4 text-xs leading-5 text-black/60">
-						Nothing is sent automatically. We will open your chosen app with the
-						details filled in so you can review and send them. Reference images
-						can be attached there.
+					<p className="text-muted-foreground mt-4 text-xs leading-5">
+						Email enquiries are sent securely to the studio. WhatsApp opens with
+						your details ready for review. Reference images can be attached
+						there.
 					</p>
 				</div>
 			)}
 
-			{(!whatsappNumber || !contactEmail) && (
-				<p className="mt-4 text-xs leading-5 text-black/60">
-					{!whatsappNumber && !contactEmail
-						? 'Add the studio WhatsApp number and email to enable delivery.'
-						: `${!whatsappNumber ? 'WhatsApp' : 'Email'} delivery is awaiting configuration.`}
+			{!whatsappNumber && (
+				<p className="text-muted-foreground mt-4 text-xs leading-5">
+					WhatsApp delivery is awaiting configuration.
 				</p>
 			)}
 			<p
 				aria-live="polite"
-				className="mt-3 text-sm font-semibold text-[#8a3d2b]"
+				className={cn(
+					'mt-3 text-sm font-semibold',
+					statusType === 'success' ? 'text-primary' : 'text-danger',
+				)}
 			>
 				{status}
 			</p>
 			{contactError && (
-				<p role="alert" className="mt-3 text-sm font-semibold text-[#8a3d2b]">
+				<p role="alert" className="text-danger mt-3 text-sm font-semibold">
 					{contactError}
 				</p>
 			)}
@@ -545,11 +562,11 @@ function TextField({
 			{labelText}
 			{props.required && <RequiredMark />}
 			{optional && (
-				<span className="ml-2 font-normal text-black/60">Optional</span>
+				<span className="text-muted-foreground ml-2 font-normal">Optional</span>
 			)}
 			<input className={input} aria-invalid={Boolean(error)} {...props} />
 			{error && (
-				<span className="mt-2 block text-xs font-medium text-[#8a3d2b]">
+				<span className="text-danger mt-2 block text-xs font-medium">
 					{error}
 				</span>
 			)}
@@ -602,7 +619,7 @@ function ChoicePill({
 				checked={checked}
 				onChange={onChange}
 			/>
-			<span className="inline-flex min-h-11 items-center rounded-full border border-black/12 bg-[#fffdf8] px-4 text-xs font-semibold text-black/60 transition peer-checked:border-[#173f35] peer-checked:bg-[#173f35] peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#765523] hover:border-[#765523]/45">
+			<span className="border-border-default bg-surface text-muted-foreground peer-checked:border-brand-green peer-checked:bg-brand-green peer-focus-visible:outline-primary hover:border-primary/45 inline-flex min-h-11 items-center rounded-full border px-4 text-xs font-semibold transition peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2">
 				{value}
 			</span>
 		</label>
@@ -611,7 +628,7 @@ function ChoicePill({
 
 function RequiredMark() {
 	return (
-		<span className="ml-1 text-[#765523]" aria-hidden="true">
+		<span className="text-primary ml-1" aria-hidden="true">
 			*
 		</span>
 	)

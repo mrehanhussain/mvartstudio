@@ -28,21 +28,21 @@ export default function StudioLocation({
 		<Module className="section py-12 sm:py-16 lg:py-20" {...props}>
 			<header className="mb-8 grid items-end gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,.55fr)] lg:gap-16">
 				<div>
-					<p className="text-xs font-bold tracking-[.22em] text-[#765523] uppercase">
+					<p className="text-primary text-xs font-bold tracking-[.22em] uppercase">
 						{eyebrow || 'Studio location'}
 					</p>
-					<h2 className="mt-4 max-w-3xl text-4xl leading-[.98] tracking-[-.035em] text-[#211d18] sm:text-5xl lg:text-6xl">
+					<h2 className="text-foreground mt-4 max-w-3xl text-4xl leading-[.98] tracking-[-.035em] sm:text-5xl lg:text-6xl">
 						{heading}
 					</h2>
 				</div>
 				{description && (
-					<p className="max-w-xl text-sm leading-7 text-[#625c53] sm:text-base">
+					<p className="text-muted-foreground max-w-xl text-sm leading-7 sm:text-base">
 						{description}
 					</p>
 				)}
 			</header>
 
-			<div className="group relative isolate min-h-[39rem] overflow-hidden rounded-[2rem] border border-black/10 bg-[#d9d3c9] shadow-[0_30px_90px_rgba(26,38,31,.14)] sm:min-h-[42rem] lg:min-h-[44rem]">
+			<div className="border-border-subtle group rounded-feature bg-art-backdrop relative isolate min-h-[39rem] overflow-hidden border shadow-[0_30px_90px_rgba(0,0,0,.2)] sm:min-h-[42rem] lg:min-h-[44rem]">
 				<iframe
 					title="Map showing the MV Art Studio location"
 					src={mapEmbedUrl}
@@ -53,13 +53,13 @@ export default function StudioLocation({
 				/>
 				<div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(12,38,31,.16),transparent_52%),linear-gradient(0deg,rgba(12,38,31,.2),transparent_42%)]" />
 
-				<div className="pointer-events-none absolute top-5 right-5 flex items-center gap-2 rounded-full border border-white/65 bg-[#fffdf8]/88 px-3 py-2 text-[10px] font-bold tracking-[.16em] text-[#173f35] uppercase shadow-lg backdrop-blur-xl sm:top-7 sm:right-7">
+				<div className="border-border-inverse-strong bg-surface/88 text-primary pointer-events-none absolute top-5 right-5 flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] font-bold tracking-[.16em] uppercase shadow-lg backdrop-blur-xl sm:top-7 sm:right-7">
 					<span className="size-2 rounded-full bg-[#3e7b5a] shadow-[0_0_0_4px_rgba(62,123,90,.14)]" />
 					Open studio · Hyderabad
 				</div>
 
-				<div className="absolute right-4 bottom-4 left-4 overflow-hidden rounded-[1.6rem] border border-white/55 bg-[#fffdf8]/92 text-[#211d18] shadow-[0_24px_70px_rgba(12,31,26,.24)] backdrop-blur-2xl sm:right-auto sm:bottom-7 sm:left-7 sm:w-[25rem] lg:top-7 lg:bottom-auto lg:w-[27rem]">
-					<div className="relative overflow-hidden bg-[#173f35] p-6 text-white sm:p-7">
+				<div className="border-border-inverse-strong rounded-panel bg-surface/92 text-foreground absolute right-4 bottom-4 left-4 overflow-hidden border shadow-[0_24px_70px_rgba(0,0,0,.3)] backdrop-blur-2xl sm:right-auto sm:bottom-7 sm:left-7 sm:w-[25rem] lg:top-7 lg:bottom-auto lg:w-[27rem]">
+					<div className="bg-brand-green relative overflow-hidden p-6 text-white sm:p-7">
 						<div className="pointer-events-none absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,.65)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.65)_1px,transparent_1px)] [background-size:28px_28px] opacity-[.055]" />
 						<div className="relative flex items-start gap-4">
 							<span className="grid size-11 shrink-0 place-items-center rounded-full border border-[#d4ad69]/35 bg-white/8 text-[#d4ad69]">
@@ -79,25 +79,25 @@ export default function StudioLocation({
 					<div className="grid gap-px bg-black/8 sm:grid-cols-2">
 						<a
 							href={`mailto:${cleanEmail}`}
-							className="flex min-w-0 items-center gap-3 bg-[#fffdf8]/96 px-5 py-4 text-xs transition hover:bg-white"
+							className="bg-surface/96 hover:bg-surface-raised flex min-w-0 items-center gap-3 px-5 py-4 text-xs transition"
 						>
 							<PiEnvelopeSimple
 								aria-hidden="true"
-								className="size-4 shrink-0 text-[#765523]"
+								className="text-primary size-4 shrink-0"
 							/>
 							<span className="truncate">{email}</span>
 						</a>
-						<div className="flex items-center gap-3 bg-[#fffdf8]/96 px-5 py-4 text-xs">
+						<div className="bg-surface/96 flex items-center gap-3 px-5 py-4 text-xs">
 							<PiPhone
 								aria-hidden="true"
-								className="size-4 shrink-0 text-[#765523]"
+								className="text-primary size-4 shrink-0"
 							/>
 							<div className="flex flex-col gap-1.5">
 								{phones?.map((phone) => (
 									<a
 										key={phone}
 										href={`tel:+${stegaClean(phone)?.replace(/\D/g, '')}`}
-										className="transition hover:text-[#765523]"
+										className="hover:text-primary transition"
 									>
 										{phone}
 									</a>
@@ -110,14 +110,14 @@ export default function StudioLocation({
 						href={cleanMapUrl}
 						target="_blank"
 						rel="noreferrer"
-						className="group/route flex items-center justify-between gap-5 border-t border-black/8 bg-[#fffdf8]/96 px-5 py-4 transition hover:bg-white"
+						className="border-border-subtle group/route bg-surface/96 hover:bg-surface-raised flex items-center justify-between gap-5 border-t px-5 py-4 transition"
 					>
 						<span className="flex items-center gap-3">
-							<span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#173f35] text-white transition group-hover/route:bg-[#765523]">
+							<span className="bg-brand-green group-hover/route:bg-primary grid size-10 shrink-0 place-items-center rounded-full text-white transition">
 								<PiNavigationArrow aria-hidden="true" className="size-4" />
 							</span>
 							<span>
-								<span className="block text-[9px] font-bold tracking-[.18em] text-[#765523] uppercase">
+								<span className="text-primary block text-[9px] font-bold tracking-[.18em] uppercase">
 									Plan your visit
 								</span>
 								<span className="mt-0.5 block text-sm font-semibold">
@@ -129,7 +129,7 @@ export default function StudioLocation({
 					</a>
 				</div>
 
-				<div className="pointer-events-none absolute right-7 bottom-7 hidden items-center gap-2 rounded-full border border-white/55 bg-[#173f35]/88 px-4 py-2.5 text-[10px] font-bold tracking-[.15em] text-white uppercase shadow-xl backdrop-blur-xl lg:flex">
+				<div className="border-border-inverse-strong bg-brand-green/88 pointer-events-none absolute right-7 bottom-7 hidden items-center gap-2 rounded-full border px-4 py-2.5 text-[10px] font-bold tracking-[.15em] text-white uppercase shadow-xl backdrop-blur-xl lg:flex">
 					<PiNavigationArrow
 						aria-hidden="true"
 						className="size-4 text-[#d4ad69]"

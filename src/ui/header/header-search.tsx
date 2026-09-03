@@ -69,7 +69,7 @@ export default function HeaderSearch({
 				type="button"
 				onClick={() => setOpen(true)}
 				className={cn(
-					'grid size-11 place-items-center rounded-full text-[#211d18] transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#765523]',
+					'text-foreground hover:bg-foreground/5 focus-visible:outline-primary grid size-11 place-items-center rounded-full transition focus-visible:outline-2 focus-visible:outline-offset-2',
 					className,
 				)}
 				aria-label="Search products and pages"
@@ -89,12 +89,12 @@ export default function HeaderSearch({
 				>
 					<div
 						ref={dialogRef}
-						className="w-full max-w-3xl overflow-hidden rounded-[1.75rem] border border-white/55 bg-[#fffaf0]/96 shadow-[0_35px_100px_rgba(9,30,24,.28)]"
+						className="border-border-inverse-strong rounded-panel bg-surface-raised/96 w-full max-w-3xl overflow-hidden border shadow-[0_35px_100px_rgba(0,0,0,.34)]"
 					>
-						<div className="flex items-center gap-3 border-b border-black/10 px-5 py-4 sm:px-7">
+						<div className="border-border-subtle flex items-center gap-3 border-b px-5 py-4 sm:px-7">
 							<PiMagnifyingGlass
 								aria-hidden="true"
-								className="size-6 shrink-0 text-[#765523]"
+								className="text-primary size-6 shrink-0"
 							/>
 							<label className="sr-only" htmlFor={inputId}>
 								Search the MV Art Studio catalog
@@ -106,18 +106,18 @@ export default function HeaderSearch({
 								value={query}
 								onChange={(event) => setQuery(event.target.value)}
 								placeholder="Search calligraphy, steel signs, acrylic…"
-								className="min-w-0 flex-1 bg-transparent py-2 text-lg text-[#211d18] outline-none placeholder:text-black/32 sm:text-xl"
+								className="text-foreground placeholder:text-foreground/35 min-w-0 flex-1 bg-transparent py-2 text-lg outline-none sm:text-xl"
 							/>
 							{loading && (
 								<PiSpinnerGap
 									aria-label="Searching"
-									className="size-5 animate-spin text-[#765523]"
+									className="text-primary size-5 animate-spin"
 								/>
 							)}
 							<button
 								type="button"
 								onClick={() => setOpen(false)}
-								className="grid size-11 shrink-0 place-items-center rounded-full border border-black/10 hover:bg-black/5"
+								className="border-border-subtle hover:bg-foreground/5 grid size-11 shrink-0 place-items-center rounded-full border"
 								aria-label="Close search"
 							>
 								<PiX aria-hidden="true" className="size-4" />
@@ -126,13 +126,13 @@ export default function HeaderSearch({
 
 						<div className="max-h-[65vh] overflow-y-auto p-3 sm:p-5">
 							<div className="flex items-center justify-between px-2 pb-3">
-								<h2
+								<p
 									id={titleId}
-									className="text-xs font-bold tracking-[.18em] text-[#765523] uppercase"
+									className="text-primary text-xs font-bold tracking-[.18em] uppercase"
 								>
 									{query.length >= 2 ? 'Search results' : 'Find your piece'}
-								</h2>
-								<span className="hidden text-[10px] text-black/60 sm:block">
+								</p>
+								<span className="text-muted-foreground hidden text-[10px] sm:block">
 									⌘ K · ESC to close
 								</span>
 							</div>
@@ -148,22 +148,22 @@ export default function HeaderSearch({
 											key={href}
 											href={href}
 											onClick={() => setOpen(false)}
-											className="flex items-center justify-between rounded-xl border border-black/8 bg-white/55 px-4 py-4 text-sm font-semibold transition hover:border-[#765523]/35 hover:bg-white"
+											className="border-border-subtle rounded-control bg-surface/55 hover:border-primary/35 hover:bg-surface flex items-center justify-between border px-4 py-4 text-sm font-semibold transition"
 										>
 											{label}
 											<PiArrowUpRight
 												aria-hidden="true"
-												className="size-4 text-[#765523]"
+												className="text-primary size-4"
 											/>
 										</Link>
 									))}
 								</div>
 							) : !loading && results.length === 0 ? (
-								<div className="rounded-2xl border border-dashed border-black/15 px-5 py-10 text-center">
-									<p className="font-semibold text-[#211d18]">
+								<div className="border-border-default rounded-card border border-dashed px-5 py-10 text-center">
+									<p className="text-foreground font-semibold">
 										No exact matches yet
 									</p>
-									<p className="mt-2 text-sm text-black/60">
+									<p className="text-muted-foreground mt-2 text-sm">
 										Try a material, collection, calligraphy style, or product
 										name.
 									</p>
@@ -175,9 +175,9 @@ export default function HeaderSearch({
 											<Link
 												href={result.href}
 												onClick={() => setOpen(false)}
-												className="group flex items-center gap-4 rounded-2xl p-2 transition hover:bg-[#efe5d6]"
+												className="group rounded-control hover:bg-surface-muted flex items-center gap-4 p-2 transition"
 											>
-												<span className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-[#e8dfd2]">
+												<span className="rounded-control bg-art-backdrop relative size-16 shrink-0 overflow-hidden">
 													{result.imageUrl ? (
 														<Image
 															src={result.imageUrl}
@@ -187,22 +187,22 @@ export default function HeaderSearch({
 															className="object-cover transition-opacity duration-300 group-hover:opacity-85"
 														/>
 													) : (
-														<span className="grid size-full place-items-center text-[#765523]">
+														<span className="text-primary grid size-full place-items-center">
 															<PiMagnifyingGlass aria-hidden="true" />
 														</span>
 													)}
 												</span>
 												<span className="min-w-0 flex-1">
-													<span className="block text-[10px] font-bold tracking-[.16em] text-[#765523] uppercase">
+													<span className="text-primary block text-[10px] font-bold tracking-[.16em] uppercase">
 														{result.kicker}
 													</span>
-													<span className="mt-1 block truncate text-base font-semibold text-[#211d18]">
+													<span className="text-foreground mt-1 block truncate text-base font-semibold">
 														{result.title}
 													</span>
 												</span>
 												<PiArrowUpRight
 													aria-hidden="true"
-													className="mr-2 size-5 shrink-0 text-black/30 transition group-hover:text-[#173f35]"
+													className="text-foreground/30 group-hover:text-primary mr-2 size-5 shrink-0 transition"
 												/>
 											</Link>
 										</li>

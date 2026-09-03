@@ -17,6 +17,7 @@ import '@/app.css'
 const fontSans = Geist({ subsets: ['latin'] })
 const fontMono = Geist_Mono({ subsets: ['latin'] })
 const fontManrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
+const themeScript = `(function(){try{var k='mvart-theme';var s=localStorage.getItem(k);var t=s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){document.documentElement.dataset.theme='light'}})()`
 
 export default async function RootLayout({
 	children,
@@ -29,12 +30,19 @@ export default async function RootLayout({
 	const showDrafts = isDraftMode || dev
 
 	return (
-		<html lang="en" data-scroll-behavior="smooth">
+		<html
+			lang="en"
+			data-scroll-behavior="smooth"
+			data-theme="light"
+			suppressHydrationWarning
+		>
+			<head>
+				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
+			</head>
 			<NuqsAdapter>
 				<body
 					className={`${fontManrope.variable} bg-background text-foreground antialiased`}
 				>
-					<MotionSystem />
 					<RouteState />
 					<a href="#main-content" className="skip-link">
 						Skip to main content
@@ -71,6 +79,7 @@ export default async function RootLayout({
 						<Footer perspective="published" stega={false} />
 					)}
 
+					<MotionSystem />
 					<SanityLive includeDrafts={showDrafts} />
 
 					{isDraftMode && (

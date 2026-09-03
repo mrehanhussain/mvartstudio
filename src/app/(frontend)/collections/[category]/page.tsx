@@ -103,7 +103,7 @@ async function CachedCategory({
 			<section className="section space-y-8">
 				<div className="flex flex-wrap items-end justify-between gap-4">
 					<div>
-						<p className="text-xs font-semibold tracking-[.18em] text-[#765523] uppercase">
+						<p className="text-primary text-xs font-semibold tracking-[.18em] uppercase">
 							Browse the work
 						</p>
 						<h2 className="mt-2 text-4xl">

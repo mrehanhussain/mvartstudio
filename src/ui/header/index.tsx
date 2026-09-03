@@ -9,6 +9,7 @@ import { getSite } from '@/sanity/lib/queries'
 import type { Cta } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
 import Logo from '@/ui/logo'
+import ThemeToggle from '@/ui/theme-toggle'
 import HeaderSearch from './header-search'
 import css from './header.module.css'
 import MobileToggle from './mobile-toggle'
@@ -30,14 +31,14 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 	const blurb = site?.header?.blurb
 
 	return (
-		<Wrapper className="layout-header bg-background/80 max-md:header-open:bg-background max-md:header-open:shadow-xl md:has-[nav>details:open]:bg-background sticky top-0 z-10 backdrop-blur-[2px] transition-colors">
+		<Wrapper className="layout-header bg-background/80 max-md:header-open:shadow-xl md:has-[nav>details:open]:bg-background sticky top-0 z-10 backdrop-blur-md transition-colors">
 			<div
 				className={cn(
 					css.root,
 					'section grid items-center gap-x-4 py-0 max-md:max-h-svh max-md:overflow-y-auto',
 				)}
 			>
-				<div className="max-md:header-open:bg-background sticky top-0 z-1 flex items-center justify-between gap-4 py-2 [grid-area:top]">
+				<div className="sticky top-0 z-1 flex items-center justify-between gap-4 py-2 [grid-area:top]">
 					<Logo
 						className="header-logo h-12 w-[88px] shrink-0 grow-0"
 						perspective={perspective}
@@ -45,6 +46,7 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 					/>
 					<div className="flex items-center md:hidden">
 						<HeaderSearch mode="mobile" />
+						<ThemeToggle />
 						<MobileToggle />
 					</div>
 				</div>
@@ -59,7 +61,7 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 					<div className="md:contents">
 						<Navigation perspective={perspective} stega={stega} />
 
-						<div className="header-ctas flex items-center gap-[.5em_1em] [grid-area:ctas] max-md:mt-5 max-md:w-full max-md:flex-col max-md:border-t max-md:border-black/10 max-md:pt-5">
+						<div className="header-ctas max-md:border-border-subtle flex items-center gap-[.5em_1em] [grid-area:ctas] max-md:mt-5 max-md:w-full max-md:flex-col max-md:border-t max-md:pt-5">
 							{blurb && (
 								<div className="prose">
 									<PortableText
@@ -73,7 +75,10 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 								</div>
 							)}
 
-							<HeaderSearch mode="desktop" className="max-md:hidden" />
+							<div className="flex items-center max-md:hidden">
+								<HeaderSearch mode="desktop" />
+								<ThemeToggle />
+							</div>
 							<CTAList
 								ctas={site?.ctas as Cta[]}
 								className="max-md:w-full max-md:*:w-full"

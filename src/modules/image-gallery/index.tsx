@@ -34,7 +34,7 @@ export default function ({
 					{storyImages.map((image, index) => (
 						<figure
 							key={image._key}
-							className="group relative mb-4 break-inside-avoid overflow-hidden rounded-[1.35rem] bg-[#e8dfd2] shadow-[0_18px_50px_rgba(35,28,18,.08)]"
+							className="group rounded-card bg-art-backdrop relative mb-4 break-inside-avoid overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,.12)]"
 						>
 							<Img
 								className="h-auto w-full object-cover transition duration-700 group-hover:scale-[1.025]"

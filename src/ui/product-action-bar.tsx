@@ -63,18 +63,18 @@ export default function ProductActionBar({
 		: quoteHref
 
 	return (
-		<div className="fixed inset-x-3 bottom-3 z-40 rounded-[1.2rem] border border-white/55 bg-[#fffaf0]/92 p-2 shadow-[0_20px_65px_rgba(13,33,28,.28)] backdrop-blur-2xl lg:hidden">
+		<div className="border-border-inverse-strong rounded-panel bg-surface-raised/92 fixed inset-x-3 bottom-3 z-40 border p-2 shadow-[0_20px_65px_rgba(0,0,0,.34)] backdrop-blur-2xl lg:hidden">
 			<div className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-1">
 				<Link
 					href={quoteHref}
-					className="flex min-h-11 items-center justify-center rounded-xl bg-[#173f35] px-4 text-center text-xs font-bold text-white"
+					className="rounded-control bg-brand-green flex min-h-11 items-center justify-center px-4 text-center text-xs font-bold text-white"
 				>
 					Request quote
 				</Link>
 				<a
 					href={whatsappHref}
 					aria-label={'Ask about ' + title + ' on WhatsApp'}
-					className="grid size-11 place-items-center rounded-xl text-[#173f35] transition hover:bg-black/5"
+					className="rounded-control text-primary hover:bg-foreground/5 grid size-11 place-items-center transition"
 				>
 					<PiWhatsappLogo aria-hidden="true" className="size-5" />
 				</a>
@@ -83,7 +83,7 @@ export default function ProductActionBar({
 					onClick={toggleSaved}
 					aria-pressed={saved}
 					aria-label={saved ? 'Remove from saved pieces' : 'Save this piece'}
-					className="grid size-11 place-items-center rounded-xl text-[#173f35] transition hover:bg-black/5"
+					className="rounded-control text-primary hover:bg-foreground/5 grid size-11 place-items-center transition"
 				>
 					{saved ? (
 						<PiBookmarkSimpleFill aria-hidden="true" className="size-5" />
@@ -95,11 +95,11 @@ export default function ProductActionBar({
 					type="button"
 					onClick={shareProduct}
 					aria-label="Share this piece"
-					className="relative grid size-11 place-items-center rounded-xl text-[#173f35] transition hover:bg-black/5"
+					className="rounded-control text-primary hover:bg-foreground/5 relative grid size-11 place-items-center transition"
 				>
 					<PiShareNetwork aria-hidden="true" className="size-5" />
 					{shared && (
-						<span className="absolute -top-8 right-0 rounded-full bg-[#173f35] px-2 py-1 text-[9px] font-bold text-white">
+						<span className="bg-brand-green absolute -top-8 right-0 rounded-full px-2 py-1 text-[9px] font-bold text-white">
 							Copied
 						</span>
 					)}

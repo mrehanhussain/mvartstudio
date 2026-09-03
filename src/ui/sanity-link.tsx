@@ -1,5 +1,8 @@
+'use client'
+
 import { stegaClean } from 'next-sanity'
 import NextLink, { type LinkProps } from 'next/link'
+import { usePathname } from 'next/navigation'
 import type { Link, Page } from '@/sanity/types'
 
 export type SanityLinkType = Omit<Link, 'internal'> & {
@@ -16,6 +19,7 @@ export default function ({
 	React.ComponentProps<typeof NextLink>,
 	'href'
 >) {
+	const pathname = usePathname()
 	const { label, type, internal, external, params } = link ?? {}
 	const cleanLabel = stegaClean(label)
 	const cleanInternalSlug = stegaClean(internal?.slug)
@@ -28,6 +32,12 @@ export default function ({
 
 	const linkProps: Omit<LinkProps, 'href'> | React.ComponentProps<'a'> = {
 		...props,
+		'aria-current':
+			type === 'internal' &&
+			internalSlug &&
+			normalizedPath(internalSlug) === normalizedPath(pathname)
+				? 'page'
+				: undefined,
 		children:
 			children ||
 			cleanLabel ||
@@ -47,4 +57,9 @@ export default function ({
 		return <NextLink href={stegaClean(external)} {...linkProps} />
 
 	return <span {...linkProps} />
+}
+
+function normalizedPath(value: string) {
+	const path = value.split(/[?#]/)[0]?.replace(/\/$/, '')
+	return path || '/'
 }

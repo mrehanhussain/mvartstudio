@@ -60,7 +60,7 @@ export default function ProductGallery({
 	})
 
 	if (!activeImage) {
-		return <div className="aspect-[4/5] rounded-[1.75rem] bg-[#e9e1d4]" />
+		return <div className="rounded-card bg-art-backdrop aspect-[4/5]" />
 	}
 
 	return (
@@ -84,17 +84,17 @@ export default function ProductGallery({
 									setActiveIndex(index)
 								}}
 								className={cn(
-									'relative aspect-square w-[4.75rem] shrink-0 overflow-hidden rounded-xl border bg-[#e9e1d4] p-0.5 transition sm:w-full',
+									'border-border-subtle rounded-control bg-art-backdrop relative aspect-square w-[4.75rem] shrink-0 overflow-hidden border p-0.5 transition sm:w-full',
 									index === activeIndex
-										? 'border-[#765523] ring-2 ring-[#765523]/20'
-										: 'border-black/10 opacity-65 hover:opacity-100',
+										? 'border-primary ring-primary/20 ring-2'
+										: 'opacity-65 hover:opacity-100',
 								)}
 							>
 								<Img
 									image={image}
 									alt=""
 									width={180}
-									className="size-full rounded-[.55rem] object-cover"
+									className="size-full rounded-[.5rem] object-cover"
 									sizes="84px"
 								/>
 							</button>
@@ -102,7 +102,7 @@ export default function ProductGallery({
 					</div>
 				)}
 
-				<div className="group relative order-1 overflow-hidden rounded-[1.75rem] bg-[#e9e1d4] sm:order-2">
+				<div className="group rounded-card bg-art-backdrop relative order-1 overflow-hidden sm:order-2">
 					<button
 						type="button"
 						onClick={openLightbox}
@@ -117,7 +117,7 @@ export default function ProductGallery({
 							className="aspect-[4/5] w-full object-cover sm:aspect-[5/6] lg:max-h-[49rem]"
 							sizes="(min-width: 1024px) 55vw, 100vw"
 						/>
-							<span className="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-[#fffaf0]/92 text-[#211d18] shadow-lg backdrop-blur-sm transition-colors group-hover:bg-white">
+						<span className="bg-surface-raised/92 text-foreground group-hover:bg-surface absolute top-4 right-4 grid size-11 place-items-center rounded-full shadow-lg backdrop-blur-sm transition-colors">
 							<PiArrowsOutSimple aria-hidden="true" className="size-4" />
 						</span>
 					</button>
@@ -150,7 +150,7 @@ export default function ProductGallery({
 				}
 				className="m-auto h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-0 text-white backdrop:bg-[#0b1714]/28 backdrop:backdrop-blur-md open:flex open:flex-col"
 			>
-				<div className="flex min-h-16 shrink-0 items-center justify-between border-b border-white/15 bg-[#0b1714]/58 px-4 shadow-lg backdrop-blur-2xl sm:px-6">
+				<div className="border-border-inverse flex min-h-16 shrink-0 items-center justify-between border-b bg-[#0b1714]/58 px-4 shadow-lg backdrop-blur-2xl sm:px-6">
 					<div>
 						<p className="text-sm font-semibold">{title}</p>
 						<p aria-live="polite" className="text-xs text-white/55">
@@ -161,7 +161,7 @@ export default function ProductGallery({
 						<button
 							type="button"
 							onClick={() => setZoomed((value) => !value)}
-								className="grid size-11 place-items-center rounded-full border border-white/20 bg-black/15 backdrop-blur-xl hover:bg-black/30"
+							className="border-border-inverse grid size-11 place-items-center rounded-full border bg-black/15 backdrop-blur-xl hover:bg-black/30"
 							aria-label={zoomed ? 'Zoom out' : 'Zoom in'}
 						>
 							{zoomed ? (
@@ -173,7 +173,7 @@ export default function ProductGallery({
 						<button
 							type="button"
 							onClick={closeLightbox}
-								className="grid size-11 place-items-center rounded-full border border-white/20 bg-black/15 backdrop-blur-xl hover:bg-black/30"
+							className="border-border-inverse grid size-11 place-items-center rounded-full border bg-black/15 backdrop-blur-xl hover:bg-black/30"
 							aria-label="Close image gallery"
 						>
 							<PiX className="size-5" />
@@ -199,7 +199,7 @@ export default function ProductGallery({
 						alt={activeImage.alt || title}
 						width={2400}
 						className={cn(
-							'max-h-full w-auto max-w-full rounded-xl object-contain shadow-2xl transition-transform duration-300 select-none',
+							'rounded-control max-h-full w-auto max-w-full object-contain shadow-2xl transition-transform duration-300 select-none',
 							zoomed && 'scale-150 cursor-zoom-out',
 						)}
 						sizes="100vw"
@@ -224,7 +224,7 @@ export default function ProductGallery({
 				</div>
 
 				{gallery.length > 1 && (
-					<div className="flex shrink-0 justify-center gap-2 overflow-x-auto border-t border-white/15 bg-[#0b1714]/58 px-4 py-3 shadow-[0_-12px_36px_rgba(0,0,0,.12)] backdrop-blur-2xl">
+					<div className="border-border-inverse flex shrink-0 justify-center gap-2 overflow-x-auto border-t bg-[#0b1714]/58 px-4 py-3 shadow-[0_-12px_36px_rgba(0,0,0,.12)] backdrop-blur-2xl">
 						{gallery.map((image, index) => (
 							<button
 								type="button"
@@ -236,10 +236,10 @@ export default function ProductGallery({
 								aria-label={`Show image ${index + 1}`}
 								aria-pressed={index === activeIndex}
 								className={cn(
-									'aspect-square w-14 shrink-0 overflow-hidden rounded-lg border p-0.5',
+									'rounded-control aspect-square w-14 shrink-0 overflow-hidden border p-0.5',
 									index === activeIndex
-										? 'border-[#d4ad69]'
-										: 'border-white/15 opacity-50 hover:opacity-100',
+										? 'border-accent'
+										: 'border-border-inverse opacity-50 hover:opacity-100',
 								)}
 							>
 								<Img
@@ -282,8 +282,8 @@ function GalleryArrow({
 				'absolute top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full shadow-lg backdrop-blur-sm transition',
 				direction === 'left' ? 'left-3 sm:left-5' : 'right-3 sm:right-5',
 				lightbox
-					? 'border border-white/15 bg-black/45 text-white hover:bg-black/70'
-					: 'bg-[#fffaf0]/92 text-[#211d18] opacity-0 group-hover:opacity-100 focus:opacity-100',
+					? 'border-border-inverse border bg-black/45 text-white hover:bg-black/70'
+					: 'bg-surface-raised/92 text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100',
 			)}
 		>
 			<Icon aria-hidden="true" className="size-5" />

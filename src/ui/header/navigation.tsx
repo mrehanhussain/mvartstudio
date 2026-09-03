@@ -11,7 +11,7 @@ import Dropdown from './dropdown'
 import Megamenu from './megamenu'
 
 const topLevelClassName = cn(
-	'leading-tight md:grid md:place-content-center md:rounded-full md:px-3 md:py-2 md:text-center md:text-balance md:transition-colors md:hover:bg-black/5',
+	'leading-tight md:grid md:place-content-center md:rounded-full md:px-3 md:py-2 md:text-center md:text-balance md:transition-colors md:hover:bg-foreground/5',
 )
 
 const navigationMeta: Record<string, { index: string; description: string }> = {
@@ -51,7 +51,7 @@ export default async function ({ perspective, stega }: DynamicFetchOptions) {
 	let catalogMenuRendered = false
 
 	return (
-		<nav className="gap-x-lh flex items-stretch [grid-area:navigation] max-md:mt-6 max-md:flex-col max-md:border-t max-md:border-black/10">
+		<nav className="gap-x-lh max-md:border-border-subtle flex items-stretch [grid-area:navigation] max-md:mt-6 max-md:flex-col max-md:border-t">
 			{site?.header?.items?.map((item, i) => {
 				const label =
 					item._type === 'link'
@@ -80,26 +80,26 @@ export default async function ({ perspective, stega }: DynamicFetchOptions) {
 								link={item as SanityLinkType}
 								className={cn(
 									topLevelClassName,
-									'group/nav-item text-current max-md:block max-md:border-b max-md:border-black/10 max-md:no-underline md:hover:no-underline',
+									'group/nav-item max-md:border-border-subtle text-current max-md:block max-md:border-b max-md:no-underline md:hover:no-underline',
 								)}
 								key={`${item._key}-${i}`}
 							>
 								<span className="hidden md:inline">{label}</span>
 								<span className="grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-3 py-4 md:hidden">
-									<span className="text-[10px] font-bold tracking-[.18em] text-[#765523]">
+									<span className="text-primary text-[10px] font-bold tracking-[.18em]">
 										{meta.index}
 									</span>
 									<span>
 										<span className="block text-[1.65rem] leading-none font-[var(--font-serif)] font-semibold tracking-[-.025em]">
 											{label}
 										</span>
-										<span className="mt-1.5 block text-xs leading-snug text-black/60">
+										<span className="text-muted-foreground mt-1.5 block text-xs leading-snug">
 											{meta.description}
 										</span>
 									</span>
 									<PiArrowUpRight
 										aria-hidden="true"
-										className="size-5 text-black/60 transition group-hover/nav-item:translate-x-0.5 group-hover/nav-item:-translate-y-0.5"
+										className="text-muted-foreground size-5 transition group-hover/nav-item:translate-x-0.5 group-hover/nav-item:-translate-y-0.5"
 									/>
 								</span>
 							</SanityLink>

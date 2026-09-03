@@ -7,9 +7,9 @@ import Resolver from './resolver'
 export default function ({ eyebrow, intro, form, ...props }: FormModule) {
 	return (
 		<Module {...props}>
-			<div className="section grid items-start gap-10 py-10 md:grid-cols-[minmax(0,.72fr)_minmax(28rem,1.28fr)] md:py-16 lg:gap-16">
+			<div className="section grid items-start gap-10 py-10 lg:grid-cols-[minmax(0,.78fr)_minmax(0,1.22fr)] lg:gap-14 lg:py-16 xl:gap-16">
 				{intro && (
-					<header className="prose md:sticky-below-header [--offset:1rem]">
+					<header className="prose lg:sticky-below-header min-w-0 [--offset:1rem]">
 						<Eyebrow value={eyebrow} />
 						<PortableText value={intro} />
 					</header>

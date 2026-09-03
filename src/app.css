@@ -16,9 +16,88 @@
 	--color-surface: #fffdf8;
 	--color-brand-green: #173f35;
 	--color-muted-foreground: #625b51;
+	--color-surface-muted: #eee5d7;
+	--color-surface-raised: #fffaf0;
+	--color-art-backdrop: #e9e1d4;
+	--color-brand-green-hover: #0f3028;
+	--color-danger: #8a3d2b;
+	--color-border-subtle: color-mix(
+		in oklab,
+		var(--color-foreground) 10%,
+		transparent
+	);
+	--color-border-default: color-mix(
+		in oklab,
+		var(--color-foreground) 15%,
+		transparent
+	);
+	--color-border-accent: color-mix(
+		in oklab,
+		var(--color-primary) 32%,
+		transparent
+	);
+	--color-border-inverse: color-mix(in oklab, white 22%, transparent);
+	--color-border-inverse-strong: color-mix(in oklab, white 55%, transparent);
+
+	/* Radius is structural: controls < cards < panels < editorial features. */
+	--radius-control: 0.75rem;
+	--radius-card: 1rem;
+	--radius-panel: 1.5rem;
+	--radius-feature: 1.75rem;
 
 	--spacing-lh: 1lh;
 	--spacing-ch: 1ch;
+}
+
+:root {
+	color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
+	--color-background: #0f1512 !important;
+	--color-foreground: #f5efe5 !important;
+	--color-stroke: #3b4942 !important;
+	--color-primary: #d5aa67 !important;
+	--color-accent: #e4be7b !important;
+	--color-surface: #171f1b !important;
+	--color-surface-muted: #202a25;
+	--color-surface-raised: #1b251f;
+	--color-art-backdrop: #27332d;
+	--color-brand-green: #286052;
+	--color-brand-green-hover: #327565;
+	--color-muted-foreground: #b9afa2;
+	--color-danger: #ef9b85;
+}
+
+body {
+	transition:
+		background-color 300ms cubic-bezier(0.22, 1, 0.36, 1),
+		color 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.theme-toggle-sun {
+	opacity: 1;
+	rotate: 0deg;
+	scale: 1;
+}
+
+.theme-toggle-moon {
+	opacity: 0;
+	rotate: -35deg;
+	scale: 0.65;
+}
+
+:root[data-theme='dark'] .theme-toggle-sun {
+	opacity: 0;
+	rotate: 35deg;
+	scale: 0.65;
+}
+
+:root[data-theme='dark'] .theme-toggle-moon {
+	opacity: 1;
+	rotate: 0deg;
+	scale: 1;
 }
 
 @custom-variant hover (&:hover);
@@ -178,7 +257,7 @@
 	text-align: center;
 	gap: 0.5em;
 	padding: 0.25em 0.75em;
-	@apply transition-all active:scale-98;
+	@apply rounded-full transition-all active:scale-98;
 }
 
 @utility action {
@@ -186,7 +265,7 @@
 }
 
 @utility action-outline {
-	@apply action-base bg-background border-stroke text-foreground border hover:border-current;
+	@apply action-base bg-background border-border-default text-foreground border hover:border-current;
 }
 
 @utility ghost {
@@ -199,7 +278,7 @@
 
 @utility input {
 	padding: 0.25em 0.5em;
-	@apply bg-background border-foreground/10 focus-within:border-foreground/30 border leading-normal;
+	@apply bg-background border-border-default focus-within:border-foreground/30 rounded-control border leading-normal;
 
 	&:focus {
 		@apply ring-primary/20 border-primary ring-3 outline-none;
@@ -301,6 +380,53 @@
 		display: inline-flex;
 		min-height: 2.75rem;
 		align-items: center;
+	}
+}
+
+/* Form landing pages use a narrow editorial column beside the form. Keep long
+   display words inside that column even when Sanity's global typography is
+   loaded after the application stylesheet. */
+[data-module='form-module'] > .section > header h1 {
+	font-size: clamp(3.25rem, 6vw, 5.25rem) !important;
+	line-height: 0.94 !important;
+	letter-spacing: -0.045em;
+	overflow-wrap: anywhere;
+}
+
+@keyframes mv-route-progress {
+	0% {
+		transform: scaleX(0.08);
+		opacity: 0.45;
+	}
+	55% {
+		transform: scaleX(0.72);
+		opacity: 1;
+	}
+	100% {
+		transform: scaleX(1);
+		opacity: 0.35;
+	}
+}
+
+.route-loader-progress {
+	transform-origin: left;
+	animation: mv-route-progress 1.35s cubic-bezier(0.22, 1, 0.36, 1) infinite
+		alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body {
+		transition: none;
+	}
+
+	.theme-toggle-sun,
+	.theme-toggle-moon {
+		transition: none;
+	}
+
+	.route-loader-progress {
+		animation: none;
+		transform: scaleX(0.72);
 	}
 }
 
@@ -559,7 +685,7 @@ body[data-route='/'] [data-module='studio-location'] > .group {
 			var(--default-transition-timing-function);
 		transition-property: opacity, translate, scale, visibility;
 
-		@apply bg-background fixed z-1 min-w-max origin-top shadow-lg;
+		@apply bg-background border-border-subtle rounded-panel fixed z-1 min-w-max origin-top border shadow-lg;
 	}
 
 	&:not(:open) > :not(summary) {

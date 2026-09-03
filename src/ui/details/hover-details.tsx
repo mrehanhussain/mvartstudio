@@ -13,12 +13,14 @@ import css from './hover-details.module.css'
 export default function ({
 	safeAreaOnHover,
 	closeAfterNavigate,
+	activePathPrefixes,
 	delay,
 	className,
 	...props
 }: {
 	safeAreaOnHover?: boolean
 	closeAfterNavigate?: boolean
+	activePathPrefixes?: string[]
 	delay?: number
 } & ComponentProps<'details'>) {
 	const isDesktop = useIsDesktop()
@@ -45,6 +47,9 @@ export default function ({
 
 	// Close after navigation
 	const pathname = usePathname()
+	const isCurrent = activePathPrefixes?.some(
+		(prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+	)
 	useEffect(() => {
 		if (closeAfterNavigate) setOpen(false)
 	}, [pathname])
@@ -55,6 +60,7 @@ export default function ({
 			open={open}
 			{...events}
 			{...props}
+			data-current={activePathPrefixes ? String(Boolean(isCurrent)) : undefined}
 			onToggle={(e) => {
 				setOpen(e.currentTarget.open)
 				props.onToggle?.(e)

@@ -1,0 +1,45 @@
+export type EnquiryKind = 'contact' | 'quote'
+
+export const enquiryFieldLabels: Record<string, string> = {
+	name: 'Name',
+	email: 'Email',
+	phone: 'Phone / WhatsApp',
+	company: 'Company or organisation',
+	subject: 'Enquiry about',
+	projectType: 'Project type',
+	productReference: 'Artwork or product reference',
+	location: 'Project location',
+	dimensions: 'Approximate dimensions',
+	materials: 'Preferred materials',
+	finish: 'Colour or finish',
+	quantity: 'Quantity',
+	budget: 'Approximate budget',
+	timeline: 'Preferred timeline',
+	installation: 'Installation',
+	message: 'Project details',
+	preferredReply: 'Preferred reply',
+	references: 'Reference images',
+}
+
+export const enquiryFieldOrder: Record<EnquiryKind, string[]> = {
+	contact: ['name', 'email', 'phone', 'subject', 'message', 'preferredReply'],
+	quote: [
+		'name',
+		'email',
+		'phone',
+		'company',
+		'projectType',
+		'productReference',
+		'location',
+		'dimensions',
+		'materials',
+		'finish',
+		'quantity',
+		'budget',
+		'timeline',
+		'installation',
+		'references',
+		'message',
+		'preferredReply',
+	],
+}

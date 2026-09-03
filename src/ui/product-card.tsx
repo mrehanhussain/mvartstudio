@@ -19,7 +19,7 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
 		<article className="group flex h-full flex-col">
 			<Link
 				href={href}
-				className="relative block aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-[#e9e1d4] shadow-[0_16px_45px_rgba(35,28,18,.08)]"
+				className="rounded-card bg-art-backdrop relative block aspect-[4/5] overflow-hidden shadow-[0_16px_45px_rgba(0,0,0,.12)]"
 			>
 				<Img
 					image={image}
@@ -37,51 +37,53 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
 				)}
 				<div className="absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-4">
 					{product.featured ? (
-						<span className="rounded-full bg-[#173f35] px-3 py-1.5 text-[10px] font-bold tracking-[.16em] text-white uppercase shadow-sm">
+						<span className="bg-brand-green rounded-full px-3 py-1.5 text-[10px] font-bold tracking-[.16em] text-white uppercase shadow-sm">
 							Featured
 						</span>
 					) : (
 						<span />
 					)}
 					{imageCount > 1 && (
-						<span className="inline-flex items-center gap-1.5 rounded-full bg-[#fffaf0]/90 px-2.5 py-1.5 text-[11px] font-semibold text-[#211d18] shadow-sm backdrop-blur-sm">
+						<span className="bg-surface-raised/90 text-foreground inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[11px] font-semibold shadow-sm backdrop-blur-sm">
 							<PiImages aria-hidden="true" className="size-4" />
 							{imageCount}
 						</span>
 					)}
 				</div>
-				<span className="absolute right-4 bottom-4 grid size-10 translate-y-2 place-items-center rounded-full bg-[#fffaf0] text-[#173f35] opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+				<span className="bg-surface-raised text-primary absolute right-4 bottom-4 grid size-10 translate-y-2 place-items-center rounded-full opacity-0 shadow-lg transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
 					<PiArrowUpRight aria-hidden="true" className="size-5" />
 					<span className="sr-only">View {product.title}</span>
 				</span>
 			</Link>
 			<div className="flex flex-1 flex-col gap-2 px-1 pt-3 pb-2 sm:pt-5">
-				<div className="flex items-center justify-between gap-3 text-[10px] font-semibold tracking-[.08em] text-[#765523] sm:text-[11px]">
+				<div className="text-primary flex items-center justify-between gap-3 text-[10px] font-semibold tracking-[.08em] sm:text-[11px]">
 					<span>{product.category?.title}</span>
 					{product.materials?.[0] && (
-							<span className="hidden text-black/60 sm:inline">{product.materials[0]}</span>
+						<span className="text-muted-foreground hidden sm:inline">
+							{product.materials[0]}
+						</span>
 					)}
 				</div>
-				<h3 className="text-[1.2rem] leading-[1.08] text-[#211d18] sm:text-[1.7rem]">
+				<h3 className="text-foreground text-[1.2rem] leading-[1.08] sm:text-[1.7rem]">
 					<Link
 						href={href}
-						className="text-inherit no-underline decoration-[#b58a48] decoration-1 underline-offset-4 group-hover:underline"
+						className="decoration-accent text-inherit no-underline decoration-1 underline-offset-4 group-hover:underline"
 					>
 						{product.title}
 					</Link>
 				</h3>
 				{product.shortDescription && (
-					<p className="hidden line-clamp-2 text-sm leading-6 text-black/60 sm:block">
+					<p className="text-muted-foreground line-clamp-2 hidden text-sm leading-6 sm:block">
 						{product.shortDescription}
 					</p>
 				)}
-				<div className="mt-auto flex items-end justify-between gap-2 border-t border-black/10 pt-3 text-xs sm:gap-4 sm:text-sm">
-					<span className="text-black/60">
+				<div className="border-border-subtle mt-auto flex items-end justify-between gap-2 border-t pt-3 text-xs sm:gap-4 sm:text-sm">
+					<span className="text-muted-foreground">
 						{availabilityLabels[product.availability || ''] ||
 							'Enquire for availability'}
 					</span>
 					{product.displayPrice && (
-						<strong className="text-[#173f35]">{product.displayPrice}</strong>
+						<strong className="text-primary">{product.displayPrice}</strong>
 					)}
 				</div>
 			</div>
