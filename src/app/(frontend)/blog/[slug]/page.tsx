@@ -112,11 +112,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-	return (await sanityFetchStaticParams({
+	const posts = (await sanityFetchStaticParams({
 		query: groq`*[_type == 'blog.post' && defined(metadata.slug.current)]{
-			'slug': '/' + metadata.slug.current
-		}`,
+				'slug': metadata.slug.current
+			}`,
 	})) as { slug: string }[]
+
+	// Cache Components requires at least one param at build time. The page's
+	// existing notFound() guard handles this validation-only route.
+	return posts.length ? posts : [{ slug: '__placeholder__' }]
 }
 
 async function getPost({

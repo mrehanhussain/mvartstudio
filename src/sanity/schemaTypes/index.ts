@@ -9,16 +9,19 @@ import callout from '@/modules/callout/schema'
 import cardList from '@/modules/card-list/schema'
 import customHtml from '@/modules/custom-html/schema'
 import formModule from '@/modules/form-module/schema'
+import heroGoldenSpiral from '@/modules/hero-golden-spiral/schema'
 import heroCover from '@/modules/hero.cover/schema'
 import heroSplit from '@/modules/hero.split/schema'
 import imageGallery from '@/modules/image-gallery/schema'
 import logoList from '@/modules/logo-list/schema'
 import personList from '@/modules/person-list/schema'
+import productCatalog from '@/modules/product-catalog/schema'
 import prose from '@/modules/prose/schema'
 import quoteList from '@/modules/quote-list/schema'
 import searchModule from '@/modules/search-module/schema'
 import statList from '@/modules/stat-list/schema'
 import stepList from '@/modules/step-list/schema'
+import studioLocation from '@/modules/studio-location/schema'
 import tabbedContent from '@/modules/tabbed-content/schema'
 // documents
 import announcement from './documents/announcement'
@@ -30,6 +33,8 @@ import logo from './documents/logo'
 import navigation from './documents/navigation'
 import page from './documents/page'
 import person from './documents/person'
+import product from './documents/product'
+import productCategory from './documents/product.category'
 import quote from './documents/quote'
 import redirect from './documents/redirect'
 import site from './documents/site'
@@ -52,6 +57,8 @@ export const schema: SchemaPluginOptions = {
 		page,
 		globalModule,
 		blogPost,
+		product,
+		productCategory,
 		redirect,
 		form,
 		// references
@@ -83,15 +90,18 @@ export const schema: SchemaPluginOptions = {
 		customHtml,
 		formModule,
 		heroCover,
+		heroGoldenSpiral,
 		heroSplit,
 		imageGallery,
 		logoList,
 		personList,
+		productCatalog,
 		prose,
 		quoteList,
 		searchModule,
 		statList,
 		stepList,
+		studioLocation,
 		tabbedContent,
 	],
 

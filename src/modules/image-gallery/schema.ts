@@ -66,9 +66,23 @@ export default defineModule({
 			group: 'content',
 		}),
 		defineField({
+			name: 'presentation',
+			type: 'string',
+			options: {
+				layout: 'radio',
+				list: [
+					{ title: 'Image strips', value: 'strips' },
+					{ title: 'Customer stories', value: 'stories' },
+				],
+			},
+			initialValue: 'strips',
+			group: 'options',
+		}),
+		defineField({
 			name: 'autoScroll',
 			type: 'boolean',
 			initialValue: true,
+			hidden: ({ parent }) => parent?.presentation === 'stories',
 			group: 'options',
 		}),
 		defineField({
@@ -76,7 +90,8 @@ export default defineModule({
 			type: 'number',
 			description: 'Duration in seconds for a complete cycle',
 			initialValue: 20,
-			hidden: ({ parent }) => !parent?.autoScroll,
+			hidden: ({ parent }) =>
+				parent?.presentation === 'stories' || !parent?.autoScroll,
 			group: 'options',
 		}),
 		defineField({
@@ -84,7 +99,8 @@ export default defineModule({
 			title: 'Alternate Scroll Direction',
 			type: 'boolean',
 			initialValue: true,
-			hidden: ({ parent }) => !parent?.autoScroll,
+			hidden: ({ parent }) =>
+				parent?.presentation === 'stories' || !parent?.autoScroll,
 			group: 'options',
 		}),
 	],

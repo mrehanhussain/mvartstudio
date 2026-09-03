@@ -1,0 +1,6 @@
+receipts/
+.codebase-memory/
+.next/
+.git/
+.env*
+node_modules/

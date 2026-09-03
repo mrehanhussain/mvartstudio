@@ -9,6 +9,7 @@ import { getSite } from '@/sanity/lib/queries'
 import type { Cta } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
 import Logo from '@/ui/logo'
+import HeaderSearch from './header-search'
 import css from './header.module.css'
 import MobileToggle from './mobile-toggle'
 import Navigation from './navigation'
@@ -36,13 +37,16 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 					'section grid items-center gap-x-4 py-0 max-md:max-h-svh max-md:overflow-y-auto',
 				)}
 			>
-				<div className="max-md:header-open:bg-background sticky top-0 z-1 flex items-center justify-between gap-4 py-4 [grid-area:top]">
+				<div className="max-md:header-open:bg-background sticky top-0 z-1 flex items-center justify-between gap-4 py-2 [grid-area:top]">
 					<Logo
-						className="max-w-max grow has-[img]:-my-2 has-[img]:h-[2lh]"
+						className="header-logo h-12 w-[88px] shrink-0 grow-0"
 						perspective={perspective}
 						stega={stega}
 					/>
-					<MobileToggle />
+					<div className="flex items-center md:hidden">
+						<HeaderSearch mode="mobile" />
+						<MobileToggle />
+					</div>
 				</div>
 
 				<div
@@ -55,7 +59,7 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 					<div className="md:contents">
 						<Navigation perspective={perspective} stega={stega} />
 
-						<div className="flex items-center gap-[.5em_1em] [grid-area:ctas] max-md:flex-col">
+						<div className="header-ctas flex items-center gap-[.5em_1em] [grid-area:ctas] max-md:mt-5 max-md:w-full max-md:flex-col max-md:border-t max-md:border-black/10 max-md:pt-5">
 							{blurb && (
 								<div className="prose">
 									<PortableText
@@ -69,9 +73,10 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 								</div>
 							)}
 
+							<HeaderSearch mode="desktop" className="max-md:hidden" />
 							<CTAList
 								ctas={site?.ctas as Cta[]}
-								className="max-sm:w-full max-sm:*:w-full"
+								className="max-md:w-full max-md:*:w-full"
 							/>
 						</div>
 					</div>

@@ -4,11 +4,18 @@
 	--font-sans: 'Geist', sans-serif;
 	--font-mono: 'Geist Mono', monospace;
 
-	--color-background: #fff;
-	--color-foreground: var(--color-neutral-900);
-	--color-stroke: var(--color-neutral-200);
+	/* MV Art Studio's baseline brand tokens. Keeping these in the application
+	   prevents non-page-builder routes and streamed loading states from falling
+	   back to the browser's blue LinkText color. */
+	--color-background: #f7f2e9;
+	--color-foreground: #211d18;
+	--color-stroke: #d8cdbd;
 
-	--color-primary: LinkText;
+	--color-primary: #765523;
+	--color-accent: #b58a48;
+	--color-surface: #fffdf8;
+	--color-brand-green: #173f35;
+	--color-muted-foreground: #625b51;
 
 	--spacing-lh: 1lh;
 	--spacing-ch: 1ch;
@@ -37,12 +44,13 @@
 	}
 
 	@keyframes anchored-heading {
-
 		0%,
 		50% {
-			background-color: color-mix(in oklab,
-					var(--color-amber-400) 50%,
-					transparent);
+			background-color: color-mix(
+				in oklab,
+				var(--color-amber-400) 50%,
+				transparent
+			);
 		}
 	}
 
@@ -64,6 +72,8 @@
 	}
 
 	body {
+		overflow-x: clip;
+
 		&:has(#header-open:checked):has(.layout-header nav > details:open) {
 			overflow: hidden;
 		}
@@ -75,7 +85,8 @@
 		display: grid;
 		grid-template-rows: auto 0fr;
 		align-content: start;
-		transition: grid-template-rows var(--details-duration) var(--default-transition-timing-function);
+		transition: grid-template-rows var(--details-duration)
+			var(--default-transition-timing-function);
 
 		&::details-content {
 			content-visibility: visible;
@@ -83,11 +94,11 @@
 			min-block-size: 0;
 		}
 
-		>:not(summary) {
+		> :not(summary) {
 			transition: visibility var(--details-duration);
 		}
 
-		&:not(:is([open], :open))>:not(summary) {
+		&:not(:is([open], :open)) > :not(summary) {
 			visibility: hidden;
 		}
 
@@ -97,10 +108,9 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-
 		details,
 		details::details-content,
-		details>:not(summary) {
+		details > :not(summary) {
 			transition-duration: 0s;
 		}
 	}
@@ -111,7 +121,7 @@
 	}
 
 	a {
-		color: revert;
+		color: inherit;
 	}
 
 	cite {
@@ -162,12 +172,13 @@
 @utility action-base {
 	cursor: pointer;
 	display: inline-flex;
+	min-height: 2.75rem;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
 	gap: 0.5em;
 	padding: 0.25em 0.75em;
-	@apply active:scale-98 transition-all;
+	@apply transition-all active:scale-98;
 }
 
 @utility action {
@@ -191,19 +202,19 @@
 	@apply bg-background border-foreground/10 focus-within:border-foreground/30 border leading-normal;
 
 	&:focus {
-		@apply outline-none ring-3 ring-primary/20 border-primary;
+		@apply ring-primary/20 border-primary ring-3 outline-none;
 	}
 }
 
 @utility focus-ring {
-	@apply outline-2 outline-dashed outline-offset-2 outline-primary z-1;
+	@apply outline-primary z-1 outline-2 outline-offset-2 outline-dashed;
 }
 
 @utility skip-link {
 	@apply action-base bg-background text-foreground sr-only;
 
 	&:focus {
-		@apply not-sr-only fixed top-4 left-4 focus-ring z-100;
+		@apply focus-ring not-sr-only fixed top-4 left-4 z-100;
 	}
 }
 
@@ -211,6 +222,208 @@
 
 @utility section {
 	@apply mx-auto w-full max-w-7xl px-4 py-12 md:px-8;
+}
+
+/* The header is shared by page-builder and standalone routes. These scoped
+   dimensions deliberately outrank page-level Sanity styles so the logo and
+   quote CTA do not resize or shift when navigating between route types. */
+.layout-header {
+	font-family: var(--font-manrope), sans-serif !important;
+	border-block-start: 0 !important;
+	border-block-end: 1px solid
+		color-mix(in oklab, var(--color-stroke) 72%, transparent) !important;
+}
+
+.layout-header > div {
+	min-height: 4.25rem !important;
+}
+
+.layout-header .header-logo {
+	height: 3rem !important;
+	width: 5.5rem !important;
+	margin: 0 !important;
+}
+
+.layout-header .header-logo img {
+	height: 100% !important;
+	width: 100% !important;
+	max-height: none !important;
+	object-fit: contain !important;
+}
+
+.layout-header .header-ctas,
+.layout-header .header-ctas .cta-list {
+	margin-block: 0 !important;
+	align-self: center !important;
+}
+
+.layout-header .header-ctas .action {
+	min-height: 2.5rem !important;
+	padding: 0.5rem 1.25rem !important;
+	font-size: 0.875rem !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.01em !important;
+	line-height: 1.25rem !important;
+	text-transform: none !important;
+}
+
+.layout-header
+	:is(a[aria-current='page'], details[data-current='true'] > summary) {
+	background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
+	color: var(--color-primary);
+}
+
+.layout-header
+	:is(a[aria-current='page'], details[data-current='true'] > summary)::after {
+	position: absolute;
+	bottom: -0.35rem;
+	left: 50%;
+	width: 1.25rem;
+	height: 2px;
+	content: '';
+	background: currentColor;
+	border-radius: 999px;
+	transform: translateX(-50%);
+}
+
+.layout-header
+	:is(a[aria-current='page'], details[data-current='true'] > summary) {
+	position: relative;
+}
+
+@media (max-width: 47.999rem) {
+	.layout-header
+		:is(a[aria-current='page'], details[data-current='true'] > summary)::after {
+		display: none;
+	}
+
+	footer a {
+		display: inline-flex;
+		min-height: 2.75rem;
+		align-items: center;
+	}
+}
+
+/* Task-oriented pages should expose their useful content before spending a
+	full viewport on atmosphere. */
+body:is([data-route='/blog'], [data-route='/faq']) [data-module='hero.split'] {
+	padding-block: clamp(3rem, 7vw, 5.5rem) !important;
+}
+
+body:is([data-route='/blog'], [data-route='/faq'])
+	[data-module='hero.split']
+	figure
+	img {
+	width: 100%;
+	max-height: 30rem;
+	object-fit: cover;
+}
+
+@media (max-width: 47.999rem) {
+	body:is([data-route='/blog'], [data-route='/faq'])
+		[data-module='hero.split'] {
+		gap: 1.75rem;
+		padding-block: 2.25rem !important;
+	}
+
+	body:is([data-route='/blog'], [data-route='/faq'])
+		[data-module='hero.split']
+		figure {
+		max-height: 17rem;
+		overflow: hidden;
+		border-radius: 1rem;
+	}
+
+	body:is([data-route='/blog'], [data-route='/faq'])
+		[data-module='hero.split']
+		figure
+		img {
+		height: 17rem;
+		object-fit: cover;
+	}
+}
+
+body[data-route='/'] [data-module='studio-location'] > .group {
+	min-height: 34rem;
+}
+
+/* A single motion language for navigation and interactive surfaces. Larger
+   viewport reveals are orchestrated by MotionSystem so server components stay
+   server-rendered and Sanity preview behavior remains unchanged. */
+@keyframes mv-menu-panel-in {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -0.5rem, 0) scale(0.985);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+}
+
+@keyframes mv-menu-item-in {
+	from {
+		opacity: 0;
+		transform: translate3d(0, 0.65rem, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.layout-header details[open] > div {
+		animation: mv-menu-panel-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	.layout-header details[open] > div > .grid > a {
+		animation: mv-menu-item-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	.layout-header details[open] > div > .grid > a:nth-child(2) {
+		animation-delay: 45ms;
+	}
+
+	.layout-header details[open] > div > .grid > a:nth-child(3) {
+		animation-delay: 90ms;
+	}
+
+	.layout-header details[open] > div > .grid > a:nth-child(4) {
+		animation-delay: 135ms;
+	}
+
+	.layout-header details[open] > div > .grid > a:nth-child(5) {
+		animation-delay: 180ms;
+	}
+
+	.layout-header details[open] > div > .grid > a:nth-child(6) {
+		animation-delay: 225ms;
+	}
+
+	:is(.action, .action-outline, button, summary) {
+		transition-duration: 280ms;
+		transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	:is(.action, .action-outline, button):active {
+		transform: scale(0.975);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto !important;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+	}
 }
 
 @utility prose {
@@ -244,7 +457,7 @@
 		list-style: revert;
 		padding-left: 1.5em;
 
-		&>li>ol {
+		& > li > ol {
 			list-style: lower-alpha;
 		}
 	}
@@ -254,10 +467,13 @@
 	}
 
 	blockquote {
-		@apply border-stroke border-l-4 pl-4;
+		padding-block: 0.75rem;
+		font-size: 1.125em;
+		font-style: italic;
+		@apply text-foreground/80;
 	}
 
-	:not(pre)>code {
+	:not(pre) > code {
 		padding-inline: 0.25em;
 		font-size: 0.875em;
 		@apply bg-foreground/5 rounded-sm;
@@ -296,67 +512,19 @@
 	scroll-behavior: smooth;
 	scroll-snap-type: x mandatory;
 
-	@apply *:md:snap-start *:snap-center;
+	@apply *:snap-center *:md:snap-start;
 }
 
 @utility carousel-scroll-buttons {
-	@supports (position-anchor: var(--anchor-name)) {
-		@apply no-scrollbar;
-
-		&::scroll-button(*) {
-			cursor: pointer;
-			position: absolute;
-			position-anchor: var(--anchor-name);
-			z-index: 1;
-			display: block;
-			aspect-ratio: 1;
-			width: 1.5lh;
-			margin-inline: -100%;
-			background-color: currentColor;
-		}
-
-		&::scroll-button(left) {
-			content: '' / 'Scroll left';
-			position-area: center start;
-			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm62.63 304L296 374.63 177.37 256 296 137.37 318.63 160l-96 96z'/%3E%3C/svg%3E") center / cover;
-		}
-
-		&::scroll-button(right) {
-			content: '' / 'Scroll right';
-			position-area: center end;
-			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23fff' d='M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm-40 326.63L193.37 352l96-96-96-96L216 137.37 334.63 256z'/%3E%3C/svg%3E") center / cover;
-		}
-	}
+	@apply no-scrollbar;
 }
 
 @utility carousel-scroll-marker {
-	--size: 12px;
-	scroll-marker-group: after;
-
-	&::scroll-marker-group {
-		position: absolute;
-		position-anchor: var(--anchor-name);
-		top: calc(anchor(bottom) + 1rem);
-		justify-self: center;
-		display: flex;
-		align-items: center;
-		gap: 0.5ch;
-	}
-
-	&>* {
-		&::scroll-marker {
-			content: '';
-			@apply bg-foreground/25 block size-1 rounded-full;
-		}
-
-		&::scroll-marker:target-current {
-			@apply bg-foreground w-[2ch] opacity-100;
-		}
-	}
+	@apply no-scrollbar;
 }
 
 @utility accordion {
-	&>summary {
+	& > summary {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -367,8 +535,8 @@
 		}
 	}
 
-	&:open>summary svg {
-		rotate: .5turn;
+	&:open > summary svg {
+		rotate: 0.5turn;
 	}
 }
 
@@ -380,26 +548,33 @@
 	> :not(summary) {
 		position-anchor: var(--anchor-name);
 		position-area: end span-end;
-		position-try-fallbacks: end span-start, flip-block;
-		position-try: end span-start, flip-block;
+		position-try-fallbacks:
+			end span-start,
+			flip-block;
+		position-try:
+			end span-start,
+			flip-block;
 
-		transition: var(--default-transition-duration) var(--default-transition-timing-function);
+		transition: var(--default-transition-duration)
+			var(--default-transition-timing-function);
 		transition-property: opacity, translate, scale, visibility;
 
-		@apply fixed z-1 min-w-max bg-background shadow-lg origin-top;
+		@apply bg-background fixed z-1 min-w-max origin-top shadow-lg;
 	}
 
-	&:not(:open)>:not(summary) {
+	&:not(:open) > :not(summary) {
 		@apply -translate-y-1 scale-95 opacity-0;
 	}
 }
 
 @utility skeleton {
 	background-size: 200% 100%;
-	background-image: linear-gradient(to right,
-			color-mix(in oklab, var(--color-foreground) 10%, transparent),
-			color-mix(in oklab, var(--color-foreground) 5%, transparent),
-			color-mix(in oklab, var(--color-foreground) 10%, transparent));
+	background-image: linear-gradient(
+		to right,
+		color-mix(in oklab, var(--color-foreground) 10%, transparent),
+		color-mix(in oklab, var(--color-foreground) 5%, transparent),
+		color-mix(in oklab, var(--color-foreground) 10%, transparent)
+	);
 	animation: skeleton 1.2s linear infinite;
 
 	@apply block h-lh;
@@ -435,7 +610,8 @@
 /* anims */
 
 @utility anim-fade {
-	transition: var(--default-transition-duration) var(--default-transition-timing-function);
+	transition: var(--default-transition-duration)
+		var(--default-transition-timing-function);
 	transition-property: opacity, translate, scale;
 	@apply starting:opacity-0;
 }
@@ -457,10 +633,11 @@
 }
 
 @utility anim-toggle {
-	transition: var(--default-transition-duration) var(--default-transition-timing-function);
+	transition: var(--default-transition-duration)
+		var(--default-transition-timing-function);
 	transition-property: opacity, translate, scale, visibility;
 
-	:where(details:not(:open))>& {
+	:where(details:not(:open)) > & {
 		@apply -translate-y-4 opacity-0;
 	}
 }

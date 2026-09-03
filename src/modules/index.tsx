@@ -9,16 +9,19 @@ import Callout from '@/modules/callout'
 import CardList from '@/modules/card-list'
 import CustomHTML from '@/modules/custom-html'
 import FormModule from '@/modules/form-module'
+import HeroGoldenSpiral from '@/modules/hero-golden-spiral'
 import HeroCover from '@/modules/hero.cover'
 import HeroSplit from '@/modules/hero.split'
 import ImageGallery from '@/modules/image-gallery'
 import LogoList from '@/modules/logo-list'
 import PersonList from '@/modules/person-list'
+import ProductCatalog from '@/modules/product-catalog'
 import Prose from '@/modules/prose'
 import QuoteList from '@/modules/quote-list'
 import SearchModule from '@/modules/search-module'
 import StatList from '@/modules/stat-list'
 import StepList from '@/modules/step-list'
+import StudioLocation from '@/modules/studio-location'
 import TabbedContent from '@/modules/tabbed-content'
 import type { DynamicFetchOptions } from '@/sanity/lib/live'
 import type {
@@ -38,15 +41,18 @@ const MODULES_MAP = {
 	'custom-html': CustomHTML,
 	'form-module': FormModule,
 	'hero.cover': HeroCover,
+	'hero-golden-spiral': HeroGoldenSpiral,
 	'hero.split': HeroSplit,
 	'image-gallery': ImageGallery,
 	'logo-list': LogoList,
 	'person-list': PersonList,
+	'product-catalog': ProductCatalog,
 	prose: Prose,
 	'quote-list': QuoteList,
 	'search-module': SearchModule,
 	'stat-list': StatList,
 	'step-list': StepList,
+	'studio-location': StudioLocation,
 	'tabbed-content': TabbedContent,
 } as const
 
@@ -69,6 +75,7 @@ export default function ({
 				return { currentPage: page || post }
 			case 'blog-index':
 			case 'blog-post-list':
+			case 'product-catalog':
 				return { perspective, stega }
 			default:
 				return {}

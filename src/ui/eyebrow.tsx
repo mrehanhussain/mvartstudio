@@ -10,7 +10,10 @@ export default function ({
 
 	return (
 		<p
-			className={cn('technical eyebrow text-sm text-current/60', className)}
+			className={cn(
+				'eyebrow text-sm font-semibold tracking-[.08em] text-current/70',
+				className,
+			)}
 			{...props}
 		>
 			{stegaClean(value)}

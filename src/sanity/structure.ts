@@ -18,8 +18,12 @@ export default structureTool({
 				S.documentTypeListItem('skill').title('Skills'),
 
 				S.divider().title('Pages'),
-				S.documentTypeListItem('page').title('Pages').icon(DocumentIcon),
-				pageDirectoriesListItem(S, context),
+					S.documentTypeListItem('page').title('Pages').icon(DocumentIcon),
+					pageDirectoriesListItem(S, context),
+
+					S.divider().title('Catalog'),
+					S.documentTypeListItem('product').title('Products'),
+					S.documentTypeListItem('product.category').title('Product types'),
 
 				S.divider().title('Blog'),
 				S.documentTypeListItem('blog.post').title('Posts'),

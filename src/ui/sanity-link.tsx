@@ -17,20 +17,28 @@ export default function ({
 	'href'
 >) {
 	const { label, type, internal, external, params } = link ?? {}
+	const cleanLabel = stegaClean(label)
+	const cleanInternalSlug = stegaClean(internal?.slug)
+	// Keep quote-labelled CTAs aligned with the dedicated project brief instead
+	// of dropping visitors into the shorter general-enquiry form.
+	const internalSlug =
+		cleanLabel === 'Request a Custom Quote' && cleanInternalSlug === '/contact'
+			? '/custom-projects'
+			: cleanInternalSlug
 
 	const linkProps: Omit<LinkProps, 'href'> | React.ComponentProps<'a'> = {
 		...props,
 		children:
 			children ||
-			stegaClean(label) ||
+			cleanLabel ||
 			stegaClean(internal?.title) ||
 			stegaClean(external),
 	}
 
-	if (type === 'internal' && internal?.slug)
+	if (type === 'internal' && internalSlug)
 		return (
 			<NextLink
-				href={[internal.slug, stegaClean(params)].filter(Boolean).join('')}
+				href={[internalSlug, stegaClean(params)].filter(Boolean).join('')}
 				{...linkProps}
 			/>
 		)

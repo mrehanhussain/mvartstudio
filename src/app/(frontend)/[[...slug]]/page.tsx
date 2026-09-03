@@ -72,14 +72,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		getSite({ perspective, stega: false }),
 	])
 	const { title, description, image, noIndex } = page?.metadata ?? {}
+	const path = slug?.join('/') || ''
+	const canonical = `/${path}`
+	const isContact = path === 'contact'
+	const resolvedTitle = isContact
+		? 'Contact MV Art Studio | General Enquiries'
+		: title
+	const resolvedDescription = isContact
+		? 'Contact MV Art Studio in Hyderabad for general questions, product guidance, collaborations, and order support.'
+		: description
 
 	return {
-		title,
-		description,
+		title: resolvedTitle,
+		description: resolvedDescription,
 		openGraph: {
 			type: 'website',
-			title,
-			description,
+			title: resolvedTitle,
+			description: resolvedDescription,
 			url: [process.env.NEXT_PUBLIC_BASE_URL, slug?.join('/')]
 				.filter(Boolean)
 				.join('/'),
@@ -95,6 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			index: noIndex ? false : undefined,
 		},
 		alternates: {
+			canonical,
 			types: {
 				'application/rss+xml': `/${ROUTES.blog}/rss.xml`,
 				// Only advertise the .md route when a curated markdown copy exists

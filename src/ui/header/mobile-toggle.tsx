@@ -2,7 +2,7 @@ import { VscChromeClose, VscMenu } from 'react-icons/vsc'
 
 export default function () {
 	return (
-		<label className="has-focus-visible:focus-ring text-xl md:hidden">
+		<label className="has-focus-visible:focus-ring grid size-11 place-items-center rounded-full text-xl md:hidden">
 			<input
 				id="header-open"
 				type="checkbox"

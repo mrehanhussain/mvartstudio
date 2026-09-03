@@ -22,15 +22,34 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 					0.5
 				)
 			},
-			'posts': *[
+				'posts': *[
 				_type == 'blog.post'
 				&& defined(metadata.slug.current)
 				&& metadata.noIndex != true
 			]|order(publishDate desc){
 				'url': $baseUrl + '/' + $blogDir + '/' + metadata.slug.current,
 				'lastModified': coalesce(publishDate, _updatedAt),
-				'priority': 0.4
-			}
+					'priority': 0.4
+				},
+				'productCategories': *[
+					_type == 'product.category'
+					&& defined(slug.current)
+					&& metadata.noIndex != true
+				]|order(displayOrder asc){
+					'url': $baseUrl + '/collections/' + slug.current,
+					'lastModified': _updatedAt,
+					'priority': 0.7
+				},
+				'products': *[
+					_type == 'product'
+					&& defined(slug.current)
+					&& defined(category->slug.current)
+					&& metadata.noIndex != true
+				]|order(displayOrder asc){
+					'url': $baseUrl + '/collections/' + category->slug.current + '/' + slug.current,
+					'lastModified': _updatedAt,
+					'priority': 0.6
+				}
 		}`,
 		params: {
 			baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
@@ -38,8 +57,10 @@ export default async function (): Promise<MetadataRoute.Sitemap> {
 		},
 		perspective: 'published',
 	})) as {
-		pages: MetadataRoute.Sitemap
-		posts: MetadataRoute.Sitemap
+			pages: MetadataRoute.Sitemap
+			posts: MetadataRoute.Sitemap
+			productCategories: MetadataRoute.Sitemap
+			products: MetadataRoute.Sitemap
 	}
 
 	return Object.values(data).flat()

@@ -1,5 +1,5 @@
 import { VisualEditing } from 'next-sanity/visual-editing'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Manrope } from 'next/font/google'
 import { draftMode } from 'next/headers'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Suspense } from 'react'
@@ -10,10 +10,13 @@ import Announcement, { DynamicAnnouncement } from '@/ui/announcement'
 import DraftModeBanner from '@/ui/draft-mode-banner'
 import Footer, { DynamicFooter } from '@/ui/footer'
 import Header, { DynamicHeader } from '@/ui/header'
+import MotionSystem from '@/ui/motion-system'
+import RouteState from '@/ui/route-state'
 import '@/app.css'
 
 const fontSans = Geist({ subsets: ['latin'] })
 const fontMono = Geist_Mono({ subsets: ['latin'] })
+const fontManrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
 
 export default async function RootLayout({
 	children,
@@ -28,7 +31,11 @@ export default async function RootLayout({
 	return (
 		<html lang="en" data-scroll-behavior="smooth">
 			<NuqsAdapter>
-				<body className="bg-background text-foreground antialiased">
+				<body
+					className={`${fontManrope.variable} bg-background text-foreground antialiased`}
+				>
+					<MotionSystem />
+					<RouteState />
 					<a href="#main-content" className="skip-link">
 						Skip to main content
 					</a>
