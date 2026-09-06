@@ -22,6 +22,8 @@ import Loading from '@/ui/loading'
 
 type Props = PageProps<'/collections/[category]'>
 
+const BEST_SELLERS_SLUG = 'best-sellers'
+
 export default async function Page({ params }: Props) {
 	const { isEnabled } = await draftMode()
 	if (isEnabled || process.env.NODE_ENV === 'development')
@@ -54,48 +56,59 @@ async function CachedCategory({
 	stega,
 }: { categorySlug: string } & DynamicFetchOptions) {
 	'use cache'
+	const isBestSellers = categorySlug === BEST_SELLERS_SLUG
 	const [categoryResult, categoriesResult] = await Promise.all([
-		sanityFetch({
-			query: PRODUCT_CATEGORY_QUERY,
-			params: { category: categorySlug },
-			perspective,
-			stega,
-		}),
+		isBestSellers
+			? Promise.resolve({ data: null })
+			: sanityFetch({
+					query: PRODUCT_CATEGORY_QUERY,
+					params: { category: categorySlug },
+					perspective,
+					stega,
+				}),
 		sanityFetch({ query: CATALOG_CATEGORIES_QUERY, perspective, stega }),
 	])
 	const category = categoryResult.data as CatalogCategory | null
-	if (!category) notFound()
+	if (!isBestSellers && !category) notFound()
 	const productsResult = await sanityFetch({
 		query: CATALOG_PRODUCTS_QUERY,
-		params: { categoryId: category._id, featuredOnly: false },
+		params: {
+			categoryId: category?._id || null,
+			featuredOnly: isBestSellers,
+		},
 		perspective,
 		stega,
 	})
 	const products = productsResult.data as CatalogProduct[]
+	const title = isBestSellers ? 'Best Sellers' : category?.title
+	const description = isBestSellers
+		? 'Featured pieces from the studio — the work clients return to most often.'
+		: category?.description
+	const image = isBestSellers ? undefined : category?.image
 
 	return (
 		<main>
-			<header className="relative isolate overflow-hidden bg-[#173f35] text-white">
-				{category.image && (
+			<header className="relative isolate overflow-hidden bg-[#0f172a] text-[#f8fafc]">
+				{image && (
 					<Img
-						image={category.image}
-						alt={category.image.alt || ''}
+						image={image}
+						alt={image.alt || ''}
 						width={1800}
 						loading="eager"
 						className="absolute inset-0 -z-20 h-full w-full object-cover opacity-35"
 					/>
 				)}
-				<div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#122f28] via-[#173f35]/85 to-transparent" />
+				<div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#0f172a] via-[#0f172a]/85 to-transparent" />
 				<div className="section py-20 md:py-28">
-					<p className="mb-4 text-xs font-semibold tracking-[.24em] text-[#dbbd84] uppercase">
-						The collection
+					<p className="text-accent mb-4 text-xs font-semibold tracking-[.24em] uppercase">
+						{isBestSellers ? 'Featured work' : 'The collection'}
 					</p>
 					<h1 className="max-w-3xl text-5xl leading-none md:text-7xl">
-						{category.title}
+						{title}
 					</h1>
-					{category.description && (
+					{description && (
 						<p className="mt-6 max-w-2xl text-lg leading-8 text-white/75">
-							{category.description}
+							{description}
 						</p>
 					)}
 				</div>
@@ -129,6 +142,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		params,
 		getDynamicFetchOptions(),
 	])
+	if (category === BEST_SELLERS_SLUG) {
+		return {
+			title: 'Best Sellers | MV Art Studio',
+			description:
+				'Featured Islamic calligraphy, wall art, and signage from MV Art Studio.',
+			alternates: { canonical: '/collections/best-sellers' },
+			openGraph: {
+				type: 'website',
+				url: `${process.env.NEXT_PUBLIC_BASE_URL}/collections/best-sellers`,
+			},
+		}
+	}
 	const data = (await sanityFetchMetadata({
 		query: PRODUCT_CATEGORY_QUERY,
 		params: { category },
@@ -149,7 +174,11 @@ export async function generateStaticParams() {
 	const categories = (await sanityFetchStaticParams({
 		query: CATALOG_CATEGORIES_QUERY,
 	})) as CatalogCategory[]
-	return categories.length
-		? categories.map(({ slug }) => ({ category: slug }))
-		: [{ category: '__placeholder__' }]
+	const params = [{ category: BEST_SELLERS_SLUG }]
+	if (categories.length) {
+		params.push(...categories.map(({ slug }) => ({ category: slug || '' })))
+	} else {
+		params.push({ category: '__placeholder__' })
+	}
+	return params
 }

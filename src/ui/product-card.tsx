@@ -14,6 +14,11 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
 	const image = product.gallery?.[0]
 	const alternateImage = product.gallery?.[1]
 	const imageCount = product.gallery?.length || 0
+	const availability =
+		availabilityLabels[product.availability || ''] || 'Enquire for availability'
+	const showAvailability = !(
+		product.availability === 'custom-enquiry' && product.displayPrice
+	)
 
 	return (
 		<article className="group flex h-full flex-col">
@@ -37,7 +42,7 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
 				)}
 				<div className="absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-4">
 					{product.featured ? (
-						<span className="bg-brand-green rounded-full px-3 py-1.5 text-[10px] font-bold tracking-[.16em] text-white uppercase shadow-sm">
+						<span className="bg-brand rounded-full px-3 py-1.5 text-[10px] font-bold tracking-[.16em] text-white uppercase shadow-sm">
 							Featured
 						</span>
 					) : (
@@ -56,7 +61,7 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
 				</span>
 			</Link>
 			<div className="flex flex-1 flex-col gap-2 px-1 pt-3 pb-2 sm:pt-5">
-				<div className="text-primary flex items-center justify-between gap-3 text-[10px] font-semibold tracking-[.08em] sm:text-[11px]">
+				<div className="text-accent flex items-center justify-between gap-3 text-[10px] font-semibold tracking-[.08em] sm:text-[11px]">
 					<span>{product.category?.title}</span>
 					{product.materials?.[0] && (
 						<span className="text-muted-foreground hidden sm:inline">
@@ -78,12 +83,13 @@ export default function ProductCard({ product }: { product: CatalogProduct }) {
 					</p>
 				)}
 				<div className="border-border-subtle mt-auto flex items-end justify-between gap-2 border-t pt-3 text-xs sm:gap-4 sm:text-sm">
-					<span className="text-muted-foreground">
-						{availabilityLabels[product.availability || ''] ||
-							'Enquire for availability'}
-					</span>
+					{showAvailability && (
+						<span className="text-muted-foreground">{availability}</span>
+					)}
 					{product.displayPrice && (
-						<strong className="text-primary">{product.displayPrice}</strong>
+						<strong className="text-primary ml-auto">
+							{product.displayPrice}
+						</strong>
 					)}
 				</div>
 			</div>

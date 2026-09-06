@@ -133,7 +133,7 @@ export default function ProductGallery({
 								direction="right"
 								onClick={selectNext}
 							/>
-							<span className="absolute right-4 bottom-4 rounded-full bg-[#102e27]/82 px-3 py-1.5 text-xs font-semibold text-white tabular-nums backdrop-blur-sm">
+							<span className="absolute right-4 bottom-4 rounded-full bg-[#0f172a]/82 px-3 py-1.5 text-xs font-semibold text-white tabular-nums backdrop-blur-sm">
 								{activeIndex + 1} / {gallery.length}
 							</span>
 						</>
@@ -148,9 +148,9 @@ export default function ProductGallery({
 				onClick={(event) =>
 					event.target === event.currentTarget && closeLightbox()
 				}
-				className="m-auto h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-0 text-white backdrop:bg-[#0b1714]/28 backdrop:backdrop-blur-md open:flex open:flex-col"
+				className="m-auto h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-0 text-white backdrop:bg-[#0f172a]/28 backdrop:backdrop-blur-md open:flex open:flex-col"
 			>
-				<div className="border-border-inverse flex min-h-16 shrink-0 items-center justify-between border-b bg-[#0b1714]/58 px-4 shadow-lg backdrop-blur-2xl sm:px-6">
+				<div className="border-border-inverse flex min-h-16 shrink-0 items-center justify-between border-b bg-[#0f172a]/58 px-4 shadow-lg backdrop-blur-2xl sm:px-6">
 					<div>
 						<p className="text-sm font-semibold">{title}</p>
 						<p aria-live="polite" className="text-xs text-white/55">
@@ -182,7 +182,7 @@ export default function ProductGallery({
 				</div>
 
 				<div
-					className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center overflow-auto bg-gradient-to-b from-[#0b1714]/12 via-transparent to-[#0b1714]/12 p-3 sm:p-8"
+					className="relative flex min-h-0 flex-1 touch-pan-y items-center justify-center overflow-auto bg-gradient-to-b from-[#0f172a]/12 via-transparent to-[#0f172a]/12 p-3 sm:p-8"
 					onPointerDown={(event) => {
 						pointerStart.current = event.clientX
 					}}
@@ -224,7 +224,7 @@ export default function ProductGallery({
 				</div>
 
 				{gallery.length > 1 && (
-					<div className="border-border-inverse flex shrink-0 justify-center gap-2 overflow-x-auto border-t bg-[#0b1714]/58 px-4 py-3 shadow-[0_-12px_36px_rgba(0,0,0,.12)] backdrop-blur-2xl">
+					<div className="border-border-inverse flex shrink-0 justify-center gap-2 overflow-x-auto border-t bg-[#0f172a]/58 px-4 py-3 shadow-[0_-12px_36px_rgba(0,0,0,.12)] backdrop-blur-2xl">
 						{gallery.map((image, index) => (
 							<button
 								type="button"

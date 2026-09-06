@@ -104,7 +104,7 @@ async function CachedProduct({
 				<ProductGallery images={item.gallery} title={item.title || 'Product'} />
 				<div className="self-start lg:sticky lg:top-24">
 					<div className="flex flex-wrap items-center gap-3">
-						<p className="text-primary text-xs font-bold tracking-[.2em] uppercase">
+						<p className="text-accent text-xs font-bold tracking-[.2em] uppercase">
 							{item.category?.title}
 						</p>
 						{availability && (
@@ -228,7 +228,7 @@ async function CachedProduct({
 				<div>
 					{item.description && (
 						<>
-							<p className="text-primary text-xs font-bold tracking-[.2em] uppercase">
+							<p className="text-accent text-xs font-bold tracking-[.2em] uppercase">
 								The piece
 							</p>
 							<div className="prose text-muted-foreground mt-4 max-w-3xl">
@@ -307,7 +307,7 @@ async function CachedProduct({
 				<section className="section space-y-8 pt-14">
 					<div className="flex flex-wrap items-end justify-between gap-4">
 						<div>
-							<p className="text-primary text-xs font-bold tracking-[.2em] uppercase">
+							<p className="text-accent text-xs font-bold tracking-[.2em] uppercase">
 								Continue exploring
 							</p>
 							<h2 className="mt-2 text-4xl tracking-[-.025em]">

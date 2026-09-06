@@ -1,5 +1,5 @@
 import { VisualEditing } from 'next-sanity/visual-editing'
-import { Geist, Geist_Mono, Manrope } from 'next/font/google'
+import { Geist, Geist_Mono, Manrope, Playfair_Display } from 'next/font/google'
 import { draftMode } from 'next/headers'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Suspense } from 'react'
@@ -17,7 +17,11 @@ import '@/app.css'
 const fontSans = Geist({ subsets: ['latin'] })
 const fontMono = Geist_Mono({ subsets: ['latin'] })
 const fontManrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
-const themeScript = `(function(){try{var k='mvart-theme';var s=localStorage.getItem(k);var t=s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t}catch(e){document.documentElement.dataset.theme='light'}})()`
+const fontPlayfair = Playfair_Display({
+	subsets: ['latin'],
+	variable: '--font-playfair',
+})
+const themeScript = `(function(){try{var k='mvart-theme';var s=localStorage.getItem(k);var t=s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;document.addEventListener('click',function(e){var b=e.target&&e.target.closest&&e.target.closest('button[data-theme-toggle]');if(!b)return;var n=document.documentElement.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem(k,n)}catch(err){}document.documentElement.dataset.theme=n;document.documentElement.style.colorScheme=n;document.querySelectorAll('button[data-theme-toggle]').forEach(function(el){el.setAttribute('aria-pressed',n==='dark'?'true':'false');el.setAttribute('aria-label','Switch to '+(n==='dark'?'light':'dark')+' theme')})},true)}catch(e){document.documentElement.dataset.theme='light'}})()`
 
 export default async function RootLayout({
 	children,
@@ -41,7 +45,7 @@ export default async function RootLayout({
 			</head>
 			<NuqsAdapter>
 				<body
-					className={`${fontManrope.variable} bg-background text-foreground antialiased`}
+					className={`${fontManrope.variable} ${fontPlayfair.variable} ${fontSans.className} bg-background text-foreground antialiased`}
 				>
 					<RouteState />
 					<a href="#main-content" className="skip-link">

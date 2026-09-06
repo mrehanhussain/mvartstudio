@@ -28,7 +28,7 @@ export default function StudioLocation({
 		<Module className="section py-12 sm:py-16 lg:py-20" {...props}>
 			<header className="mb-8 grid items-end gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,.55fr)] lg:gap-16">
 				<div>
-					<p className="text-primary text-xs font-bold tracking-[.22em] uppercase">
+					<p className="text-accent text-xs font-bold tracking-[.22em] uppercase">
 						{eyebrow || 'Studio location'}
 					</p>
 					<h2 className="text-foreground mt-4 max-w-3xl text-4xl leading-[.98] tracking-[-.035em] sm:text-5xl lg:text-6xl">
@@ -54,19 +54,19 @@ export default function StudioLocation({
 				<div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(12,38,31,.16),transparent_52%),linear-gradient(0deg,rgba(12,38,31,.2),transparent_42%)]" />
 
 				<div className="border-border-inverse-strong bg-surface/88 text-primary pointer-events-none absolute top-5 right-5 flex items-center gap-2 rounded-full border px-3 py-2 text-[10px] font-bold tracking-[.16em] uppercase shadow-lg backdrop-blur-xl sm:top-7 sm:right-7">
-					<span className="size-2 rounded-full bg-[#3e7b5a] shadow-[0_0_0_4px_rgba(62,123,90,.14)]" />
+					<span className="bg-accent size-2 rounded-full shadow-[0_0_0_4px_rgba(193,168,117,.18)]" />
 					Open studio · Hyderabad
 				</div>
 
 				<div className="border-border-inverse-strong rounded-panel bg-surface/92 text-foreground absolute right-4 bottom-4 left-4 overflow-hidden border shadow-[0_24px_70px_rgba(0,0,0,.3)] backdrop-blur-2xl sm:right-auto sm:bottom-7 sm:left-7 sm:w-[25rem] lg:top-7 lg:bottom-auto lg:w-[27rem]">
-					<div className="bg-brand-green relative overflow-hidden p-6 text-white sm:p-7">
+					<div className="bg-brand relative overflow-hidden p-6 text-white sm:p-7">
 						<div className="pointer-events-none absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,.65)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.65)_1px,transparent_1px)] [background-size:28px_28px] opacity-[.055]" />
 						<div className="relative flex items-start gap-4">
-							<span className="grid size-11 shrink-0 place-items-center rounded-full border border-[#d4ad69]/35 bg-white/8 text-[#d4ad69]">
+							<span className="border-accent/35 text-accent grid size-11 shrink-0 place-items-center rounded-full border bg-white/8">
 								<PiMapPin aria-hidden="true" className="size-5" />
 							</span>
 							<div>
-								<p className="text-[10px] font-bold tracking-[.2em] text-[#d4ad69] uppercase">
+								<p className="text-accent text-[10px] font-bold tracking-[.2em] uppercase">
 									MV Art Studio
 								</p>
 								<address className="mt-3 text-sm leading-6 text-white/78 not-italic">
@@ -113,7 +113,7 @@ export default function StudioLocation({
 						className="border-border-subtle group/route bg-surface/96 hover:bg-surface-raised flex items-center justify-between gap-5 border-t px-5 py-4 transition"
 					>
 						<span className="flex items-center gap-3">
-							<span className="bg-brand-green group-hover/route:bg-primary grid size-10 shrink-0 place-items-center rounded-full text-white transition">
+							<span className="bg-brand group-hover/route:bg-primary grid size-10 shrink-0 place-items-center rounded-full text-white transition">
 								<PiNavigationArrow aria-hidden="true" className="size-4" />
 							</span>
 							<span>
@@ -129,10 +129,10 @@ export default function StudioLocation({
 					</a>
 				</div>
 
-				<div className="border-border-inverse-strong bg-brand-green/88 pointer-events-none absolute right-7 bottom-7 hidden items-center gap-2 rounded-full border px-4 py-2.5 text-[10px] font-bold tracking-[.15em] text-white uppercase shadow-xl backdrop-blur-xl lg:flex">
+				<div className="border-border-inverse-strong bg-brand/88 pointer-events-none absolute right-7 bottom-7 hidden items-center gap-2 rounded-full border px-4 py-2.5 text-[10px] font-bold tracking-[.15em] text-white uppercase shadow-xl backdrop-blur-xl lg:flex">
 					<PiNavigationArrow
 						aria-hidden="true"
-						className="size-4 text-[#d4ad69]"
+						className="text-accent size-4"
 					/>
 					Kishan Bagh · Hyderabad
 				</div>

@@ -11,23 +11,17 @@ export default function ({
 	...props
 }: LinkList & React.ComponentProps<'li'> & Partial<{ _key: string }>) {
 	return (
-		<li className={cn('grid gap-1 text-left', className)} {...props}>
+		<li className={cn('footer-nav__col', className)} {...props}>
 			{link && (
-				<div>
-					<SanityLink
-						className="technical text-xs text-current/60 [[href]]:hover:underline"
-						link={link as SanityLinkType}
-					/>
+				<div className="footer-nav__heading">
+					<SanityLink link={link as SanityLinkType} />
 				</div>
 			)}
 
-			<ul className="leading-tight">
+			<ul className="footer-nav__links">
 				{links?.map((item, i) => (
 					<li key={`${item._key}-${i}`}>
-						<SanityLink
-							className="inline-block py-[.3ch] text-current hover:underline"
-							link={item as SanityLinkType}
-						/>
+						<SanityLink link={item as SanityLinkType} />
 					</li>
 				))}
 			</ul>

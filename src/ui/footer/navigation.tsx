@@ -8,16 +8,16 @@ export default async function ({ perspective, stega }: DynamicFetchOptions) {
 	const site = await getSite({ perspective, stega })
 
 	return (
-		<nav>
-			<ul className="gap-y-lh flex items-start justify-center gap-x-[2lh] max-md:flex-col">
+		<nav aria-label="Footer" className="w-full min-w-0 md:max-w-3xl lg:max-w-4xl">
+			<ul className="footer-nav">
 				{site?.footer?.items?.map((item, i) => {
 					switch (item._type) {
 						case 'link':
 							return (
-								<li key={`${item._key}-${i}`}>
+								<li key={`${item._key}-${i}`} className="footer-nav__col">
 									<SanityLink
 										link={item as SanityLinkType}
-										className="text-current hover:underline"
+										className="hover:text-accent text-sm hover:underline"
 									/>
 								</li>
 							)

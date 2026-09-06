@@ -11,7 +11,7 @@ export default function ({
 	return (
 		<p
 			className={cn(
-				'eyebrow text-sm font-semibold tracking-[.08em] text-current/70',
+				'eyebrow text-accent text-sm font-semibold tracking-[.08em]',
 				className,
 			)}
 			{...props}

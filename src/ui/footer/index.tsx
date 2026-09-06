@@ -25,10 +25,10 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 	const blurb = site?.footer?.blurb
 
 	return (
-		<footer>
-			<div className="section space-y-4">
-				<div className="flex justify-between gap-4 max-md:flex-col md:items-start">
-					<div className="flex flex-col items-center gap-4 max-md:text-center md:items-start">
+		<footer className="bg-[#0f172a] text-[#f8fafc]">
+			<div className="section space-y-10 py-12 md:py-16">
+				<div className="flex flex-col justify-between gap-12 max-md:flex-col md:flex-row md:items-start md:gap-16 lg:gap-20">
+					<div className="flex max-w-sm shrink-0 flex-col items-center gap-4 max-md:text-center md:items-start">
 						<Logo
 							className="[&_img]:h-[2lh]"
 							perspective={perspective}
@@ -36,7 +36,7 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 						/>
 
 						{blurb && (
-							<div className="prose">
+							<div className="prose text-sm leading-relaxed text-[#f8fafc]/72">
 								<PortableText
 									value={blurb}
 									components={{
@@ -49,7 +49,7 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 						)}
 
 						<SocialNavigation
-							className="social [&_svg]:size-lh link flex items-center gap-4 max-md:justify-center"
+							className="social [&_svg]:size-lh link flex items-center gap-4 text-[#f8fafc] max-md:justify-center"
 							perspective={perspective}
 							stega={stega}
 						/>
@@ -59,14 +59,14 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 				</div>
 
 				{(site?.copyright || site?.bottom?.items) && (
-					<div className="flex items-center justify-between gap-4 text-center not-has-[.bottom-navigation]:justify-center max-md:flex-col">
+					<div className="flex items-center justify-between gap-4 border-t border-white/15 pt-6 text-center text-sm text-[#f8fafc]/70 not-has-[.bottom-navigation]:justify-center max-md:flex-col">
 						{site?.bottom?.items && (
 							<ul className="bottom-navigation flex flex-wrap gap-x-4">
 								{site?.bottom?.items?.map((item, i) => (
 									<li key={`${item._key}-${i}`}>
 										<SanityLink
 											link={item as SanityLinkType}
-											className="text-current hover:underline"
+											className="hover:text-accent text-current hover:underline"
 										/>
 									</li>
 								))}
@@ -74,7 +74,7 @@ async function CachedFooter({ perspective, stega }: DynamicFetchOptions) {
 						)}
 
 						{site?.copyright && (
-							<div className="[&_a]:link copyright md:order-first">
+							<div className="[&_a]:link copyright text-[#f8fafc]/65 md:order-first">
 								<PortableText value={site.copyright} />
 							</div>
 						)}

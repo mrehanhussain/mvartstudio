@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState, type ComponentProps } from 'react'
 import { useIsDesktop } from '@/hooks/useMatchMedia'
 import { cn } from '@/lib/utils'
+import { pathMatches } from '@/ui/header/nav-path'
 import css from './hover-details.module.css'
 
 /**
@@ -47,8 +48,8 @@ export default function ({
 
 	// Close after navigation
 	const pathname = usePathname()
-	const isCurrent = activePathPrefixes?.some(
-		(prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+	const isCurrent = activePathPrefixes?.some((prefix) =>
+		pathMatches(pathname, prefix),
 	)
 	useEffect(() => {
 		if (closeAfterNavigate) setOpen(false)

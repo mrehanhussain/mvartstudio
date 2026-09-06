@@ -82,3 +82,14 @@ export const PRODUCT_STATIC_PARAMS_QUERY = groq`
 		'product': slug.current
 	}
 `
+
+export const CUSTOM_MENU_IMAGES_QUERY = groq`{
+	'namePlates': *[_type == 'page' && metadata.slug.current == 'custom-projects/name-plates'][0]
+		.modules[_type == 'hero.split' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },
+	'memorials': *[_type == 'page' && metadata.slug.current == 'custom-projects/memorials'][0]
+		.modules[_type == 'hero.split' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },
+	'signage': *[_type == 'page' && metadata.slug.current == 'commercial-signage'][0]
+		.modules[_type == 'hero.cover' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },
+	'calligraphy': *[_type == 'product' && slug.current == 'ayatul-kursi-halo'][0]
+		.gallery[0]{ ..., asset->{ ..., metadata } }
+}`

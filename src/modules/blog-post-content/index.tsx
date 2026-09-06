@@ -38,15 +38,18 @@ export default function ({
 						<Img
 							image={post.metadata?.image}
 							width={1600}
-							className="absolute inset-0 size-full object-cover opacity-30"
+							className={cn(
+								css.heroImage,
+								'absolute inset-0 size-full object-cover',
+							)}
 							alt=""
 							draggable={false}
 							loading="eager"
 						/>
-						<span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(247,242,233,.98)_0%,rgba(247,242,233,.88)_48%,rgba(247,242,233,.55)_100%)]" />
+						<span className={css.heroOverlay} />
 
 						<div className="relative flex min-h-[clamp(28rem,52vw,38rem)] max-w-5xl flex-col justify-end p-6 sm:p-10 lg:p-14">
-							<p className="text-primary mb-5 text-xs font-bold tracking-[.2em] uppercase">
+							<p className="text-accent mb-5 text-xs font-bold tracking-[.2em] uppercase">
 								Journal
 							</p>
 							<h1

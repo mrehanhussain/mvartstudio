@@ -4,6 +4,8 @@ import { stegaClean } from 'next-sanity'
 import NextLink, { type LinkProps } from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { Link, Page } from '@/sanity/types'
+import { useNavActive } from '@/ui/header/nav-active'
+import { getLinkHref, normalizePath } from '@/ui/header/nav-path'
 
 export type SanityLinkType = Omit<Link, 'internal'> & {
 	_type?: 'link'
@@ -20,6 +22,7 @@ export default function ({
 	'href'
 >) {
 	const pathname = usePathname()
+	const active = useNavActive()
 	const { label, type, internal, external, params } = link ?? {}
 	const cleanLabel = stegaClean(label)
 	const cleanInternalSlug = stegaClean(internal?.slug)
@@ -30,14 +33,25 @@ export default function ({
 			? '/custom-projects'
 			: cleanInternalSlug
 
+	const linkHref = getLinkHref({
+		type,
+		internal: internalSlug ? { slug: internalSlug } : internal,
+		external,
+		params,
+	})
+	const isCurrent =
+		type === 'internal' &&
+		Boolean(linkHref) &&
+		(active === undefined
+			? normalizePath(internalSlug || '') === normalizePath(pathname)
+			: Boolean(active) &&
+				(active!.key
+					? active!.key === link?._key
+					: linkHref === active!.href))
+
 	const linkProps: Omit<LinkProps, 'href'> | React.ComponentProps<'a'> = {
 		...props,
-		'aria-current':
-			type === 'internal' &&
-			internalSlug &&
-			normalizedPath(internalSlug) === normalizedPath(pathname)
-				? 'page'
-				: undefined,
+		'aria-current': isCurrent ? 'page' : undefined,
 		children:
 			children ||
 			cleanLabel ||
@@ -57,9 +71,4 @@ export default function ({
 		return <NextLink href={stegaClean(external)} {...linkProps} />
 
 	return <span {...linkProps} />
-}
-
-function normalizedPath(value: string) {
-	const path = value.split(/[?#]/)[0]?.replace(/\/$/, '')
-	return path || '/'
 }

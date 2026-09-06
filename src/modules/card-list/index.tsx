@@ -1,10 +1,27 @@
 import { PortableText, stegaClean } from 'next-sanity'
+import {
+	PiBuildings,
+	PiDoorOpen,
+	PiMoonStars,
+	PiShapes,
+	PiSignpost,
+	PiStorefront,
+} from 'react-icons/pi'
 import { cn } from '@/lib/utils'
 import { Module } from '@/modules'
 import type { CardList } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
 import Eyebrow from '@/ui/eyebrow'
 import Img from '@/ui/img'
+
+const SIGNAGE_ICONS = [
+	PiBuildings,
+	PiDoorOpen,
+	PiSignpost,
+	PiMoonStars,
+	PiStorefront,
+	PiShapes,
+]
 
 export default function ({
 	eyebrow,
@@ -16,6 +33,7 @@ export default function ({
 	...props
 }: CardList) {
 	const layout = stegaClean(l)
+	const isSignageSolutions = props.attributes?.uid === 'signage-solutions'
 
 	return (
 		<Module className="section space-y-8" {...props}>
@@ -41,48 +59,66 @@ export default function ({
 					)}
 					style={{ '--columns': columns }}
 				>
-					{cards.map((item, i) => (
-						<article key={`${item._key}-${i}`} className="prose">
-							{(item.image || item.icon) && (
-								<figure>
-									<Img
-										className="w-full object-cover"
-										image={item.image}
-										width={1000}
-										alt=""
-									/>
-									<Img
-										className="h-12 w-auto object-cover"
-										image={item.icon}
-										width={120}
-										alt=""
-									/>
-								</figure>
-							)}
+					{cards.map((item, i) => {
+						const SignageIcon = isSignageSolutions
+							? SIGNAGE_ICONS[i % SIGNAGE_ICONS.length]
+							: null
 
-							<Eyebrow value={item.eyebrow} />
+						return (
+							<article
+								key={`${item._key}-${i}`}
+								className={cn(
+									'prose',
+									isSignageSolutions &&
+										'group rounded-card border-border-subtle bg-surface/45 hover:border-border-accent hover:bg-surface border p-6 transition-[background-color,border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_18px_48px_color-mix(in_oklab,var(--color-foreground)_8%,transparent)]',
+								)}
+							>
+								{SignageIcon && (
+									<div className="rounded-card border-border-accent bg-primary/10 text-primary mb-6 grid size-12 place-items-center border transition-transform duration-300 group-hover:scale-105">
+										<SignageIcon className="size-6" aria-hidden="true" />
+									</div>
+								)}
+								{(item.image || item.icon) && (
+									<figure>
+										<Img
+											className="w-full object-cover"
+											image={item.image}
+											width={1000}
+											alt=""
+										/>
+										<Img
+											className="h-12 w-auto object-cover"
+											image={item.icon}
+											width={120}
+											alt=""
+										/>
+									</figure>
+								)}
 
-							<PortableText
-								value={item.content ?? []}
-								components={{
-									types: {
-										image: ({ value }) => (
-											<figure>
-												<Img
-													className="mx-auto w-full"
-													image={value}
-													width={1000}
-													alt={value.alt ?? ''}
-												/>
-											</figure>
-										),
-									},
-								}}
-							/>
+								<Eyebrow value={item.eyebrow} />
 
-							<CTAList ctas={item.ctas} className="max-sm:*:w-full" />
-						</article>
-					))}
+								<PortableText
+									value={item.content ?? []}
+									components={{
+										types: {
+											image: ({ value }) => (
+												<figure>
+													<Img
+														className="mx-auto w-full"
+														image={value}
+														width={1000}
+														alt={value.alt ?? ''}
+													/>
+												</figure>
+											),
+										},
+									}}
+								/>
+
+								<CTAList ctas={item.ctas} className="max-sm:*:w-full" />
+							</article>
+						)
+					})}
 				</div>
 			)}
 

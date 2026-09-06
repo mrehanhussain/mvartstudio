@@ -11,6 +11,7 @@ export const LINK_QUERY = groq`
 			_type,
 			title,
 			'slug': select(
+				_type == 'product.category' => '/collections/' + slug.current,
 				metadata.slug.current == 'index' => '/',
 				'/' + metadata.slug.current
 			)

@@ -59,7 +59,7 @@ function Facet({
 								className={cn(
 									'border-border-default bg-surface group-hover:border-primary peer-focus-visible:outline-primary grid size-5 shrink-0 place-items-center border transition peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2',
 									type === 'radio' ? 'rounded-full' : 'rounded-[.3rem]',
-									checked && 'border-brand-green bg-brand-green text-white',
+									checked && 'border-brand bg-brand text-white',
 								)}
 							>
 								{checked &&
@@ -252,7 +252,7 @@ export default function CatalogGrid({
 							<PiSlidersHorizontal className="size-5" />
 							Filters
 							{activeCount > 0 && (
-								<span className="bg-brand-green grid size-5 place-items-center rounded-full text-[11px] text-white">
+								<span className="bg-brand grid size-5 place-items-center rounded-full text-[11px] text-white">
 									{activeCount}
 								</span>
 							)}
@@ -387,7 +387,7 @@ export default function CatalogGrid({
 					<button
 						type="button"
 						aria-label="Close filters"
-						className="absolute inset-0 bg-[#102e27]/55 backdrop-blur-sm"
+						className="absolute inset-0 bg-[#0f172a]/55 backdrop-blur-sm"
 						onClick={() => setDrawerOpen(false)}
 					/>
 					<div
@@ -429,7 +429,7 @@ export default function CatalogGrid({
 							<button
 								type="button"
 								onClick={() => setDrawerOpen(false)}
-								className="bg-brand-green min-h-12 rounded-full px-4 text-sm font-semibold text-white"
+								className="bg-brand min-h-12 rounded-full px-4 text-sm font-semibold text-white"
 							>
 								Show {visible.length} results
 							</button>

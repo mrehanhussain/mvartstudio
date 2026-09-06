@@ -5,6 +5,7 @@ import HoverDetails from '@/ui/details/hover-details'
 import MobileOnlyDetails from '@/ui/details/mobile-only-details'
 import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
 import LinkCard from './link.card'
+import { collectNavHrefs } from './nav-path'
 
 export default function ({
 	link,
@@ -13,16 +14,21 @@ export default function ({
 }: Megamenu & {
 	summaryClassName?: string
 }) {
+	const activePathPrefixes = collectNavHrefs([{ link, items }])
+
 	return (
 		<HoverDetails
 			name="header"
 			className="accordion group/megamenu [--safearea-x:20vw]!"
 			safeAreaOnHover
 			closeAfterNavigate
+			activePathPrefixes={
+				activePathPrefixes.length ? activePathPrefixes : undefined
+			}
 		>
 			<summary
 				className={cn(
-					'h-full group-open/megamenu:max-md:font-bold',
+					'group-open/megamenu:max-md:font-bold',
 					summaryClassName,
 				)}
 			>

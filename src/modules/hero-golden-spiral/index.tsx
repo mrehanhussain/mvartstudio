@@ -4,60 +4,35 @@ import type { HeroGoldenSpiral } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
 import Eyebrow from '@/ui/eyebrow'
 import Img from '@/ui/img'
+import { GoldenSpiralDesktop, GoldenSpiralMobile } from './golden-spiral'
 
 const defaultHighlights = [
-	'Islamic calligraphy',
-	'Layered acrylic',
-	'Wood',
-	'Architectural steel',
+	'Wall art & home decor',
+	'Arabic & Islamic art',
+	'Personalised name plates',
+	'Wood, acrylic & more',
 ]
 
-function GoldenSpiral() {
-	return (
-		<svg
-			aria-hidden="true"
-			className="absolute inset-0 size-full"
-			viewBox="0 0 1440 760"
-			preserveAspectRatio="xMidYMid slice"
-		>
-			<g fill="none" stroke="currentColor" vectorEffect="non-scaling-stroke">
-				<path d="M0 0h1440v760H0z" opacity=".16" />
-				<path
-					d="M890 0v760M0 470h1440M890 290h550M1100 0v290M1100 180h340M1310 180v110M1310 248h130"
-					opacity=".19"
-				/>
-				<path
-					d="M0 0c0 420 340 760 760 760 376 0 680-304 680-680M0 0c420 0 760 340 760 760M760 760c0-260 210-470 470-470 116 0 210 94 210 210M1230 290c0 116-94 210-210 210-72 0-130-58-130-130M890 370c0-44 36-80 80-80 28 0 50 22 50 50M1020 340c0 17-13 30-30 30"
-					opacity=".42"
-					strokeWidth="1.5"
-				/>
-				<path
-					d="M0 0 1440 760M1440 0 0 760"
-					opacity=".07"
-					strokeDasharray="5 10"
-				/>
-			</g>
-		</svg>
-	)
-}
-
-export default function HeroGoldenSpiral({
+/**
+ * MV Art Studio hero using the real golden-spiral SVG geometry from
+ * 21st.dev "Hero Golden Spiral" (ncdai/hero-01). Full-bleed composition so
+ * long Sanity headlines are never clipped by the φ aspect frame.
+ */
+export default function HeroGoldenSpiralModule({
 	eyebrow,
 	content = [],
 	ctas,
 	highlights,
 	image,
-	textAlign: _textAlign,
-	verticalAlign: _verticalAlign,
 	...props
-}: HeroGoldenSpiral & { textAlign?: unknown; verticalAlign?: unknown }) {
+}: HeroGoldenSpiral) {
 	const items = highlights?.length
 		? highlights.map((item) => item.title).filter(Boolean)
 		: defaultHighlights
 
 	return (
 		<Module
-			className="relative isolate overflow-hidden bg-[#102e27] text-[#fffaf0]"
+			className="relative isolate overflow-hidden bg-[#0f172a] text-[#f8fafc]"
 			{...props}
 		>
 			{image?.asset && (
@@ -65,42 +40,54 @@ export default function HeroGoldenSpiral({
 					image={image}
 					width={1920}
 					alt={image.alt || ''}
-					className="pointer-events-none absolute inset-0 -z-20 size-full object-cover opacity-45"
-					priority
+					loading="eager"
+					className="pointer-events-none absolute inset-0 -z-20 size-full object-cover object-[68%_42%] opacity-40"
 				/>
 			)}
-			<div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,28,23,.96)_0%,rgba(8,28,23,.78)_44%,rgba(8,28,23,.24)_100%)]" />
-			<div className="pointer-events-none absolute inset-0 text-[#d4ad69]">
-				<GoldenSpiral />
+			<div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(15,23,42,.97)_0%,rgba(15,23,42,.88)_38%,rgba(25,67,145,.42)_68%,rgba(15,23,42,.2)_100%)]" />
+
+			{/* 21st.dev spiral — mobile portrait geometry */}
+			<div className="pointer-events-none absolute inset-0 md:hidden">
+				<GoldenSpiralMobile />
 			</div>
-			<div className="section relative flex min-h-[calc(100svh-4.25rem)] items-center py-20 sm:py-24 lg:py-28">
+			{/* 21st.dev spiral — desktop landscape geometry, anchored right */}
+			<div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[min(72vw,58rem)] md:block">
+				<GoldenSpiralDesktop />
+			</div>
+
+			<div className="section relative flex min-h-[calc(100svh-4.5rem)] flex-col justify-center py-16 sm:py-20 lg:py-24">
 				<div className="max-w-3xl">
-					<Eyebrow value={eyebrow} className="mb-6 text-[#d9b875]" />
-					<div className="prose headings:font-[family-name:var(--font-cormorant)] headings:font-medium headings:tracking-[-.035em] [&_h1]:max-w-3xl [&_h1]:text-5xl [&_h1]:leading-[.94] [&_h1]:sm:text-7xl [&_h1]:lg:text-[5.75rem] [&_p]:max-w-xl [&_p]:text-base [&_p]:leading-7 [&_p]:text-white/72 [&_p]:sm:text-lg">
-						<PortableText value={content} />
+					<Eyebrow value={eyebrow} className="text-accent mb-5 sm:mb-6" />
+					<div className="prose headings:font-[family-name:var(--font-serif)] headings:font-medium headings:tracking-[-.035em] [&_h1]:max-w-[14ch] [&_h1]:text-5xl [&_h1]:leading-[.94] [&_h1]:text-[#f8fafc] [&_h1]:sm:text-6xl [&_h1]:lg:text-7xl [&_h1]:xl:text-[5.5rem] [&_p]:mt-5 [&_p]:max-w-xl [&_p]:text-base [&_p]:leading-7 [&_p]:text-[#f8fafc]/72 [&_p]:sm:text-lg">
+						<PortableText value={content || []} />
 					</div>
 					<CTAList
 						ctas={ctas}
-						className="[&_.action-outline]:border-border-inverse mt-8 gap-3 max-sm:*:w-full [&_.action]:min-h-12 [&_.action]:rounded-full [&_.action]:bg-[#d4ad69] [&_.action]:px-6 [&_.action]:font-semibold [&_.action]:text-[#102e27] [&_.action-outline]:min-h-12 [&_.action-outline]:rounded-full [&_.action-outline]:bg-white/5 [&_.action-outline]:px-6 [&_.action-outline]:text-white"
+						className="[&_.action-outline]:border-border-inverse mt-8 flex max-w-sm flex-col gap-3 [&_.action]:bg-accent [&_.action]:min-h-12 [&_.action]:rounded-sm [&_.action]:px-6 [&_.action]:font-semibold [&_.action]:tracking-[.04em] [&_.action]:text-[#0f172a] [&_.action]:uppercase [&_.action-outline]:min-h-12 [&_.action-outline]:rounded-sm [&_.action-outline]:bg-white/8 [&_.action-outline]:px-6 [&_.action-outline]:font-semibold [&_.action-outline]:tracking-[.04em] [&_.action-outline]:text-[#f8fafc] [&_.action-outline]:uppercase"
 					/>
+				</div>
+
+				{!!items.length && (
 					<ul
 						aria-label="Materials and specialties"
-						className="mt-12 grid max-w-3xl grid-cols-2 gap-x-7 gap-y-4 border-t border-[#d4ad69]/30 pt-6 text-xs font-semibold tracking-[.16em] text-white/68 uppercase sm:flex sm:flex-wrap sm:items-center sm:gap-7"
+						className="border-accent/28 mt-14 flex max-w-4xl flex-wrap items-center gap-x-7 gap-y-3 border-t pt-6 text-[10px] font-semibold tracking-[.16em] text-[#f8fafc]/68 uppercase sm:mt-16 sm:text-xs"
 					>
-						{items.map((item, index) => (
-							<li
-								key={`${item}-${index}`}
-								className="flex items-center gap-2.5"
-							>
-								<span
-									aria-hidden="true"
-									className="size-1.5 rounded-full bg-[#d4ad69] shadow-[0_0_0_4px_rgba(212,173,105,.12)]"
-								/>
-								{item}
-							</li>
-						))}
+						{items.map((item, index) =>
+							item ? (
+								<li
+									key={`${item}-${index}`}
+									className="flex items-center gap-2.5"
+								>
+									<span
+										aria-hidden="true"
+										className="bg-accent size-1.5 shrink-0 rounded-full shadow-[0_0_0_4px_rgba(193,168,117,.12)]"
+									/>
+									{item}
+								</li>
+							) : null,
+						)}
 					</ul>
-				</div>
+				)}
 			</div>
 		</Module>
 	)

@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import type { LinkList, Page } from '@/sanity/types'
 import HoverDetails from '@/ui/details/hover-details'
 import SanityLink, { type SanityLinkType } from '@/ui/sanity-link'
+import { getLinkHref } from './nav-path'
 
 export default function ({
 	link: summary,
@@ -13,6 +14,11 @@ export default function ({
 	_key: string
 	summaryClassName?: string
 }) {
+	const activePathPrefixes = [
+		getLinkHref(summary as SanityLinkType),
+		...(links?.map((item) => getLinkHref(item as SanityLinkType)) ?? []),
+	].filter((href): href is string => Boolean(href))
+
 	return (
 		<HoverDetails
 			name="header"
@@ -20,10 +26,13 @@ export default function ({
 			style={{ '--anchor-name': `--dropdown-${_key}` }}
 			safeAreaOnHover
 			closeAfterNavigate
+			activePathPrefixes={
+				activePathPrefixes.length ? activePathPrefixes : undefined
+			}
 		>
 			<summary
 				className={cn(
-					'h-full group-open/dropdown:max-md:font-bold',
+					'group-open/dropdown:max-md:font-bold',
 					summaryClassName,
 				)}
 			>

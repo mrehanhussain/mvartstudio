@@ -3,24 +3,30 @@
 @theme {
 	--font-sans: 'Geist', sans-serif;
 	--font-mono: 'Geist Mono', monospace;
+	--font-serif: var(--font-playfair), 'Playfair Display', serif;
+	--font-cormorant: var(--font-playfair), 'Playfair Display', serif;
 
-	/* MV Art Studio's baseline brand tokens. Keeping these in the application
-	   prevents non-page-builder routes and streamed loading states from falling
-	   back to the browser's blue LinkText color. */
-	--color-background: #f7f2e9;
-	--color-foreground: #211d18;
-	--color-stroke: #d8cdbd;
+	/* Harbor Blue brand + Camel Linen gold accents (kept from camel-linen).
+	   https://21st.dev/community/themes/harbor-blue
+	   https://21st.dev/community/themes/camel-linen */
+	--color-background: #ffffff;
+	--color-foreground: #0f172a;
+	--color-stroke: #e2e8f0;
 
-	--color-primary: #765523;
-	--color-accent: #b58a48;
-	--color-surface: #fffdf8;
-	--color-brand-green: #173f35;
-	--color-muted-foreground: #625b51;
-	--color-surface-muted: #eee5d7;
-	--color-surface-raised: #fffaf0;
-	--color-art-backdrop: #e9e1d4;
-	--color-brand-green-hover: #0f3028;
-	--color-danger: #8a3d2b;
+	--color-primary: #194391;
+	--color-primary-foreground: #ffffff;
+	/* Camel Linen warm gold — labels, eyebrows, metal accents */
+	--color-accent: #c1a875;
+	--color-surface: #ffffff;
+	--color-brand: #194391;
+	--color-muted-foreground: #64748b;
+	--color-surface-muted: #f1f5f9;
+	--color-surface-raised: #f8fafc;
+	--color-art-backdrop: #dce6f9;
+	--color-brand-hover: #12306c;
+	--color-whatsapp: #25d366;
+	--color-whatsapp-hover: #1ebe57;
+	--color-danger: #ef4444;
 	--color-border-subtle: color-mix(
 		in oklab,
 		var(--color-foreground) 10%,
@@ -40,10 +46,10 @@
 	--color-border-inverse-strong: color-mix(in oklab, white 55%, transparent);
 
 	/* Radius is structural: controls < cards < panels < editorial features. */
-	--radius-control: 0.75rem;
-	--radius-card: 1rem;
-	--radius-panel: 1.5rem;
-	--radius-feature: 1.75rem;
+	--radius-control: 0.5rem;
+	--radius-card: 0.75rem;
+	--radius-panel: 1rem;
+	--radius-feature: 1.25rem;
 
 	--spacing-lh: 1lh;
 	--spacing-ch: 1ch;
@@ -55,19 +61,23 @@
 
 :root[data-theme='dark'] {
 	color-scheme: dark;
-	--color-background: #0f1512 !important;
-	--color-foreground: #f5efe5 !important;
-	--color-stroke: #3b4942 !important;
-	--color-primary: #d5aa67 !important;
-	--color-accent: #e4be7b !important;
-	--color-surface: #171f1b !important;
-	--color-surface-muted: #202a25;
-	--color-surface-raised: #1b251f;
-	--color-art-backdrop: #27332d;
-	--color-brand-green: #286052;
-	--color-brand-green-hover: #327565;
-	--color-muted-foreground: #b9afa2;
-	--color-danger: #ef9b85;
+	--color-background: #0f172a !important;
+	--color-foreground: #f8fafc !important;
+	--color-stroke: #334155 !important;
+	--color-primary: #7ca3f5 !important;
+	--color-primary-foreground: #0f172a !important;
+	--color-accent: #d4bc8b !important;
+	--color-surface: #1e293b !important;
+	--color-surface-muted: #1e293b;
+	--color-surface-raised: #334155;
+	--color-art-backdrop: #1e293b;
+	/* Solid brand CTAs stay deep navy so white text stays readable */
+	--color-brand: #194391;
+	--color-brand-hover: #12306c;
+	--color-whatsapp: #25d366;
+	--color-whatsapp-hover: #1ebe57;
+	--color-muted-foreground: #94a3b8;
+	--color-danger: #f87171;
 }
 
 body {
@@ -261,7 +271,7 @@ body {
 }
 
 @utility action {
-	@apply action-base bg-primary text-background;
+	@apply action-base bg-primary text-primary-foreground;
 }
 
 @utility action-outline {
@@ -315,6 +325,14 @@ body {
 
 .layout-header > div {
 	min-height: 4.25rem !important;
+	max-width: 90rem !important;
+	padding-inline: 1rem !important;
+}
+
+@media (width >= 80rem) {
+	.layout-header > div {
+		padding-inline: 2rem !important;
+	}
 }
 
 .layout-header .header-logo {
@@ -334,6 +352,8 @@ body {
 .layout-header .header-ctas .cta-list {
 	margin-block: 0 !important;
 	align-self: center !important;
+	z-index: 1;
+	isolation: isolate;
 }
 
 .layout-header .header-ctas .action {
@@ -346,41 +366,199 @@ body {
 	text-transform: none !important;
 }
 
-.layout-header
-	:is(a[aria-current='page'], details[data-current='true'] > summary) {
-	background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
-	color: var(--color-primary);
-}
-
-.layout-header
-	:is(a[aria-current='page'], details[data-current='true'] > summary)::after {
-	position: absolute;
-	bottom: -0.35rem;
-	left: 50%;
-	width: 1.25rem;
-	height: 2px;
-	content: '';
-	background: currentColor;
-	border-radius: 999px;
-	transform: translateX(-50%);
-}
-
-.layout-header
-	:is(a[aria-current='page'], details[data-current='true'] > summary) {
+.layout-header nav.header-nav > a,
+.layout-header nav.header-nav > details > summary {
 	position: relative;
 }
 
-@media (max-width: 47.999rem) {
-	.layout-header
-		:is(a[aria-current='page'], details[data-current='true'] > summary)::after {
+.layout-header nav.header-nav > a[aria-current='page'],
+.layout-header nav.header-nav > details[data-current='true'] > summary {
+	color: var(--color-primary);
+	background-color: transparent;
+}
+
+@media (width >= 48rem) {
+	.layout-header nav.header-nav {
+		flex-wrap: nowrap;
+		justify-content: safe center;
+		max-width: 100%;
+		gap: 0.1rem 0.15rem;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scrollbar-width: none;
+	}
+
+	.layout-header nav.header-nav::-webkit-scrollbar {
 		display: none;
 	}
 
-	footer a {
+	.layout-header nav.header-nav > :is(a, details) {
+		flex-shrink: 0;
+		min-width: max-content;
+	}
+
+	.layout-header nav.header-nav > a,
+	.layout-header nav.header-nav > details > summary {
+		display: inline-flex;
+		min-height: 2.75rem;
+		align-items: center;
+		justify-content: center;
+		padding: 0.25rem 0.45rem;
+		overflow: visible;
+		border-radius: 0.35rem;
+		background-color: transparent;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.055em;
+		line-height: 1.2;
+		white-space: nowrap;
+		list-style: none;
+		text-decoration: none;
+		transition:
+			color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+			background-color 180ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.layout-header nav.header-nav > details > summary {
+		gap: 0.2rem;
+	}
+
+	.layout-header nav.header-nav > details > summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.layout-header nav.header-nav > a::after,
+	.layout-header nav.header-nav > details > summary::after {
+		position: absolute;
+		bottom: 0.35rem;
+		left: 50%;
+		width: 0;
+		height: 2px;
+		content: '';
+		background: currentColor;
+		border-radius: 999px;
+		transform: translateX(-50%);
+		transition: width 180ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.layout-header nav.header-nav > a:hover,
+	.layout-header nav.header-nav > details > summary:hover {
+		background-color: transparent;
+		color: var(--color-primary);
+	}
+
+	.layout-header nav.header-nav > a:hover::after,
+	.layout-header nav.header-nav > details > summary:hover::after,
+	.layout-header nav.header-nav > a[aria-current='page']::after,
+	.layout-header
+		nav.header-nav
+		> details[data-current='true']
+		> summary::after {
+		width: 1.15rem;
+	}
+
+	.layout-header nav.header-nav > a[aria-current='page'],
+	.layout-header nav.header-nav > details[data-current='true'] > summary {
+		background-color: transparent;
+		font-weight: 700;
+	}
+
+	.layout-header nav.header-nav > a:active,
+	.layout-header nav.header-nav > details > summary:active {
+		color: var(--color-primary);
+	}
+}
+
+@media (width >= 80rem) {
+	.layout-header nav.header-nav {
+		gap: 0.15rem 0.25rem;
+	}
+
+	.layout-header nav.header-nav > a,
+	.layout-header nav.header-nav > details > summary {
+		padding: 0.25rem 0.5rem;
+		font-size: 0.75rem;
+		letter-spacing: 0.05em;
+	}
+}
+
+@media (max-width: 47.999rem) {
+	.layout-header nav.header-nav > a::after,
+	.layout-header nav.header-nav > details > summary::after {
+		display: none;
+	}
+
+	/* Touch targets for footer utility links only — never column nav */
+	footer .bottom-navigation a,
+	footer .social a {
 		display: inline-flex;
 		min-height: 2.75rem;
 		align-items: center;
 	}
+}
+
+/* Footer link columns: equal tops, consistent gaps, no staggered min-heights */
+.footer-nav {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	align-items: start;
+	column-gap: clamp(1.5rem, 4vw, 3.5rem);
+	row-gap: 2rem;
+	min-width: 0;
+}
+
+@media (max-width: 39.99rem) {
+	.footer-nav {
+		grid-template-columns: 1fr;
+	}
+}
+
+.footer-nav__col {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.85rem;
+	min-width: 0;
+}
+
+.footer-nav__heading,
+.footer-nav__heading a,
+.footer-nav__heading span {
+	color: var(--color-accent) !important;
+	font-family: var(--font-sans);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	line-height: 1.3;
+	text-transform: uppercase;
+	text-wrap: balance;
+	min-height: 0 !important;
+	display: block !important;
+	padding: 0 !important;
+}
+
+.footer-nav__links {
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.footer-nav__links a,
+.footer-nav__links span {
+	display: inline !important;
+	min-height: 0 !important;
+	padding: 0 !important;
+	line-height: 1.45;
+	font-size: 0.9375rem;
+	color: color-mix(in oklab, var(--color-foreground) 88%, transparent);
+}
+
+.footer-nav__links a:hover {
+	color: var(--color-accent);
+	text-decoration: underline;
 }
 
 /* Form landing pages use a narrow editorial column beside the form. Keep long

@@ -79,7 +79,7 @@ export default function HeaderSearch({
 
 			{open && (
 				<div
-					className="fixed inset-0 z-[100] flex items-start justify-center bg-[#0d211c]/42 px-4 pt-[max(1rem,8vh)] backdrop-blur-md"
+					className="fixed inset-0 z-[100] flex items-start justify-center bg-[#0f172a]/42 px-4 pt-[max(1rem,8vh)] backdrop-blur-md"
 					role="dialog"
 					aria-modal="true"
 					aria-labelledby={titleId}
@@ -128,7 +128,7 @@ export default function HeaderSearch({
 							<div className="flex items-center justify-between px-2 pb-3">
 								<p
 									id={titleId}
-									className="text-primary text-xs font-bold tracking-[.18em] uppercase"
+									className="text-accent text-xs font-bold tracking-[.18em] uppercase"
 								>
 									{query.length >= 2 ? 'Search results' : 'Find your piece'}
 								</p>

@@ -43,7 +43,7 @@ export default function ({
 								sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 								alt={image.alt ?? ''}
 							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-[#0d211c]/82 via-transparent to-transparent opacity-85" />
+							<div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/82 via-transparent to-transparent opacity-85" />
 							<figcaption className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
 								<span className="text-[9px] font-bold tracking-[.18em] text-[#e1bf80] uppercase">
 									{index % 2 === 0

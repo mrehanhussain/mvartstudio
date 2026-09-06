@@ -1,3 +1,31 @@
+.heroImage {
+	opacity: 0.4;
+}
+
+.heroOverlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		color-mix(in oklab, var(--color-background) 94%, transparent) 0%,
+		color-mix(in oklab, var(--color-background) 82%, transparent) 48%,
+		color-mix(in oklab, var(--color-background) 48%, transparent) 100%
+	);
+}
+
+:global(:root[data-theme='dark']) .heroImage {
+	opacity: 0.55;
+}
+
+:global(:root[data-theme='dark']) .heroOverlay {
+	background: linear-gradient(
+		90deg,
+		color-mix(in oklab, var(--color-background) 82%, transparent) 0%,
+		color-mix(in oklab, var(--color-background) 68%, transparent) 48%,
+		color-mix(in oklab, var(--color-background) 38%, transparent) 100%
+	);
+}
+
 .body {
 	font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
 	line-height: 1.8;

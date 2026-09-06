@@ -10,6 +10,8 @@ import {
 import {
 	enquiryFieldLabels as fieldLabels,
 	enquiryFieldOrder as fieldOrder,
+	QUOTE_PROJECT_TYPES,
+	resolveQuoteProjectType,
 	type EnquiryKind as FormKind,
 } from '@/lib/enquiry'
 import { cn } from '@/lib/utils'
@@ -28,6 +30,7 @@ const quoteSteps = [
 
 export default function EnquiryForm({ kind }: { kind: FormKind }) {
 	const [productReference, setProductReference] = useState('')
+	const [projectType, setProjectType] = useState('')
 	const [status, setStatus] = useState('')
 	const [statusType, setStatusType] = useState<'success' | 'error'>('success')
 	const [submitting, setSubmitting] = useState(false)
@@ -42,8 +45,13 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 	)
 
 	useEffect(() => {
-		const product = new URLSearchParams(window.location.search).get('product')
+		const params = new URLSearchParams(window.location.search)
+		const product = params.get('product')
 		if (product) setProductReference(product)
+		const type = resolveQuoteProjectType(
+			params.get('type') || params.get('projectType'),
+		)
+		if (type) setProjectType(type)
 	}, [])
 
 	function goToStep(nextStep: number) {
@@ -179,7 +187,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 			<div className="border-border-subtle mb-8 border-b pb-6">
 				<div className="flex items-start justify-between gap-5">
 					<div>
-						<p className="text-primary text-xs font-bold tracking-[.2em] uppercase">
+						<p className="text-accent text-xs font-bold tracking-[.2em] uppercase">
 							{kind === 'quote' ? 'Project brief' : 'Your message'}
 						</p>
 						<p className="text-muted-foreground mt-2 max-w-md text-sm leading-6">
@@ -289,15 +297,19 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 							The piece
 						</h2>
 						<div className="grid gap-5 sm:grid-cols-2">
-							<SelectField label="Project type" name="projectType" required>
+							<SelectField
+								label="Project type"
+								name="projectType"
+								required
+								value={projectType}
+								onChange={(event) => setProjectType(event.currentTarget.value)}
+							>
 								<option value="">Choose a project type</option>
-								<option>Islamic calligraphy art</option>
-								<option>Layered acrylic art</option>
-								<option>Wood wall art</option>
-								<option>Steel wall art</option>
-								<option>Architectural signage</option>
-								<option>Radium / reflective graphics</option>
-								<option>Not sure yet</option>
+								{QUOTE_PROJECT_TYPES.map((type) => (
+									<option key={type} value={type}>
+										{type}
+									</option>
+								))}
 							</SelectField>
 							<label className={label}>
 								Artwork or product reference
@@ -466,7 +478,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 					<button
 						type="button"
 						onClick={advanceQuote}
-						className="bg-brand-green hover:bg-brand-green-hover inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white"
+						className="bg-brand hover:bg-brand-hover inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold text-white"
 					>
 						Continue <PiArrowUpRight aria-hidden="true" className="size-4" />
 					</button>
@@ -488,7 +500,7 @@ export default function EnquiryForm({ kind }: { kind: FormKind }) {
 							name="channel"
 							value="whatsapp"
 							disabled={!whatsappNumber}
-							className="bg-brand-green hover:bg-brand-green-hover focus-visible:outline-brand-green inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white transition focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+							className="bg-whatsapp hover:bg-whatsapp-hover focus-visible:outline-whatsapp inline-flex min-h-13 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white transition focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
 						>
 							<PiWhatsappLogo aria-hidden="true" className="size-5" />
 							Review and open WhatsApp
@@ -619,7 +631,7 @@ function ChoicePill({
 				checked={checked}
 				onChange={onChange}
 			/>
-			<span className="border-border-default bg-surface text-muted-foreground peer-checked:border-brand-green peer-checked:bg-brand-green peer-focus-visible:outline-primary hover:border-primary/45 inline-flex min-h-11 items-center rounded-full border px-4 text-xs font-semibold transition peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2">
+			<span className="border-border-default bg-surface text-muted-foreground peer-checked:border-brand peer-checked:bg-brand peer-focus-visible:outline-primary hover:border-primary/45 inline-flex min-h-11 items-center rounded-full border px-4 text-xs font-semibold transition peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2">
 				{value}
 			</span>
 		</label>

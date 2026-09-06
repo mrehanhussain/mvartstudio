@@ -26,7 +26,11 @@ export default defineType({
 		defineField({
 			name: 'internal',
 			type: 'reference',
-			to: [{ type: 'page' } /* { type: 'blog.post' } */],
+			to: [
+				{ type: 'page' },
+				{ type: 'product.category' },
+				{ type: 'blog.post' },
+			],
 			hidden: ({ parent }) => parent?.type !== 'internal',
 		}),
 		defineField({
@@ -54,12 +58,27 @@ export default defineType({
 			_type: 'internal._type',
 			title: 'internal.title',
 			internal: 'internal.metadata.slug.current',
+			categorySlug: 'internal.slug.current',
 			params: 'params',
 			external: 'external',
 		},
-		prepare: ({ label, title, _type, internal, params, external }) => ({
+		prepare: ({
+			label,
+			title,
+			_type,
+			internal,
+			categorySlug,
+			params,
+			external,
+		}) => ({
 			title: label || title,
-			subtitle: resolveSlug({ _type, internal, params, external }),
+			subtitle: resolveSlug({
+				_type,
+				internal:
+					_type === 'product.category' ? categorySlug : internal,
+				params,
+				external,
+			}),
 		}),
 	},
 })

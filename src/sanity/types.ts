@@ -1111,7 +1111,7 @@ export type Link = {
 	_type: 'link'
 	label?: string
 	type?: 'internal' | 'external'
-	internal?: PageReference
+	internal?: PageReference | ProductCategoryReference | BlogPostReference
 	external?: string
 	params?: string
 }
@@ -2215,7 +2215,7 @@ export type AllSanitySchemaTypes =
 
 // Source: src/app/(frontend)/[[...slug]]/page.tsx
 // Variable: PAGE_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		'modules': (			// global moddules (before)			*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (before)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// page modules			+ modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (after)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// global moddules (after)			+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		)	}
+// Query: *[_type == 'page' && metadata.slug.current == $slug][0]{		...,		'modules': (			// global moddules (before)			*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (before)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// page modules			+ modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// path modules (after)			+ *[_type == 'global-module' && path != '*' && 	string::startsWith($slug, path)	&& 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }			// global moddules (after)			+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		)	}
 export type PAGE_QUERY_RESULT = {
 	_id: string
 	_type: 'page'
@@ -2256,7 +2256,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2264,11 +2265,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2398,7 +2411,10 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductCategoryReference
 												external?: string
 												params?: string
 										  }
@@ -2406,11 +2422,23 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product.category'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -2467,7 +2495,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2475,11 +2504,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2500,7 +2541,8 @@ export type PAGE_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal?: PageReference
+							internal?:
+								BlogPostReference | PageReference | ProductCategoryReference
 							external?: string
 							params?: string
 					  }
@@ -2509,11 +2551,23 @@ export type PAGE_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal: {
-								_type: 'page'
-								title: string | null
-								slug: string | '/' | null
-							} | null
+							internal:
+								| {
+										_type: 'blog.post'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product.category'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| null
 							external?: string
 							params?: string
 					  }
@@ -2574,7 +2628,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2582,11 +2637,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2668,7 +2735,8 @@ export type PAGE_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -2676,11 +2744,23 @@ export type PAGE_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -2698,7 +2778,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2706,11 +2787,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2799,7 +2892,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2807,11 +2901,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2885,7 +2991,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2893,11 +3000,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -2963,7 +3082,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -2971,11 +3091,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3282,7 +3414,10 @@ export type PAGE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -3290,11 +3425,23 @@ export type PAGE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -3457,7 +3604,10 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductCategoryReference
 												external?: string
 												params?: string
 										  }
@@ -3465,11 +3615,23 @@ export type PAGE_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product.category'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -3688,7 +3850,8 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -3696,11 +3859,23 @@ export type PAGE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -3853,7 +4028,8 @@ export type PAGE_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -3861,11 +4037,23 @@ export type PAGE_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -3911,7 +4099,7 @@ export type OG_QUERY_RESULT =
 
 // Source: src/app/(frontend)/blog/[slug]/page.tsx
 // Variable: BLOG_POST_QUERY
-// Query: *[_type == 'blog.post' && metadata.slug.current == $slug][0]{	...,	content[]{		...,		_type == 'image' => {			...,			asset->		},		_type == 'ctas' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	'contentPlainText': pt::text(content),	'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{		style,		'text': pt::text(@)	},		'readTime': length(string::split(pt::text(content), ' ')) / 200,	categories[]->{		title,		slug	},	author->{		name,		title,		enableSchema,		'description': pt::text(content),		image{			...,			asset->		}	},	'modules': (		// global modules (before)		*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		// path modules (before)		+ *[_type == 'global-module' && path == $blogDir].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		// path modules (after)		+ *[_type == 'global-module' && path == $blogDir].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		// global modules (after)		+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }	)}
+// Query: *[_type == 'blog.post' && metadata.slug.current == $slug][0]{	...,	content[]{		...,		_type == 'image' => {			...,			asset->		},		_type == 'ctas' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},	'contentPlainText': pt::text(content),	'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{		style,		'text': pt::text(@)	},		'readTime': length(string::split(pt::text(content), ' ')) / 200,	categories[]->{		title,		slug	},	author->{		name,		title,		enableSchema,		'description': pt::text(content),		image{			...,			asset->		}	},	'modules': (		// global modules (before)		*[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		// path modules (before)		+ *[_type == 'global-module' && path == $blogDir].before[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		// path modules (after)		+ *[_type == 'global-module' && path == $blogDir].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }		// global modules (after)		+ *[_type == 'global-module' && path == '*' && 	select(		defined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,		true	)].after[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }	)}
 export type BLOG_POST_QUERY_RESULT = {
 	_id: string
 	_type: 'blog.post'
@@ -4014,7 +4202,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4022,11 +4211,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4213,7 +4414,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4221,11 +4423,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4355,7 +4569,10 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductCategoryReference
 												external?: string
 												params?: string
 										  }
@@ -4363,11 +4580,23 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product.category'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -4424,7 +4653,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4432,11 +4662,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4457,7 +4699,8 @@ export type BLOG_POST_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal?: PageReference
+							internal?:
+								BlogPostReference | PageReference | ProductCategoryReference
 							external?: string
 							params?: string
 					  }
@@ -4466,11 +4709,23 @@ export type BLOG_POST_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal: {
-								_type: 'page'
-								title: string | null
-								slug: string | '/' | null
-							} | null
+							internal:
+								| {
+										_type: 'blog.post'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product.category'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| null
 							external?: string
 							params?: string
 					  }
@@ -4531,7 +4786,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4539,11 +4795,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4625,7 +4893,8 @@ export type BLOG_POST_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -4633,11 +4902,23 @@ export type BLOG_POST_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -4655,7 +4936,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4663,11 +4945,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4756,7 +5050,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4764,11 +5059,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4842,7 +5149,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4850,11 +5158,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -4920,7 +5240,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -4928,11 +5249,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -5239,7 +5572,10 @@ export type BLOG_POST_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -5247,11 +5583,23 @@ export type BLOG_POST_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -5414,7 +5762,10 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductCategoryReference
 												external?: string
 												params?: string
 										  }
@@ -5422,11 +5773,23 @@ export type BLOG_POST_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product.category'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -5645,7 +6008,8 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -5653,11 +6017,23 @@ export type BLOG_POST_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -5810,7 +6186,8 @@ export type BLOG_POST_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -5818,11 +6195,23 @@ export type BLOG_POST_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -5841,7 +6230,7 @@ export type BLOG_POST_QUERY_RESULT = {
 
 // Source: src/app/(frontend)/blog/rss.xml/route.ts
 // Variable: BLOG_RSS_QUERY
-// Query: {	'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{		metadata	},	'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){		title,		content[]{			...,			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		publishDate,		categories[]->{ title },		author->{ name },		metadata	}}
+// Query: {	'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{		metadata	},	'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){		title,		content[]{			...,			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		publishDate,		categories[]->{ title },		author->{ name },		metadata	}}
 export type BLOG_RSS_QUERY_RESULT = {
 	blog: {
 		metadata: Metadata | null
@@ -5950,7 +6339,8 @@ export type BLOG_RSS_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -5958,11 +6348,23 @@ export type BLOG_RSS_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -6060,7 +6462,7 @@ export type BLOG_RSS_QUERY_RESULT = {
 
 // Source: src/app/(frontend)/not-found.tsx
 // Variable: NOT_FOUND_QUERY
-// Query: *[_type == 'page' && metadata.slug.current == '404'][0]{		...,		modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }	}
+// Query: *[_type == 'page' && metadata.slug.current == '404'][0]{		...,		modules[]{ 	...,	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	sidebar{ 	...,	modules[]{		...,		_type == 'callout' => {			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	} },		_type == 'form-module' => {		form->	},		_type == 'breadcrumbs' => {		crumbs[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},		_type == 'card-list' => {		cards[]{			...,			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	},		_type == 'image-gallery' => {		rows[]{			...,			images[]{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'logo-list' => {		logos[]->	},		_type == 'person-list' => {		people[]->{			name,			title,			content,			enableSchema,			image{				...,				asset->{					...,					metadata				}			}		}	},		_type == 'prose' => {		content[]{			...,			_type == 'image' => {				...,				asset->{					...,					metadata				}			},			_type == 'ctas' => {				ctas[]{					...,					link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				}			}		},		'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{			style,			'text': pt::text(@)		}	},		_type == 'quote-list' => {		quotes[]->	},		_type == 'tabbed-content' => {		tabs[]{			...,			content[]{				...,				_type == 'image' => {					...,					asset->{						...,						metadata					}				}			},			ctas[]{				...,				link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }			}		}	}, }	}
 export type NOT_FOUND_QUERY_RESULT = {
 	_id: string
 	_type: 'page'
@@ -6101,7 +6503,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6109,11 +6512,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6213,7 +6628,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6221,11 +6637,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6246,7 +6674,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal?: PageReference
+							internal?:
+								BlogPostReference | PageReference | ProductCategoryReference
 							external?: string
 							params?: string
 					  }
@@ -6255,11 +6684,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 							_type: 'link'
 							label?: string
 							type?: 'external' | 'internal'
-							internal: {
-								_type: 'page'
-								title: string | null
-								slug: string | '/' | null
-							} | null
+							internal:
+								| {
+										_type: 'blog.post'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'page'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| {
+										_type: 'product.category'
+										title: string | null
+										slug: string | '/' | null
+								  }
+								| null
 							external?: string
 							params?: string
 					  }
@@ -6320,7 +6761,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6328,11 +6770,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6414,7 +6868,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -6422,11 +6877,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -6444,7 +6911,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6452,11 +6920,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6545,7 +7025,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6553,11 +7034,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6631,7 +7124,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6639,11 +7133,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -6709,7 +7215,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -6717,11 +7224,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7028,7 +7547,10 @@ export type NOT_FOUND_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -7036,11 +7558,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -7203,7 +7737,10 @@ export type NOT_FOUND_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal?: PageReference
+												internal?:
+													| BlogPostReference
+													| PageReference
+													| ProductCategoryReference
 												external?: string
 												params?: string
 										  }
@@ -7211,11 +7748,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 												_type: 'link'
 												label?: string
 												type?: 'external' | 'internal'
-												internal: {
-													_type: 'page'
-													title: string | null
-													slug: string | '/' | null
-												} | null
+												internal:
+													| {
+															_type: 'blog.post'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'page'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| {
+															_type: 'product.category'
+															title: string | null
+															slug: string | '/' | null
+													  }
+													| null
 												external?: string
 												params?: string
 										  }
@@ -7434,7 +7983,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -7442,11 +7992,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -7599,7 +8161,8 @@ export type NOT_FOUND_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal?: PageReference
+									internal?:
+										BlogPostReference | PageReference | ProductCategoryReference
 									external?: string
 									params?: string
 							  }
@@ -7607,11 +8170,23 @@ export type NOT_FOUND_QUERY_RESULT = {
 									_type: 'link'
 									label?: string
 									type?: 'external' | 'internal'
-									internal: {
-										_type: 'page'
-										title: string | null
-										slug: string | '/' | null
-									} | null
+									internal:
+										| {
+												_type: 'blog.post'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'page'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| {
+												_type: 'product.category'
+												title: string | null
+												slug: string | '/' | null
+										  }
+										| null
 									external?: string
 									params?: string
 							  }
@@ -7950,6 +8525,138 @@ export type PRODUCT_STATIC_PARAMS_QUERY_RESULT = Array<{
 	category: string | null
 	product: string | null
 }>
+
+// Source: src/lib/catalog.ts
+// Variable: CUSTOM_MENU_IMAGES_QUERY
+// Query: {	'namePlates': *[_type == 'page' && metadata.slug.current == 'custom-projects/name-plates'][0]		.modules[_type == 'hero.split' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },	'memorials': *[_type == 'page' && metadata.slug.current == 'custom-projects/memorials'][0]		.modules[_type == 'hero.split' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },	'signage': *[_type == 'page' && metadata.slug.current == 'commercial-signage'][0]		.modules[_type == 'hero.cover' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },	'calligraphy': *[_type == 'product' && slug.current == 'ayatul-kursi-halo'][0]		.gallery[0]{ ..., asset->{ ..., metadata } }}
+export type CUSTOM_MENU_IMAGES_QUERY_RESULT = {
+	namePlates: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata: SanityImageMetadata | null
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		loading?: 'eager' | 'lazy'
+		onRight?: boolean
+		afterContent?: boolean
+		_type: 'image'
+	} | null
+	memorials: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata: SanityImageMetadata | null
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		loading?: 'eager' | 'lazy'
+		onRight?: boolean
+		afterContent?: boolean
+		_type: 'image'
+	} | null
+	signage: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata: SanityImageMetadata | null
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		mobile?: Mobile
+		opacity?: number
+		alt?: string
+		loading?: 'eager' | 'lazy'
+		_type: 'image'
+	} | null
+	calligraphy: {
+		asset: {
+			_id: string
+			_type: 'sanity.imageAsset'
+			_createdAt: string
+			_updatedAt: string
+			_rev: string
+			originalFilename?: string
+			label?: string
+			title?: string
+			description?: string
+			altText?: string
+			sha1hash?: string
+			extension?: string
+			mimeType?: string
+			size?: number
+			assetId?: string
+			uploadId?: string
+			path?: string
+			url?: string
+			metadata: SanityImageMetadata | null
+			source?: SanityAssetSourceData
+		} | null
+		media?: unknown
+		hotspot?: SanityImageHotspot
+		crop?: SanityImageCrop
+		alt?: string
+		_type: 'image'
+		_key: string
+	} | null
+}
 
 // Source: src/modules/blog-index/index.tsx
 // Variable: BLOG_INDEX_QUERY
@@ -8355,7 +9062,7 @@ export type SEARCH_QUERY_RESULT = Array<
 
 // Source: src/sanity/lib/queries.ts
 // Variable: SITE_QUERY
-// Query: *[_type == 'site'][0]{	...,	announcement->{		...,		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},	header->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	footer->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },	bottom->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },	social->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },}
+// Query: *[_type == 'site'][0]{	...,	announcement->{		...,		ctas[]{			...,			link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }		}	},	header->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },	ctas[]{		...,		link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }	},	footer->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },	bottom->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },	social->{ 	...,	items[]{			...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	},		defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		defined(links[]) => { links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },		_type == 'megamenu' => {			defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },			items[]{				...,				_type == 'link' => { 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} },				_type == 'link.list' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					links[]{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} }				},				_type == 'link.card' => {					defined(link) => { link{ 	...,	type == 'internal' => {		internal->{			_type,			title,			'slug': select(				_type == 'product.category' => '/collections/' + slug.current,				metadata.slug.current == 'index' => '/',				'/' + metadata.slug.current			)		}	} } },					image{						...,						asset->{							...,							metadata						}					}				}			}		}	} },}
 export type SITE_QUERY_RESULT = {
 	_id: string
 	_type: 'site'
@@ -8430,7 +9137,8 @@ export type SITE_QUERY_RESULT = {
 						_type: 'link'
 						label?: string
 						type?: 'external' | 'internal'
-						internal?: PageReference
+						internal?:
+							BlogPostReference | PageReference | ProductCategoryReference
 						external?: string
 						params?: string
 				  }
@@ -8438,11 +9146,23 @@ export type SITE_QUERY_RESULT = {
 						_type: 'link'
 						label?: string
 						type?: 'external' | 'internal'
-						internal: {
-							_type: 'page'
-							title: string | null
-							slug: string | '/' | null
-						} | null
+						internal:
+							| {
+									_type: 'blog.post'
+									title: string | null
+									slug: string | '/' | null
+							  }
+							| {
+									_type: 'page'
+									title: string | null
+									slug: string | '/' | null
+							  }
+							| {
+									_type: 'product.category'
+									title: string | null
+									slug: string | '/' | null
+							  }
+							| null
 						external?: string
 						params?: string
 				  }
@@ -8501,7 +9221,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8510,11 +9231,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -8528,7 +9261,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8536,11 +9270,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -8559,7 +9305,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8567,11 +9314,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -8582,7 +9341,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8591,11 +9351,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -8606,7 +9378,8 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?:
+						BlogPostReference | PageReference | ProductCategoryReference
 					external?: string
 					params?: string
 			  }
@@ -8615,11 +9388,23 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product.category'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -8668,7 +9453,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8676,11 +9462,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -8808,7 +9606,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -8816,11 +9617,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -8856,7 +9669,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -8865,11 +9681,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -8883,7 +9711,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -8891,11 +9722,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -8906,7 +9749,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -8915,11 +9761,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -8930,7 +9788,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8939,11 +9798,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -8957,7 +9828,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -8965,11 +9837,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9060,7 +9944,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9068,11 +9955,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9108,7 +10007,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9117,11 +10019,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9135,7 +10049,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9143,11 +10060,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9158,7 +10087,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9167,11 +10099,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9182,7 +10126,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9191,11 +10136,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9211,7 +10168,8 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?:
+						BlogPostReference | PageReference | ProductCategoryReference
 					external?: string
 					params?: string
 			  }
@@ -9219,11 +10177,23 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product.category'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -9281,7 +10251,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9290,11 +10261,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9308,7 +10291,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9316,11 +10300,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9339,7 +10335,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9347,11 +10344,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9362,7 +10371,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9371,11 +10381,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9386,7 +10408,8 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?:
+						BlogPostReference | PageReference | ProductCategoryReference
 					external?: string
 					params?: string
 			  }
@@ -9395,11 +10418,23 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product.category'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -9448,7 +10483,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9456,11 +10492,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9588,7 +10636,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9596,11 +10647,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9636,7 +10699,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9645,11 +10711,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9663,7 +10741,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9671,11 +10752,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9686,7 +10779,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9695,11 +10791,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9710,7 +10818,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9719,11 +10828,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9737,7 +10858,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9745,11 +10867,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -9840,7 +10974,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9848,11 +10985,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9888,7 +11037,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9897,11 +11049,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9915,7 +11079,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9923,11 +11090,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9938,7 +11117,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -9947,11 +11129,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -9962,7 +11156,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -9971,11 +11166,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10034,7 +11241,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10043,11 +11251,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10061,7 +11281,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10069,11 +11290,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10092,7 +11325,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10100,11 +11334,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10115,7 +11361,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10124,11 +11371,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10139,7 +11398,8 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?:
+						BlogPostReference | PageReference | ProductCategoryReference
 					external?: string
 					params?: string
 			  }
@@ -10148,11 +11408,23 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product.category'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -10201,7 +11473,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10209,11 +11482,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10341,7 +11626,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10349,11 +11637,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10389,7 +11689,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10398,11 +11701,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10416,7 +11731,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10424,11 +11742,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10439,7 +11769,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10448,11 +11781,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10463,7 +11808,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10472,11 +11818,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10490,7 +11848,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10498,11 +11857,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10593,7 +11964,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10601,11 +11975,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10641,7 +12027,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10650,11 +12039,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10668,7 +12069,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10676,11 +12080,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10691,7 +12107,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -10700,11 +12119,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -10715,7 +12146,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10724,11 +12156,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10787,7 +12231,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10796,11 +12241,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10814,7 +12271,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10822,11 +12280,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10845,7 +12315,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10853,11 +12324,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10868,7 +12351,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10877,11 +12361,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -10892,7 +12388,8 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal?: PageReference
+					internal?:
+						BlogPostReference | PageReference | ProductCategoryReference
 					external?: string
 					params?: string
 			  }
@@ -10901,11 +12398,23 @@ export type SITE_QUERY_RESULT = {
 					_type: 'link'
 					label?: string
 					type?: 'external' | 'internal'
-					internal: {
-						_type: 'page'
-						title: string | null
-						slug: string | '/' | null
-					} | null
+					internal:
+						| {
+								_type: 'blog.post'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'page'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| {
+								_type: 'product.category'
+								title: string | null
+								slug: string | '/' | null
+						  }
+						| null
 					external?: string
 					params?: string
 			  }
@@ -10954,7 +12463,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -10962,11 +12472,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -11094,7 +12616,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11102,11 +12627,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11142,7 +12679,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11151,11 +12691,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11169,7 +12721,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11177,11 +12732,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11192,7 +12759,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11201,11 +12771,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11216,7 +12798,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -11225,11 +12808,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -11243,7 +12838,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -11251,11 +12847,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -11346,7 +12954,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11354,11 +12965,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11394,7 +13017,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11403,11 +13029,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11421,7 +13059,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11429,11 +13070,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11444,7 +13097,10 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal?: PageReference
+											internal?:
+												| BlogPostReference
+												| PageReference
+												| ProductCategoryReference
 											external?: string
 											params?: string
 									  }
@@ -11453,11 +13109,23 @@ export type SITE_QUERY_RESULT = {
 											_type: 'link'
 											label?: string
 											type?: 'external' | 'internal'
-											internal: {
-												_type: 'page'
-												title: string | null
-												slug: string | '/' | null
-											} | null
+											internal:
+												| {
+														_type: 'blog.post'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'page'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| {
+														_type: 'product.category'
+														title: string | null
+														slug: string | '/' | null
+												  }
+												| null
 											external?: string
 											params?: string
 									  }
@@ -11468,7 +13136,8 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal?: PageReference
+								internal?:
+									BlogPostReference | PageReference | ProductCategoryReference
 								external?: string
 								params?: string
 						  }
@@ -11477,11 +13146,23 @@ export type SITE_QUERY_RESULT = {
 								_type: 'link'
 								label?: string
 								type?: 'external' | 'internal'
-								internal: {
-									_type: 'page'
-									title: string | null
-									slug: string | '/' | null
-								} | null
+								internal:
+									| {
+											_type: 'blog.post'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'page'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| {
+											_type: 'product.category'
+											title: string | null
+											slug: string | '/' | null
+									  }
+									| null
 								external?: string
 								params?: string
 						  }
@@ -11564,24 +13245,25 @@ export type HEADER_SEARCH_QUERY_RESULT = Array<
 
 declare module '@sanity/client' {
 	interface SanityQueries {
-		"\n\t*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\t'modules': (\n\t\t\t// global moddules (before)\n\t\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (before)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// page modules\n\t\t\t+ modules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (after)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// global moddules (after)\n\t\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t)\n\t}\n": PAGE_QUERY_RESULT
+		"\n\t*[_type == 'page' && metadata.slug.current == $slug][0]{\n\t\t...,\n\t\t'modules': (\n\t\t\t// global moddules (before)\n\t\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (before)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// page modules\n\t\t\t+ modules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// path modules (after)\n\t\t\t+ *[_type == 'global-module' && path != '*' && \n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t\t// global moddules (after)\n\t\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t)\n\t}\n": PAGE_QUERY_RESULT
 		"*[_type == 'page' && metadata.slug.current == $slug][0].markdown.code": PAGE_MD_QUERY_RESULT
 		"*[_type == 'blog.post' && metadata.slug.current == $slug][0].markdown.code": BLOG_POST_MD_QUERY_RESULT
 		"*[_type == $type && metadata.slug.current == $slug][0]{\n\t'title': coalesce(metadata.title, title),\n}": OG_QUERY_RESULT
-		"*[_type == 'blog.post' && metadata.slug.current == $slug][0]{\n\t...,\n\tcontent[]{\n\t\t...,\n\t\t_type == 'image' => {\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t_type == 'ctas' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t'contentPlainText': pt::text(content),\n\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\tstyle,\n\t\t'text': pt::text(@)\n\t},\n\t\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\tcategories[]->{\n\t\ttitle,\n\t\tslug\n\t},\n\tauthor->{\n\t\tname,\n\t\ttitle,\n\t\tenableSchema,\n\t\t'description': pt::text(content),\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t}\n,\n\t'modules': (\n\t\t// global modules (before)\n\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t// path modules (before)\n\t\t+ *[_type == 'global-module' && path == $blogDir].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t// path modules (after)\n\t\t+ *[_type == 'global-module' && path == $blogDir].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t// global modules (after)\n\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t)\n}": BLOG_POST_QUERY_RESULT
-		"{\n\t'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{\n\t\tmetadata\n\t},\n\t'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){\n\t\ttitle,\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tpublishDate,\n\t\tcategories[]->{ title },\n\t\tauthor->{ name },\n\t\tmetadata\n\t}\n}": BLOG_RSS_QUERY_RESULT
-		"\n\t*[_type == 'page' && metadata.slug.current == '404'][0]{\n\t\t...,\n\t\tmodules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t}\n": NOT_FOUND_QUERY_RESULT
+		"*[_type == 'blog.post' && metadata.slug.current == $slug][0]{\n\t...,\n\tcontent[]{\n\t\t...,\n\t\t_type == 'image' => {\n\t\t\t...,\n\t\t\tasset->\n\t\t},\n\t\t_type == 'ctas' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t},\n\t'contentPlainText': pt::text(content),\n\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\tstyle,\n\t\t'text': pt::text(@)\n\t},\n\t\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\tcategories[]->{\n\t\ttitle,\n\t\tslug\n\t},\n\tauthor->{\n\t\tname,\n\t\ttitle,\n\t\tenableSchema,\n\t\t'description': pt::text(content),\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t}\n,\n\t'modules': (\n\t\t// global modules (before)\n\t\t*[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t// path modules (before)\n\t\t+ *[_type == 'global-module' && path == $blogDir].before[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t// path modules (after)\n\t\t+ *[_type == 'global-module' && path == $blogDir].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t\t// global modules (after)\n\t\t+ *[_type == 'global-module' && path == '*' && \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n].after[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t)\n}": BLOG_POST_QUERY_RESULT
+		"{\n\t'blog': *[_type == 'page' && metadata.slug.current == $blogDir][0]{\n\t\tmetadata\n\t},\n\t'posts': *[_type == 'blog.post' && metadata.noIndex != true]|order(publishDate desc){\n\t\ttitle,\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tpublishDate,\n\t\tcategories[]->{ title },\n\t\tauthor->{ name },\n\t\tmetadata\n\t}\n}": BLOG_RSS_QUERY_RESULT
+		"\n\t*[_type == 'page' && metadata.slug.current == '404'][0]{\n\t\t...,\n\t\tmodules[]{ \n\t...,\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tsidebar{ \n\t...,\n\tmodules[]{\n\t\t...,\n\t\t_type == 'callout' => {\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n },\n\t\n\t_type == 'form-module' => {\n\t\tform->\n\t}\n,\n\t\n\t_type == 'breadcrumbs' => {\n\t\tcrumbs[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t}\n,\n\t\n\t_type == 'card-list' => {\n\t\tcards[]{\n\t\t\t...,\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'image-gallery' => {\n\t\trows[]{\n\t\t\t...,\n\t\t\timages[]{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'logo-list' => {\n\t\tlogos[]->\n\t}\n,\n\t\n\t_type == 'person-list' => {\n\t\tpeople[]->{\n\t\t\tname,\n\t\t\ttitle,\n\t\t\tcontent,\n\t\t\tenableSchema,\n\t\t\timage{\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n,\n\t\n\t_type == 'prose' => {\n\t\tcontent[]{\n\t\t\t...,\n\t\t\t_type == 'image' => {\n\t\t\t\t...,\n\t\t\t\tasset->{\n\t\t\t\t\t...,\n\t\t\t\t\tmetadata\n\t\t\t\t}\n\t\t\t},\n\t\t\t_type == 'ctas' => {\n\t\t\t\tctas[]{\n\t\t\t\t\t...,\n\t\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\t'headings': content[style in ['h2', 'h3', 'h4', 'h5', 'h6']]{\n\t\t\tstyle,\n\t\t\t'text': pt::text(@)\n\t\t}\n\t}\n,\n\t\n\t_type == 'quote-list' => {\n\t\tquotes[]->\n\t}\n,\n\t\n\t_type == 'tabbed-content' => {\n\t\ttabs[]{\n\t\t\t...,\n\t\t\tcontent[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'image' => {\n\t\t\t\t\t...,\n\t\t\t\t\tasset->{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tmetadata\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t},\n\t\t\tctas[]{\n\t\t\t\t...,\n\t\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t}\n\t\t}\n\t}\n,\n }\n\t}\n": NOT_FOUND_QUERY_RESULT
 		"{\n\t'site': *[_type == 'site'][0]{\n\t\ttitle\n\t},\n\t'home': *[_type == 'page' && metadata.slug.current == 'index'][0]{\n\t\t'description': metadata.description\n\t},\n\t'pages': *[_type == 'page'\n\t\t&& defined(metadata.slug.current)\n\t\t&& metadata.noIndex != true\n\t\t&& metadata.slug.current != '404'\n\t\t&& length(markdown.code) > 0\n\t] | order(metadata.slug.current != 'index', metadata.slug.current asc) {\n\t\t'title': select(\n\t\t\tmetadata.slug.current == 'index' => coalesce(metadata.title, 'Home'),\n\t\t\tcoalesce(metadata.title, metadata.slug.current)\n\t\t),\n\t\t'slug': metadata.slug.current,\n\t\t'description': metadata.description,\n\t},\n\t'posts': *[_type == 'blog.post'\n\t\t&& defined(metadata.slug.current)\n\t\t&& metadata.noIndex != true\n\t\t&& length(markdown.code) > 0\n\t] | order(publishDate desc) {\n\t\t'title': coalesce(title, metadata.title),\n\t\t'slug': $blogDir + '/' + metadata.slug.current,\n\t\t'description': metadata.description,\n\t}\n}": AGENT_DIRECTIONS_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'product'\n\t\t&& (!defined($categoryId) || category._ref == $categoryId)\n\t\t&& (!$featuredOnly || featured == true)\n\t]|order(coalesce(displayOrder, 100) asc, title asc){\n\t\t_id, title, 'slug': slug.current, shortDescription, sku, displayPrice,\n\t\tavailability, featured, materials, finishes, dimensions,\n\t\tgallery[]{ ..., asset->{ ..., metadata } },\n\t\tcategory->{ _id, title, 'slug': slug.current }\n\t}\n": CATALOG_PRODUCTS_QUERY_RESULT
 		"\n\t*[_type == 'product.category']|order(coalesce(displayOrder, 100) asc, title asc){\n\t\t_id, title, 'slug': slug.current, description, materials,\n\t\t'image': coalesce(\n\t\t\timage,\n\t\t\t*[_type == 'product' && category._ref == ^._id && defined(gallery[0].asset)]|order(coalesce(displayOrder, 100) asc)[0].gallery[0]\n\t\t){ ..., asset->{ ..., metadata } }\n\t}\n": CATALOG_CATEGORIES_QUERY_RESULT
 		"\n\t*[_type == 'product.category' && slug.current == $category][0]{\n\t\t_id, title, 'slug': slug.current, eyebrow, description, materials, metadata,\n\t\timage{ ..., asset->{ ..., metadata } }\n\t}\n": PRODUCT_CATEGORY_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'product'\n\t\t&& slug.current == $product\n\t\t&& category._ref in *[_type == 'product.category' && slug.current == $category]._id\n\t][0]{\n\t\t_id, title, 'slug': slug.current, shortDescription, description, sku,\n\t\tdisplayPrice, availability, featured, materials, finishes, dimensions, metadata,\n\t\tgallery[]{ ..., asset->{ ..., metadata } },\n\t\tcategory->{ _id, title, 'slug': slug.current, description },\n\t\t'related': *[_type == 'product' && category._ref == ^.category._ref && _id != ^._id]\n\t\t\t|order(featured desc, coalesce(displayOrder, 100) asc)[0...4]{\n\t\t\t\t_id, title, 'slug': slug.current, shortDescription, displayPrice,\n\t\t\t\tavailability, materials, gallery[0]{ ..., asset->{ ..., metadata } },\n\t\t\t\tcategory->{ _id, title, 'slug': slug.current }\n\t\t\t}\n\t}\n": PRODUCT_DETAIL_QUERY_RESULT
 		"\n\t*[_type == 'product' && defined(slug.current) && defined(category->slug.current)]{\n\t\t'category': category->slug.current,\n\t\t'product': slug.current\n\t}\n": PRODUCT_STATIC_PARAMS_QUERY_RESULT
+		"{\n\t'namePlates': *[_type == 'page' && metadata.slug.current == 'custom-projects/name-plates'][0]\n\t\t.modules[_type == 'hero.split' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },\n\t'memorials': *[_type == 'page' && metadata.slug.current == 'custom-projects/memorials'][0]\n\t\t.modules[_type == 'hero.split' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },\n\t'signage': *[_type == 'page' && metadata.slug.current == 'commercial-signage'][0]\n\t\t.modules[_type == 'hero.cover' && defined(image.asset)][0].image{ ..., asset->{ ..., metadata } },\n\t'calligraphy': *[_type == 'product' && slug.current == 'ayatul-kursi-halo'][0]\n\t\t.gallery[0]{ ..., asset->{ ..., metadata } }\n}": CUSTOM_MENU_IMAGES_QUERY_RESULT
 		"\n\t*[_type == 'blog.post' && !(_id in $featuredIds)]|order(publishDate desc){\n\t\t...,\n\t\t\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\tcategories[]->{\n\t\ttitle,\n\t\tslug\n\t},\n\tauthor->{\n\t\tname,\n\t\ttitle,\n\t\tenableSchema,\n\t\t'description': pt::text(content),\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t}\n,\n\t\t'slug': $blogDir + metadata.slug.current,\n\t}\n": BLOG_INDEX_QUERY_RESULT
 		"\n\t*[_type == 'blog.post' && _id in $featuredIds]{\n\t\t...,\n\t\t\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\tcategories[]->{\n\t\ttitle,\n\t\tslug\n\t},\n\tauthor->{\n\t\tname,\n\t\ttitle,\n\t\tenableSchema,\n\t\t'description': pt::text(content),\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t}\n,\n\t\t'slug': $blogDir + metadata.slug.current,\n\t}\n": BLOG_FEATURED_QUERY_RESULT
 		"\n\t*[_type == 'blog.post']|order(publishDate desc)[0...$limit]{\n\t\t...,\n\t\t\n\t'readTime': length(string::split(pt::text(content), ' ')) / 200,\n\tcategories[]->{\n\t\ttitle,\n\t\tslug\n\t},\n\tauthor->{\n\t\tname,\n\t\ttitle,\n\t\tenableSchema,\n\t\t'description': pt::text(content),\n\t\timage{\n\t\t\t...,\n\t\t\tasset->\n\t\t}\n\t}\n,\n\t\t'slug': $blogDir + metadata.slug.current,\n\t}\n": BLOG_POST_LIST_QUERY_RESULT
 		"*[\n\t_type in $scope\n\t&& defined(metadata.slug.current)\n\t&& metadata.noIndex != true\n\t&& !(metadata.slug.current in ['404'])\n\t&& @ match text::query($queryMatch)\n]{\n\t_id,\n\t_type,\n\ttitle,\n\t'slug': select(\n\t\t_type == 'blog.post' => $blogDir + metadata.slug.current,\n\t\tmetadata.slug.current == 'index' => '/',\n\t\t'/' + metadata.slug.current\n\t)\n}": SEARCH_QUERY_RESULT
-		"*[_type == 'site'][0]{\n\t...,\n\tannouncement->{\n\t\t...,\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\theader->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tfooter->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tbottom->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tsocial->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n}": SITE_QUERY_RESULT
+		"*[_type == 'site'][0]{\n\t...,\n\tannouncement->{\n\t\t...,\n\t\tctas[]{\n\t\t\t...,\n\t\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t}\n\t},\n\theader->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tctas[]{\n\t\t...,\n\t\tlink{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t},\n\tfooter->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tbottom->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n\tsocial->{ \n\t...,\n\titems[]{\n\t\t\n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n,\n\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\tdefined(links[]) => { links[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t_type == 'megamenu' => {\n\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\titems[]{\n\t\t\t\t...,\n\t\t\t\t_type == 'link' => { \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n },\n\t\t\t\t_type == 'link.list' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\tlinks[]{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n }\n\t\t\t\t},\n\t\t\t\t_type == 'link.card' => {\n\t\t\t\t\tdefined(link) => { link{ \n\t...,\n\ttype == 'internal' => {\n\t\tinternal->{\n\t\t\t_type,\n\t\t\ttitle,\n\t\t\t'slug': select(\n\t\t\t\t_type == 'product.category' => '/collections/' + slug.current,\n\t\t\t\tmetadata.slug.current == 'index' => '/',\n\t\t\t\t'/' + metadata.slug.current\n\t\t\t)\n\t\t}\n\t}\n } },\n\t\t\t\t\timage{\n\t\t\t\t\t\t...,\n\t\t\t\t\t\tasset->{\n\t\t\t\t\t\t\t...,\n\t\t\t\t\t\t\tmetadata\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n },\n}": SITE_QUERY_RESULT
 		'\n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n': GLOBAL_MODULE_EXCLUDE_QUERY_RESULT
 		'\n\tstring::startsWith($slug, path)\n\t&& \n\tselect(\n\t\tdefined(excludePaths) => count(excludePaths[string::startsWith($slug, @)]) == 0,\n\t\ttrue\n\t)\n\n': GLOBAL_MODULE_PATH_QUERY_RESULT
 		"\n\t*[\n\t\t_type == 'blog.category'\n\t\t&& count(*[_type == 'blog.post' && references(^._id)]) > 0\n\t]|order(title)\n": CATEGORIES_QUERY_RESULT

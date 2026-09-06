@@ -8,7 +8,7 @@ export default function Loading() {
 			<div className="w-full max-w-4xl">
 				<div className="mb-8 flex items-end justify-between gap-6">
 					<div>
-						<p className="text-primary text-[10px] font-bold tracking-[.22em] uppercase">
+						<p className="text-accent text-[10px] font-bold tracking-[.22em] uppercase">
 							MV Art Studio
 						</p>
 						<p className="mt-2 text-3xl font-[var(--font-serif)] tracking-[-.03em] sm:text-4xl">

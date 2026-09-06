@@ -49,7 +49,7 @@ export default function ({
 						key={`${step._key}-${index}`}
 						className="gap-ch flex items-start [counter-increment:step]"
 					>
-						<span className="h3 bg-foreground text-background size-lh grid shrink-0 place-content-center text-center before:content-[counter(step)]" />
+						<span className="h3 bg-accent text-foreground size-lh grid shrink-0 place-content-center text-center before:content-[counter(step)]" />
 
 						<div className="prose">
 							<PortableText value={step.content ?? []} />

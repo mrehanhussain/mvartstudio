@@ -6,7 +6,7 @@ import {
 	type DynamicFetchOptions,
 } from '@/sanity/lib/live'
 import { getSite } from '@/sanity/lib/queries'
-import type { Cta } from '@/sanity/types'
+import type { Cta, SITE_QUERY_RESULT } from '@/sanity/types'
 import CTAList from '@/ui/cta-list'
 import Logo from '@/ui/logo'
 import ThemeToggle from '@/ui/theme-toggle'
@@ -16,18 +16,24 @@ import MobileToggle from './mobile-toggle'
 import Navigation from './navigation'
 import Wrapper from './wrapper'
 
+async function getCachedSite({
+	perspective,
+	stega,
+}: DynamicFetchOptions): Promise<SITE_QUERY_RESULT> {
+	'use cache'
+	return getSite({ perspective, stega })
+}
+
 export async function DynamicHeader() {
 	const { perspective, stega } = await getDynamicFetchOptions()
-	return <CachedHeader perspective={perspective} stega={stega} />
+	return <Header perspective={perspective} stega={stega} />
 }
 
-export default async function Header(props: DynamicFetchOptions) {
-	return <CachedHeader {...props} />
-}
-
-async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
-	'use cache'
-	const site = await getSite({ perspective, stega })
+export default async function Header({
+	perspective,
+	stega,
+}: DynamicFetchOptions) {
+	const site = await getCachedSite({ perspective, stega })
 	const blurb = site?.header?.blurb
 
 	return (
@@ -35,7 +41,7 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 			<div
 				className={cn(
 					css.root,
-					'section grid items-center gap-x-4 py-0 max-md:max-h-svh max-md:overflow-y-auto',
+					'section grid items-center gap-x-6 py-0 max-md:max-h-svh max-md:overflow-y-auto',
 				)}
 			>
 				<div className="sticky top-0 z-1 flex items-center justify-between gap-4 py-2 [grid-area:top]">
@@ -68,7 +74,9 @@ async function CachedHeader({ perspective, stega }: DynamicFetchOptions) {
 										value={blurb}
 										components={{
 											types: {
-												'custom-html': ({ value }) => <CustomHTML {...value} />,
+												'custom-html': ({ value }) => (
+													<CustomHTML {...value} />
+												),
 											},
 										}}
 									/>

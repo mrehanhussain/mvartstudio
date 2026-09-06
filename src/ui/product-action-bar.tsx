@@ -67,14 +67,14 @@ export default function ProductActionBar({
 			<div className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-1">
 				<Link
 					href={quoteHref}
-					className="rounded-control bg-brand-green flex min-h-11 items-center justify-center px-4 text-center text-xs font-bold text-white"
+					className="rounded-control bg-brand flex min-h-11 items-center justify-center px-4 text-center text-xs font-bold text-white"
 				>
 					Request quote
 				</Link>
 				<a
 					href={whatsappHref}
 					aria-label={'Ask about ' + title + ' on WhatsApp'}
-					className="rounded-control text-primary hover:bg-foreground/5 grid size-11 place-items-center transition"
+					className="rounded-control bg-whatsapp hover:bg-whatsapp-hover grid size-11 place-items-center text-white transition"
 				>
 					<PiWhatsappLogo aria-hidden="true" className="size-5" />
 				</a>
@@ -99,7 +99,7 @@ export default function ProductActionBar({
 				>
 					<PiShareNetwork aria-hidden="true" className="size-5" />
 					{shared && (
-						<span className="bg-brand-green absolute -top-8 right-0 rounded-full px-2 py-1 text-[9px] font-bold text-white">
+						<span className="bg-brand absolute -top-8 right-0 rounded-full px-2 py-1 text-[9px] font-bold text-white">
 							Copied
 						</span>
 					)}
